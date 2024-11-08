@@ -36,6 +36,13 @@ CREATE TABLE IF NOT EXISTS "bia" (
     FOREIGN KEY (uid) REFERENCES users(uid) ON DELETE CASCADE
 );
 
+INSERT INTO "users" ("admin", "name", "email", "birthdate", "username", "hash", "salt")
+VALUES (
+    1, "Riccardo Bruno", "riccardo.bruno@gymapp.dev", "11-25-1999", "bankich",
+    "e982818124aab7af645a118a321edcc5af4798548a2f4819a192f21f173be85c9123d3911903f602c5d787f6074cdbf0d42114bcc5843ea2cbe9b3163b6508b8",
+    "c631ac0affd7db484f8d0103e706d3c8"
+);
+
 INSERT INTO "bia" (
     "uid", "date", "height", "weight", "bmi",
     "basal_metabolic_rate",
