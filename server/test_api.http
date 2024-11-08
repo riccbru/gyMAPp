@@ -8,7 +8,7 @@ POST http://localhost:3001/api/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "username": "bankich",
+    "username": "ciclarimpo",
     "password": "password"
 }
 
