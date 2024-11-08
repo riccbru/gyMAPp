@@ -9,13 +9,13 @@ const LocalStrategy = require("passport-local");
 const { body, check, validationResult } = require('express-validator');
 
 const daoUsers = require("./daoUsers");
-const { validateName, validateEmail, validateDate, validateUsername, validatePassword } = require("./validators");
+const { sign } = require("crypto");
 
 const app = new express();
 
-/********/
-/* CONF */
-/********/
+/*******************/
+/***     CONF    ***/
+/*******************/
 
 const PORT = 3001;
 const minDateChars = 8;
@@ -72,9 +72,9 @@ app.listen(PORT, () => {
   );
 });
 
-/****************/
-/*** passport ***/
-/****************/
+/******************/
+/***  passport  ***/
+/******************/
 
 passport.use(
   new LocalStrategy(async function verify(username, password, callback) {
@@ -95,9 +95,9 @@ passport.deserializeUser(function (user, callback) {
   return callback(null, user);
 });
 
-/**************/
-/* AuthN APIs */
-/**************/
+/******************/
+/*** AuthN APIs ***/
+/******************/
 
 app.get("/api/session",
     (req, res) => {
@@ -165,11 +165,11 @@ app.post("/api/signup",
                 return res.status(400).json({ error: errors.array()[0] });
             }
             const user = {
-                name: req.body.name,
-                email: req.body.email,
-                birthdate: req.body.birthdate,
-                username: req.body.username,
-                password: req.body.password,
+                name:       req.body.name,
+                email:      req.body.email,
+                birthdate:  req.body.birthdate,
+                username:   req.body.username,
+                password:   req.body.password,
             };
             try {
                 const result = await daoUsers.signup(user)

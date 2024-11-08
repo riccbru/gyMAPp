@@ -1,29 +1,31 @@
+/* SINGUP VALIDATORS TO CLEAN CODE */
+
 'use strict';
 
-const { body, check } = require('express-validator');
+const { body } = require('express-validator');
 
 const minDateChars = 8;
 const minPassLength = 8;
 const minEmailChars = 4;
 const maxUserLength = 20;
 
-exports.validateName = () => {
+const validateName = () => {
     body('name')
             .notEmpty().withMessage("Your name can't be an empty string")
             .isString().withMessage("Name must be string")
             .isLength({ min: 1, max: maxUserLength })
-            .withMessage("Name length must be between 1 and 20")
+            .withMessage("Name length must be between 1 and 20");
 }
 
-exports.validateEmail = () => {
+const validateEmail = () => {
     body('email')
         .notEmpty().withMessage("Your email can't be an empty string")
         .isString().withMessage("Last time I checked emails were strings")
         .isLength({ min: minEmailChars }).withMessage("Your email can't be that short")
-        .isEmail().withMessage("Invalid email")
+        .isEmail().withMessage("Invalid email: user@domain.tld");
 }
 
-exports.validateDate = () => {
+const validateDate = () => {
     body('birthdate')
         .notEmpty().withMessage("Your birthdate can't be an empty string")
         .isString().withMessage("Birthdate must be a string")
@@ -35,7 +37,7 @@ exports.validateDate = () => {
         .withMessage("Invalid birthdate");
 }
 
-exports.validateUsername = () => {
+const validateUsername = () => {
     body('username')
         .notEmpty().withMessage("Your username can't be an empty string")
         .isString().withMessage("Username must be a string")
@@ -43,10 +45,20 @@ exports.validateUsername = () => {
         .withMessage(`Username cannot exceed ${maxUserLength} characters`);
 }
 
-exports.validatePassword = () => {
+const validatePassword = () => {
     body('password')
         .notEmpty().withMessage("Your password can't be an empty string")
         .isString().withMessage("Password must be a string")
         .isLength({ min: minPassLength })
         .withMessage(`Password must be at least ${minPassLength} characters`);
 }
+
+const signupValidators = [
+    validateName,
+    validateEmail,
+    validateDate,
+    validateUsername,
+    validatePassword
+];
+
+module.exports = { signupValidators };
