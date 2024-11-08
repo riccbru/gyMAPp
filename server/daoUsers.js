@@ -10,7 +10,6 @@ exports.signup = (userInfo) => {
       if (err) reject(err);
       if (row) {
         reject(`Username '${username}' not available`);
-        // console.log("signedup");
       } else {
         crypto.randomBytes(16, (err, buf) => {
           if (err) reject(err);
