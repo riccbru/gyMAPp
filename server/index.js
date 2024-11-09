@@ -4,12 +4,13 @@ const cors = require("cors");
 const morgan = require("morgan");
 const express = require("express");
 const passport = require("passport");
-const session = require('express-session');
+const bodyParser = require("body-parser");
+const session = require("express-session");
 const LocalStrategy = require("passport-local");
-const { body, check, validationResult } = require('express-validator');
+const { body, check, param, validationResult } = require("express-validator");
 
+const daoBias = require("./daoBias");
 const daoUsers = require("./daoUsers");
-const { sign } = require("crypto");
 
 const app = new express();
 
@@ -33,10 +34,14 @@ const sessionOptions = {
     resave: false,
     saveUninitialized: false,
     cookie: { httpOnly: true, secure: app.get('env') === 'production' ? true : false },
-  };
+};
 
 app.use(morgan('dev'));
-app.use(express.json());
+
+// app.use(express.json());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
 app.use(cors(corsOptions));
 app.use(session(sessionOptions));
 app.use(passport.authenticate('session'));
@@ -49,7 +54,7 @@ const isLogged = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   } else {
-    return res.status(401).json({ error: "Not authorized" });
+    return res.status(401).json({ error: "Unauthorized" });
   }
 };
 
@@ -167,9 +172,9 @@ app.post("/api/signup",
             const user = {
                 name:       req.body.name,
                 email:      req.body.email,
-                birthdate:  req.body.birthdate,
                 username:   req.body.username,
                 password:   req.body.password,
+                birthdate:  req.body.birthdate,
             };
             try {
                 const result = await daoUsers.signup(user)
@@ -188,4 +193,81 @@ app.get("/api/logout", isLogged,
           res.status(200).json({ success: "Logged out" });
         });
     }
+);
+
+/*******************/
+/***   BIA API   ***/
+/*******************/
+
+app.get("/api/bias/:uid", isLogged,
+  [
+    check("uid").notEmpty().withMessage("Provide a UID"),
+    param("uid").isInt({ min: 1 }).withMessage("UID starts from 1").toInt()
+  ],
+  async (req, res) => {
+    const errors = validationResult(req).formatWith(errorFormatter);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ error: errors.array()[0] });
+    }
+    if (req.params.uid === req.user.uid) {
+      const uid = req.user.uid;
+      try {
+        const bias = await daoBias.fetchBias(uid);
+        res.status(200).json(bias);
+      } catch (err) {
+        res.status(404).json({ error: err });
+      }
+    } else {
+      return res.status(403).json({error: "You can't access other users' BIA"});
+    }
+  }
+);
+
+app.post("/api/bias/", isLogged,
+  [
+    body('date')
+            .notEmpty().withMessage("Your date can't be an empty string")
+            .isString().withMessage("Date must be a string")
+            .isLength({ min: minDateChars }).withMessage("Invalid date")
+            .matches(/^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-\d{4}$/)
+            .withMessage("date must be in MM-DD-YYYY format")
+            .bail()
+            .isDate({ format: 'MM-DD-YYYY', strictMode: true })
+            .withMessage("Invalid date")
+  ],
+  async (req, res) => {
+    const errors = validationResult(req).formatWith(errorFormatter);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ error: errors.array()[0] });
+    }
+    if (req.isAuthenticated()) {
+      const uid = req.user.uid;
+      try {
+        const bia = {
+          uid:                                req.user.uid,
+          bmi:                                req.body.bmi,
+          date:                               req.body.date,
+          na_k:                               req.body.na_k,
+          weight:                             req.body.weight,
+          height:                             req.body.height,
+          fat_mass:                           req.body.fat_mass,
+          muscle_mass:                        req.body.muscle_mass,
+          phase_angle:                        req.body.phase_angle,
+          fat_free_mass:                      req.body.fat_free_mass,
+          total_body_water:                   req.body.total_body_water,
+          basal_metabolic_rate:               req.body.basal_metabolic_rate,
+          extra_cellular_water:               req.body.extra_cellular_water,
+          intra_cellular_water:               req.body.intra_cellular_water,
+          skeletal_muscle_mass:               req.body.skeletal_muscle_mass,
+          body_composition_measurement:       req.body.body_composition_measurement,
+          total_daily_energy_expenditure:     req.body.total_daily_energy_expenditure,
+          appendicular_skeletal_muscle_mass:  req.body.appendicular_skeletal_muscle_mass,
+        }
+        const call = daoBias.pushBia(bia);
+        return res.json({ success: call });
+      } catch (err) {
+        return res.status(403).json({error: "You can't push other users' BIA"});
+      }
+    }
+  }
 );

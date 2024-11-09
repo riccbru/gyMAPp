@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS "users" (
     "salt" TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS "bia" (
+CREATE TABLE IF NOT EXISTS "bias" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "uid" INTEGER NOT NULL,
     "date" TEXT NOT NULL,
@@ -32,18 +32,19 @@ CREATE TABLE IF NOT EXISTS "bia" (
     "skeletal_muscle_mass" REAL NOT NULL,
     "appendicular_skeletal_muscle_mass" REAL NOT NULL,
 
-
     FOREIGN KEY (uid) REFERENCES users(uid) ON DELETE CASCADE
 );
 
-INSERT INTO "users" ("admin", "name", "email", "birthdate", "username", "hash", "salt")
+INSERT INTO "users" (
+    "admin", "name", "email", "birthdate", "username", "hash", "salt"
+)
 VALUES (
     1, "Riccardo Bruno", "riccardo.bruno@gymapp.dev", "11-25-1999", "bankich",
     "e982818124aab7af645a118a321edcc5af4798548a2f4819a192f21f173be85c9123d3911903f602c5d787f6074cdbf0d42114bcc5843ea2cbe9b3163b6508b8",
     "c631ac0affd7db484f8d0103e706d3c8"
 );
 
-INSERT INTO "bia" (
+INSERT INTO "bias" (
     "uid", "date", "height", "weight", "bmi",
     "basal_metabolic_rate",
     "total_daily_energy_expenditure",
@@ -59,7 +60,7 @@ INSERT INTO "bia" (
     "skeletal_muscle_mass",                 -- %smm = smm / weight
     "appendicular_skeletal_muscle_mass"
 ) VALUES (
-    1, "31-08-2024", 177.5, 91.2, 28.9,
+    1, "08-31-2024", 177.5, 91.2, 28.9,
     2072.4,
     3523.1,
     0.9,
