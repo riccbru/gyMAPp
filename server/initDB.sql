@@ -1,7 +1,11 @@
 BEGIN TRANSACTION;
 
+-- ***************** --
+-- * CREATE TABLES * --
+-- ***************** --
+
 CREATE TABLE IF NOT EXISTS "users" (
-    "uid" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "uid" INTEGER PRIMARY KEY AUTOINCREMENT,
     "admin" INTEGER NOT NULL CHECK ("admin" in (0, 1)) DEFAULT 0,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -12,7 +16,7 @@ CREATE TABLE IF NOT EXISTS "users" (
 );
 
 CREATE TABLE IF NOT EXISTS "bias" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "uid" INTEGER NOT NULL,
     "date" TEXT NOT NULL,
     "height" REAL NOT NULL,
@@ -34,6 +38,51 @@ CREATE TABLE IF NOT EXISTS "bias" (
 
     FOREIGN KEY (uid) REFERENCES users(uid) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS "meals" (
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "uid" INTEGER NOT NULL,
+    "weekday" INTEGER NOT NULL CHECK ("weekday" BETWEEN 1 AND 7), 
+    "meal_type" INTEGER NOT NULL CHECK ("meal_type" BETWEEN 1 AND 7),
+
+    FOREIGN KEY (uid) REFERENCES users(uid) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS "ingredients" (
+  "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+  "ingredient_name" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "ingredients_usage" (
+    "meal_id" INTEGER NOT NULL,
+    "ingredient_id" INTEGER NOT NULL,
+    "quantity" REAL NOT NULL,
+
+    PRIMARY KEY (meal_id, ingredient_id),
+    FOREIGN KEY (meal_id) REFERENCES meals(id) ON DELETE CASCADE,
+    FOREIGN KEY (ingredient_id) REFERENCES ingredients(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS "meals_options" (
+  "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+  "meal_id" INTEGER NOT NULL,
+  "option_number" INTEGER NOT NULL,
+
+  FOREIGN KEY (meal_id) REFERENCES meals(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS "meals_options_ingredients" (
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "meal_option_id" INTEGER NOT NULL,
+    "ingredient_id" INTEGER NOT NULL,
+
+    FOREIGN KEY (meal_option_id) REFERENCES meals_options(id) ON DELETE CASCADE,
+    FOREIGN KEY (ingredient_id) REFERENCES ingredients(id) ON DELETE CASCADE
+);
+
+-- *************************** --
+-- * INSERT DATA INTO TABLES * --
+-- *************************** --
 
 INSERT INTO "users" (
     "admin", "name", "email", "birthdate", "username", "hash", "salt"
@@ -82,5 +131,67 @@ INSERT INTO "bias" (
     40.3,
     31.0
 );
+
+-- *************************** --
+-- * DIET PLANNING INSERTION * --
+-- *************************** --
+
+-- ************* --
+-- * BREAKFAST * --
+-- ************* --
+INSERT INTO "meals" ("uid", "weekday", "meal_type")
+VALUES (1, 1, 1), (1, 2, 1), (1, 3, 1), (1, 4, 1), (1, 5, 1), (1, 6, 1)
+;
+INSERT INTO "ingredients" ("ingredient_name")
+VALUES ("Tea"), ("Honey"), ("Rusks"), ("Peanut Butter"), ("Jam (low sugars)")
+;
+INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
+VALUES
+    (1, (SELECT id FROM ingredients WHERE ingredient_name = 'Tea'), 200),
+    (1, (SELECT id FROM ingredients WHERE ingredient_name = 'Honey'), 5),
+    (1, (SELECT id FROM ingredients WHERE ingredient_name = 'Rusks'), 50),
+    (1, (SELECT id FROM ingredients WHERE ingredient_name = 'Peanut Butter'), 10),
+    (1, (SELECT id FROM ingredients WHERE ingredient_name = 'Jam (low sugars)'), 25)
+;
+INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
+VALUES
+    (2, (SELECT id FROM ingredients WHERE ingredient_name = 'Tea'), 200),
+    (2, (SELECT id FROM ingredients WHERE ingredient_name = 'Honey'), 5),
+    (2, (SELECT id FROM ingredients WHERE ingredient_name = 'Rusks'), 40),
+    (2, (SELECT id FROM ingredients WHERE ingredient_name = 'Peanut Butter'), 5),
+    (2, (SELECT id FROM ingredients WHERE ingredient_name = 'Jam (low sugars)'), 20)
+;
+INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
+VALUES
+    (3, (SELECT id FROM ingredients WHERE ingredient_name = 'Tea'), 200),
+    (3, (SELECT id FROM ingredients WHERE ingredient_name = 'Honey'), 5),
+    (3, (SELECT id FROM ingredients WHERE ingredient_name = 'Rusks'), 60),
+    (3, (SELECT id FROM ingredients WHERE ingredient_name = 'Peanut Butter'), 10),
+    (3, (SELECT id FROM ingredients WHERE ingredient_name = 'Jam (low sugars)'), 30)
+;
+INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
+VALUES
+    (4, (SELECT id FROM ingredients WHERE ingredient_name = 'Tea'), 200),
+    (4, (SELECT id FROM ingredients WHERE ingredient_name = 'Honey'), 5),
+    (4, (SELECT id FROM ingredients WHERE ingredient_name = 'Rusks'), 40),
+    (4, (SELECT id FROM ingredients WHERE ingredient_name = 'Peanut Butter'), 5),
+    (4, (SELECT id FROM ingredients WHERE ingredient_name = 'Jam (low sugars)'), 30)
+;
+INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
+VALUES
+    (5, (SELECT id FROM ingredients WHERE ingredient_name = 'Tea'), 200),
+    (5, (SELECT id FROM ingredients WHERE ingredient_name = 'Honey'), 5),
+    (5, (SELECT id FROM ingredients WHERE ingredient_name = 'Rusks'), 60),
+    (5, (SELECT id FROM ingredients WHERE ingredient_name = 'Peanut Butter'), 10),
+    (5, (SELECT id FROM ingredients WHERE ingredient_name = 'Jam (low sugars)'), 30)
+;
+INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
+VALUES
+    (6, (SELECT id FROM ingredients WHERE ingredient_name = 'Tea'), 200),
+    (6, (SELECT id FROM ingredients WHERE ingredient_name = 'Honey'), 5),
+    (6, (SELECT id FROM ingredients WHERE ingredient_name = 'Rusks'), 40),
+    (6, (SELECT id FROM ingredients WHERE ingredient_name = 'Peanut Butter'), 5),
+    (6, (SELECT id FROM ingredients WHERE ingredient_name = 'Jam (low sugars)'), 25)
+;
 
 COMMIT;

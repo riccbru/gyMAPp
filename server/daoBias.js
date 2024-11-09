@@ -50,9 +50,8 @@ exports.fetchBias = (uid) => {
         db.all(sql, [uid], (err, rows) => {
             if (err) {
                 reject(err);
-            } else if (!rows.length || !rows.some(row => row.id)) {
-                const username = rows[0]?.username;
-                reject(`No BIAs for user ${username}`);
+            } else if (!(rows.length || rows.some(row => row.id))) {
+                reject(`No BIAs for user ${rows[0]?.username}`);
             } else {
               const bias = rows.map((b) => returnBia(b));
               resolve(bias);
