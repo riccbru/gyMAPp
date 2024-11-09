@@ -8,11 +8,11 @@ POST http://localhost:3001/api/signup HTTP/1.1
 Content-Type: application/json
 
 {
-    "password": "password",
-    "name":     "Cicla Rimpo",
-    "birthdate": "11-25-1999",
-    "username": "ciclarimpus",
-    "email":    "cicla.rimpo@gymapp.dev",
+    "name":         "Cicla Rimpo",
+    "email":        "cicla.rimpo@gymapp.dev",
+    "username":     "ciclarimpo",
+    "password":     "password",
+    "birthdate":    "11-25-1999"
 }
 
 ###
@@ -25,7 +25,7 @@ POST http://localhost:3001/api/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "username": "bankich",
+    "username": "ciclarimpo",
     "password": "password"
 }
 

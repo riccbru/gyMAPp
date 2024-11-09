@@ -39,11 +39,7 @@ const sessionOptions = {
 };
 
 app.use(morgan("dev"));
-
 app.use(express.json());
-// app.use(bodyParser.json({ limit: "50mb" }));
-// app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
-
 app.use(cors(corsOptions));
 app.use(session(sessionOptions));
 app.use(passport.authenticate("session"));
@@ -127,8 +123,7 @@ app.post("/api/login", function (req, res, next) {
   })(req, res, next);
 });
 
-app.post(
-  "/api/signup",
+app.post("/api/signup",
   [
     body("name")
       .notEmpty()
@@ -175,25 +170,22 @@ app.post(
   ],
   async (req, res) => {
     if (req.isAuthenticated()) {
-      return res.status(403);
+      return res.status(403).json({ error: `You are already logged in, ${req.user.username}` });
     } else {
       const errors = validationResult(req).formatWith(errorFormatter);
       if (!errors.isEmpty()) {
         return res.status(400).json({ error: errors.array()[0] });
       }
-      const user = {
-        name: req.body.name,
-        email: req.body.email,
-        username: req.body.username,
-        password: req.body.password,
-        birthdate: req.body.birthdate,
-      };
+      const user = { ...req.body };
       try {
-        const result = await daoUsers.signup(user);
-        if (!result) return res.status(500).json();
-        return res.status(200).json({ success: result });
+        const call = await daoUsers.signup(user);
+        return res.status(201).json({ success: call });
       } catch (err) {
-        return res.status(409).json({ error: err });
+        if (err.message.endsWith('not available')) {
+          return res.status(409).json({ error: err.message });
+        } else {
+          return res.status(500).json({ error: err.message });
+        }
       }
     }
   }
@@ -245,11 +237,10 @@ app.post("/api/bia/", isLogged,
       return res.status(400).json({ error: errors.array()[0] });
     }
     const uid = req.user.uid;
-    console.log(req.body);
     try {
       const bia = {uid: req.user.uid, ...req.body}
       const call = await daoBias.pushBia(bia);
-      return res.status(200).json({ success: call });
+      return res.status(201).json({ success: call });
     } catch (err) {
       return res.status(500).json({ error: err });
     }
