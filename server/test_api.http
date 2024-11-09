@@ -41,9 +41,9 @@ Content-Type: application/json
 {
     "bmi": 28.9,
     "na_k": 0.9,
-    "weight": 91.2,
-    "height": 177.5,
-    "fat_mass": 16.2,
+    "weight": 84.2,
+    "height": 178,
+    "fat_mass": 13.2,
     "phase_angle": 7.6,
     "muscle_mass": 60.4,
     "date": "08-31-2024",

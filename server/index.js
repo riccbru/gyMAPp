@@ -223,7 +223,7 @@ app.get("/api/bias/:uid", isLogged,
   }
 );
 
-app.post("/api/bias/", isLogged,
+app.post("/api/bias/",
   [
     body('date')
             .notEmpty().withMessage("Your date can't be an empty string")
@@ -240,6 +240,8 @@ app.post("/api/bias/", isLogged,
     if (!errors.isEmpty()) {
         return res.status(400).json({ error: errors.array()[0] });
     }
+    console.log(`req.user.uid:\t${req.user.uid}`);
+    console.log(`req.params.uid:\t${req.params.uid}`);
     if (req.isAuthenticated()) {
       const uid = req.user.uid;
       try {
