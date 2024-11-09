@@ -47,7 +47,9 @@ exports.login = (credentials) => {
             uid: row.uid,
             admin: row.admin,
             username: row.username,
+            name: row.name,
             birthdate: row.birthdate,
+            email: row.email
           };
           if (err) reject(err);
           if (!crypto.timingSafeEqual(Buffer.from(row.hash, "hex"), hash)) {
