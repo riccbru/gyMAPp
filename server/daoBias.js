@@ -41,11 +41,11 @@ const returnBia = (b) => {
 exports.fetchBias = (uid) => {
     return new Promise((resolve, reject) => {
         db.all("SELECT * FROM users WHERE uid = ?", [uid], (err, rows) => {
-            if (err) { reject(err); console.log(`daoBias.fetchBias:\n${err}`) }
+            if (err) { reject(err); }
             else {
                 const sql = "SELECT * FROM bias WHERE uid = ? ORDER BY id DESC";
                 db.all(sql, [uid], (err, rows) => {
-                    if (err) { reject(err); console.log(`daoBias.fetchBias:\n${err}`) }
+                    if (err) { reject(err); }
                     else if (!rows.length) { reject("BIA not found"); }
                     else {
                         const bias = rows.map((b) => returnBia(b));
