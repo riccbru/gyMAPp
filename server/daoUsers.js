@@ -16,9 +16,8 @@ exports.signup = async (userInfo) => {
       });
     });
 
-    if (user) {
-      throw new Error(`Username '${username}' not available`);
-    }
+    /* USER EXISTS, THROW ERROR */
+    if (user) { throw new Error(`Username '${username}' not available`); }
 
     else {
 
