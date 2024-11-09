@@ -263,8 +263,8 @@ app.post("/api/bias/", isLogged,
           total_daily_energy_expenditure:     req.body.total_daily_energy_expenditure,
           appendicular_skeletal_muscle_mass:  req.body.appendicular_skeletal_muscle_mass,
         }
-        const call = daoBias.pushBia(bia);
-        return res.json({ success: call });
+        const call = await daoBias.pushBia(bia);
+        return res.status(200).json({ success: call });
       } catch (err) {
         return res.status(403).json({error: "You can't push other users' BIA"});
       }
