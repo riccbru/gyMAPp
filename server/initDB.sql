@@ -37,11 +37,18 @@ CREATE TABLE IF NOT EXISTS "bias" (
 
 INSERT INTO "users" (
     "admin", "name", "email", "birthdate", "username", "hash", "salt"
-)
-VALUES (
+) VALUES (
     1, "Riccardo Bruno", "riccardo.bruno@gymapp.dev", "11-25-1999", "bankich",
     "e982818124aab7af645a118a321edcc5af4798548a2f4819a192f21f173be85c9123d3911903f602c5d787f6074cdbf0d42114bcc5843ea2cbe9b3163b6508b8",
     "c631ac0affd7db484f8d0103e706d3c8"
+);
+
+INSERT INTO "users" (
+    "admin", "name", "email", "birthdate", "username", "hash", "salt"
+) VALUES (
+    0, "Ciclarimpo", "ciclarimpo@gymapp.dev", "01-01-0001", "ciclarimpo",
+    "e94959bd74a547cb72cca16f55c319547a95fb481d5cc2e436759e08a61453d0180d96961791a1eb7a45c24a56d9cd791a3074e6db6da998ebcdd16b19fd33c1",
+    "38d0246251f259a305c5af38b17d026b"
 );
 
 INSERT INTO "bias" (
