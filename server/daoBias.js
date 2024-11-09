@@ -36,53 +36,54 @@ const returnBia = (b) => ({
 
 exports.fetchBias = (uid) => {
     return new Promise((resolve, reject) => {
-      const sql = "SELECT * FROM bias WHERE uid = ? ORDER BY id DESC";
-      db.all(sql, [uid], (err, rows) => {
-        if (err) {
-          reject(err);
-        } else if (!rows.length) {
-          reject("BIA not found");
-        } else {
-          const bias = rows.map((b) => returnBia(b));
-          resolve(bias);
-        }
-      });
+        const sql = `
+        SELECT bias.*, users.username
+        FROM users
+        LEFT JOIN bias ON users.uid = bias.uid
+        WHERE users.uid = ?
+        ORDER BY bias.id DESC;
+        `;
+        db.get("SELECT * FROM users WHERE uid = ?", [uid], (err, row) => {
+            if (err) { reject(err); }
+            else if (!row) { reject(`User with UID #${uid} does not exist`); }
+        });
+        db.all(sql, [uid], (err, rows) => {
+            if (err) {
+                reject(err);
+            } else if (!rows.length || !rows.some(row => row.id)) {
+                const username = rows[0]?.username;
+                reject(`No BIAs for user ${username}`);
+            } else {
+              const bias = rows.map((b) => returnBia(b));
+              resolve(bias);
+            }
+        });
     });
 }
 
 exports.pushBia = (bia) => {
     return new Promise((resolve, reject) => {
-        let query = "INSERT INTO bias (uid, date, height, weight, bmi, " +
-                    "basal_metabolic_rate, total_daily_energy_expenditure, na_k, " +
-                    "phase_angle, total_body_water, extra_cellular_water, intra_cellular_water, " + 
-                    "fat_free_mass, fat_mass, body_composition_measurement, muscle_mass, " + 
-                    "skeletal_muscle_mass, appendicular_skeletal_muscle_mass) " + 
-                    "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
-        const sql = query;
-        db.run(sql,
-            [
-                bia.uid,
-                bia.date,
-                bia.height,
-                bia.weight,
-                bia.bmi,
-                bia.basal_metabolic_rate,
-                bia.total_daily_energy_expenditure,
-                bia.na_k,
-                bia.phase_angle,
-                bia.total_body_water,
-                bia.extra_cellular_water,
-                bia.intra_cellular_water,
-                bia.fat_free_mass,
-                bia.fat_mass,
-                bia.body_composition_measurement,
-                bia.muscle_mass,
-                bia.skeletal_muscle_mass,
-                bia.appendicular_skeletal_muscle_mass,
-            ],
+        const sql = `
+        INSERT INTO bias (
+            uid, date, height, weight, bmi, 
+            basal_metabolic_rate, total_daily_energy_expenditure, na_k, 
+            phase_angle, total_body_water, extra_cellular_water, intra_cellular_water, 
+            fat_free_mass, fat_mass, body_composition_measurement, muscle_mass, 
+            skeletal_muscle_mass, appendicular_skeletal_muscle_mass
+            ) 
+        VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );
+        `;
+        const biaArray = [
+            bia.uid, bia.date, bia.height, bia.weight, bia.bmi,
+            bia.basal_metabolic_rate, bia.total_daily_energy_expenditure, bia.na_k, bia.phase_angle,
+            bia.total_body_water, bia.extra_cellular_water, bia.intra_cellular_water,
+            bia.fat_free_mass, bia.fat_mass, bia.body_composition_measurement, bia.muscle_mass,
+            bia.skeletal_muscle_mass, bia.appendicular_skeletal_muscle_mass,
+        ]
+        db.run(sql, biaArray,
             function (err) {
-                if (err) { reject(err); }
-                else { resolve(`BIA #${this.lastID} uploaded`); }
+                if (err) { reject(err); console.log(err); }
+                else { resolve(`Uploaded new BIA with ID #${this.lastID}`); }
             });
     });
 }

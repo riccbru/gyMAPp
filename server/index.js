@@ -201,14 +201,16 @@ app.get("/api/logout", isLogged, (req, res) => {
 /***   BIA API   ***/
 /*******************/
 
-app.get("/api/bia/", isLogged,
+app.get("/api/bia/:uid?", isLogged,
   async (req, res) => {
     const errors = validationResult(req).formatWith(errorFormatter);
     if (!errors.isEmpty()) {
       return res.status(400).json({ error: errors.array()[0] });
     }
       try {
-        const bias = await daoBias.fetchBias(req.user.uid);
+        const reqUID = req.params.uid || req.user.uid;
+        const uid = req.user.admin && req.params.uid ? reqUID : req.user.uid;
+        const bias = await daoBias.fetchBias(uid);
         res.status(200).json(bias);
       } catch (err) {
         res.status(404).json({ error: err });
@@ -217,20 +219,6 @@ app.get("/api/bia/", isLogged,
 );
 
 app.post("/api/bia/", isLogged,
-  [
-    body("date")
-      .notEmpty()
-      .withMessage("Your date can't be an empty string")
-      .isString()
-      .withMessage("Date must be a string")
-      .isLength({ min: minDateChars })
-      .withMessage("Invalid date")
-      .matches(/^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-\d{4}$/)
-      .withMessage("date must be in MM-DD-YYYY format")
-      .bail()
-      .isDate({ format: "MM-DD-YYYY", strictMode: true })
-      .withMessage("Invalid date"),
-  ],
   async (req, res) => {
     const errors = validationResult(req).formatWith(errorFormatter);
     if (!errors.isEmpty()) {
@@ -238,7 +226,7 @@ app.post("/api/bia/", isLogged,
     }
     const uid = req.user.uid;
     try {
-      const bia = {uid: req.user.uid, ...req.body}
+      const bia = {uid: req.user.uid, ...req.body};
       const call = await daoBias.pushBia(bia);
       return res.status(201).json({ success: call });
     } catch (err) {
