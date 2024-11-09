@@ -240,8 +240,6 @@ app.post("/api/bias/",
     if (!errors.isEmpty()) {
         return res.status(400).json({ error: errors.array()[0] });
     }
-    console.log(`req.user.uid:\t${req.user.uid}`);
-    console.log(`req.params.uid:\t${req.params.uid}`);
     if (req.isAuthenticated()) {
       const uid = req.user.uid;
       try {
