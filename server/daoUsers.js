@@ -3,35 +3,74 @@
 const db = require("./db");
 const crypto = require("crypto");
 
-exports.signup = (userInfo) => {
+exports.signup = async (userInfo) => {
   const { name, email, birthdate, username, password } = userInfo;
-  return new Promise((resolve, reject) => {
-    db.get("SELECT * FROM users WHERE username = ?", [username], (err, row) => {
-      if (err) reject(err);
-      if (row) {
-        reject(`Username '${username}' not available`);
-      } else {
-        crypto.randomBytes(16, (err, buf) => {
-          if (err) reject(err);
-          const salt = buf.toString("hex");
-          crypto.scrypt(password, salt, 64, (err, hash) => {
-            if (err) reject(err);
-            const sql =
-              "INSERT INTO users ('admin', 'name', 'email', 'birthdate', 'username', 'hash', 'salt') VALUES (0, ?, ?, ?, ?, ?, ?)";
-            db.run(
-              sql,
-              [name, email, birthdate, username, hash, salt],
-              function (err) {
-                if (err) reject(err);
-                resolve(`User '${username}' created successfully`);
-              }
-            );
-          });
-        });
-      }
+
+  try {
+    const user = await new Promise((resolve, reject) => {
+      const sql = "SELECT * FROM users WHERE username = ?";
+      db.get(sql, [username], (err, row) => {
+        if (err) { reject(err); }
+        else { resolve(row); }
+      });
     });
-  });
+
+    if (user) { throw new Error(`Username '${username}' not available`); }
+    else {
+      const salt = await new Promise((resolve, reject) => {
+        crypto.randomBytes(16, (err, buf) => {
+          if (err) { reject(err); }
+          else { resolve(buf.toString("hex")); }
+        });
+      });
+
+      const hash = await new Promise((resolve, reject) => {
+        crypto.scrypt(password, salt, 64, (err, derivedKey) => {
+          if (err) { reject(err); }
+          else { resolve(derivedKey.toString("hex")); }
+        });
+      });
+
+      await new Promise((resolve, reject) => {
+        const sql = "INSERT INTO users ('admin', 'name', 'email', 'birthdate', 'username', 'hash', 'salt') VALUES (0, ?, ?, ?, ?, ?, ?)";
+        db.run(sql, [name, email, birthdate, username, hash, salt], function (err) {
+          if (err) { reject(err); }
+          else { resolve(`User '${username}' created successfully`); }
+        });
+      });
+      return `User '${username}' created successfully`;
+    }
+  } catch(err) {
+      throw new Error(err.message || "Signup failed");
+  }
 };
+
+  // return new Promise((resolve, reject) => {
+  //   db.get("SELECT * FROM users WHERE username = ?", [username], async (err, row) => {
+  //     if (err) reject(err);
+  //     if (row) {
+  //       reject(`Username '${username}' not available`);
+  //     } else {
+  //       crypto.randomBytes(16, (err, buf) => {
+  //         if (err) reject(err);
+  //         const salt = buf.toString("hex");
+  //         crypto.scrypt(password, salt, 64, (err, hash) => {
+  //           if (err) reject(err);
+  //           const sql =
+  //             "INSERT INTO users ('admin', 'name', 'email', 'birthdate', 'username', 'hash', 'salt') VALUES (0, ?, ?, ?, ?, ?, ?)";
+  //           db.run(
+  //             sql,
+  //             [name, email, birthdate, username, hash, salt],
+  //             function (err) {
+  //               if (err) reject(err);
+  //               resolve(`User '${username}' created successfully`);
+  //             }
+  //           );
+  //         });
+  //       });
+  //     }
+  //   });
+  // });
 
 exports.login = (credentials) => {
   const { username, password } = credentials;
