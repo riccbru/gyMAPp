@@ -9,7 +9,7 @@ const returnPercentage = (num, den) => {
 const returnBia = (b) => {
     const bia = {};
 
-    bia.uid = b.uid,
+    bia.id = b.id,
     bia.date = b.date,
     bia.height = b.height,
     bia.weight = b.weight,
@@ -43,7 +43,7 @@ exports.fetchBias = (uid) => {
         db.all("SELECT * FROM users WHERE uid = ?", [uid], (err, rows) => {
             if (err) { reject(err); console.log(`daoBias.fetchBias:\n${err}`) }
             else {
-                const sql = "SELECT * FROM bias WHERE uid = ? ORDER BY date DESC";
+                const sql = "SELECT * FROM bias WHERE uid = ? ORDER BY id DESC";
                 db.all(sql, [uid], (err, rows) => {
                     if (err) { reject(err); console.log(`daoBias.fetchBias:\n${err}`) }
                     else if (!rows.length) { reject("BIA not found"); }
@@ -88,8 +88,8 @@ exports.pushBia = (bia) => {
                 bia.appendicular_skeletal_muscle_mass,
             ],
             function (err) {
-                if (err) { reject(err); console.log(`daoBias.pushBia:\n${err}`) }
-                else { resolve(); }
+                if (err) { reject(err); }
+                else { resolve(`BIA #${this.lastID} uploaded`); }
             });
     });
 }
