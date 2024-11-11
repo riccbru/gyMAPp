@@ -6,10 +6,11 @@ const express = require("express");
 const passport = require("passport");
 const session = require("express-session");
 const LocalStrategy = require("passport-local");
-const { body, check, param, validationResult } = require("express-validator");
+const { body, check, param, query, validationResult } = require("express-validator");
 
 const daoBias = require("./daoBias");
 const daoUsers = require("./daoUsers");
+const daoMeals = require("./daoMeals");
 
 const app = new express();
 
@@ -203,10 +204,6 @@ app.get("/api/logout", isLogged, (req, res) => {
 
 app.get("/api/bia/:uid?", isLogged,
   async (req, res) => {
-    const errors = validationResult(req).formatWith(errorFormatter);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ error: errors.array()[0] });
-    }
       try {
         const reqUID = req.params.uid || req.user.uid;
         const uid = req.user.admin && req.params.uid ? reqUID : req.user.uid;
@@ -231,6 +228,37 @@ app.post("/api/bia/", isLogged,
       return res.status(201).json({ success: call });
     } catch (err) {
       return res.status(500).json({ error: err });
+    }
+  }
+);
+
+/*********************/
+/***   MEAlS API   ***/
+/*********************/
+
+app.get("/api/meals", isLogged,
+  [
+    query('weekday')
+      .isInt({ min: 1 }).withMessage("'weekday' must be integer"),
+    query('type')
+      .isInt({ min: 1 }).withMessage("'type' must be integer")
+  ],
+  async (req, res) => {
+    const errors = validationResult(req).formatWith(errorFormatter);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array()[0] });
+    }
+    try {
+      const uid = req.user.uid;
+      const weekday = req.query.weekday;
+      const type = req.query.type;
+      const meal = await daoMeals.fetchMeal(uid, weekday, type);
+      // console.log(`UID:\t${uid}\nDAY:\t${weekday}\nTYPE:\t${type}`);
+      // console.log(`MEAL:\n${meal}`);
+      return res.status(200).json(meal);
+    } catch (err) {
+      // console.log(`ERROR (index.api/meals):\n${err}`);
+      return res.status(404).json({ error: err });
     }
   }
 );
