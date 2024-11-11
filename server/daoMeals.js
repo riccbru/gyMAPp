@@ -43,3 +43,17 @@ exports.fetchMeal = (uid, weekday, meal_type) => {
         });
     });
 };
+
+exports.fetchMealWithOption = (uid, weekday, meal_type) => {
+    return new Promise((resolve, reject) => {
+        const sql = ``;
+        db.all(sql, [uid, weekday, meal_type], (err, rows) => {
+            if (err) { reject(err); }
+            else if (!rows.length) { reject(`Meal not found`); }
+            else {
+                const meal = rows.map((m) => returnMealWithOption(m));
+                resolve(meal);
+            }
+        });
+    });
+};
