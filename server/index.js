@@ -233,15 +233,15 @@ app.post("/api/bia/", isLogged,
 );
 
 /*********************/
-/***   MEAlS API   ***/
+/***   MEALS API   ***/
 /*********************/
 
 app.get("/api/meals", isLogged,
   [
     query('weekday')
       .isInt({ min: 1, max: 6 }).withMessage("'weekday' must an integer in [1, 6]"),
-    query('type')
-      .isInt({ min: 1, max: 6 }).withMessage("'type' must an integer in [1, 6]")
+    query('meal')
+      .isInt({ min: 1, max: 6 }).withMessage("'meal' must an integer in [1, 6]")
   ],
   async (req, res) => {
     const errors = validationResult(req).formatWith(errorFormatter);
@@ -251,9 +251,9 @@ app.get("/api/meals", isLogged,
     try {
       const uid = req.user.uid;
       const weekday = req.query.weekday;
-      const type = req.query.type;
-      const meal = await daoMeals.fetchMeal(uid, weekday, type);
-      return res.status(200).json(meal);
+      const meal = req.query.meal;
+      const meals = await daoMeals.fetchMealWithOptions(uid, weekday, meal);
+      return res.status(200).json(meals);
     } catch (err) {
       return res.status(404).json({ error: err });
     }

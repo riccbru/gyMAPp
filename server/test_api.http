@@ -61,6 +61,6 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3001/api/meals?weekday=2&type=5 HTTP/1.1
+GET http://localhost:3001/api/meals?weekday=2&meal=3 HTTP/1.1
 
 ###

@@ -55,30 +55,17 @@ CREATE TABLE IF NOT EXISTS "ingredients" (
 
 CREATE TABLE IF NOT EXISTS "ingredients_usage" (
     "meal_id" INTEGER NOT NULL,
+    "option_id" INTEGER NOT NULL DEFAULT 1,
     "ingredient_id" INTEGER NOT NULL,
     "quantity" REAL NOT NULL,
 
-    PRIMARY KEY (meal_id, ingredient_id),
+    PRIMARY KEY (meal_id, option_id, ingredient_id),
     FOREIGN KEY (meal_id) REFERENCES meals(id) ON DELETE CASCADE,
     FOREIGN KEY (ingredient_id) REFERENCES ingredients(id) ON DELETE CASCADE
 );
+-- ****************************************************************** --
 
-CREATE TABLE IF NOT EXISTS "meals_options" (
-  "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-  "meal_id" INTEGER NOT NULL,
-  "option_id" INTEGER NOT NULL,
 
-  FOREIGN KEY (meal_id) REFERENCES meals(id) ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS "meals_options_ingredients" (
-    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-    "meal_option_id" INTEGER NOT NULL,
-    "ingredient_id" INTEGER NOT NULL,
-
-    FOREIGN KEY (meal_option_id) REFERENCES meals_options(id) ON DELETE CASCADE,
-    FOREIGN KEY (ingredient_id) REFERENCES ingredients(id) ON DELETE CASCADE
-);
 
 -- ******************* --
 -- * USER & BIA DATA * --
@@ -132,17 +119,56 @@ INSERT INTO "bias" (
     31.0
 );
 
--- ************* --
--- * MEAL PLAN * --
--- ************* --
 
--- ************* --                                                                     
--- * BREAKFAST * --
+
+
 -- ************* --
+-- *** MEALS *** --
+-- ************* --
+-- Breakfast --
 INSERT INTO "meals" ("uid", "weekday", "meal_type")
 VALUES (1, 1, 1), (1, 2, 1), (1, 3, 1), (1, 4, 1), (1, 5, 1), (1, 6, 1);
+-- Morning Snack --
+INSERT INTO "meals" ("uid", "weekday", "meal_type")
+VALUES (1, 1, 2), (1, 2, 2), (1, 3, 2), (1, 4, 2), (1, 5, 2), (1, 6, 2);
+-- Lunch --
+INSERT INTO "meals" ("uid", "weekday", "meal_type")
+VALUES (1, 1, 3), (1, 2, 3);
+-- Afternoon Snack --
+INSERT INTO "meals" ("uid", "weekday", "meal_type")
+VALUES (1, 1, 4), (1, 2, 4), (1, 3, 4), (1, 4, 4), (1, 5, 4), (1, 6, 4);
+-- Dinner --
+INSERT INTO "meals" ("uid", "weekday", "meal_type")
+VALUES (1, 1, 5);
+-- Midnight Snack --
+INSERT INTO "meals" ("uid", "weekday", "meal_type")
+VALUES (1, 1, 6), (1, 2, 6), (1, 3, 6), (1, 4, 6), (1, 5, 6), (1, 6, 6);
+
+
+
+-- ******************* --
+-- *** INGREDIENTS *** --
+-- ******************* --
 INSERT INTO "ingredients" ("ingredient_name")
-VALUES ("Tea"), ("Honey"), ("Rusks"), ("Peanut Butter"), ("Jam (low sugars)");
+VALUES
+    -- Breakfast --
+    ("Tea"), ("Honey"), ("Rusks"), ("Peanut Butter"), ("Jam (low sugars)"),
+    -- Morning snack --
+    ("Banana"), ("Almonds"), ("Apples"), ("Hazelnuts"), ("Walnuts"),
+    -- Lunch --
+    ("Pasta"), ("Parmigiano"), ("Ricotta"), ("Spinach"), ("EVO"), ("Parboiled rice"), ("Beans"), ("Carrots"),
+    -- Afternoon snack --
+    ("Whole wheat bread"), ("Bresaola (low fat)"), ("Fruit yogurt (low fat)"), ("Walnuts"),
+    -- Dinner --
+    ("Potatoes"), ("Mozzarella (cow)"), ("Broccoli"),
+    -- Night snack --
+    ("Greek yogurt (no fats)");
+
+
+
+-- *************************************** --                                                                    
+-- *****          BREAKFAST          ***** --
+-- *************************************** --
 -- Monday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
@@ -191,54 +217,136 @@ VALUES
     ((SELECT id FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 1), (SELECT id FROM ingredients WHERE ingredient_name = 'Rusks'), 40),
     ((SELECT id FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 1), (SELECT id FROM ingredients WHERE ingredient_name = 'Peanut Butter'), 5),
     ((SELECT id FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 1), (SELECT id FROM ingredients WHERE ingredient_name = 'Jam (low sugars)'), 25);
+-- ****************************************************************** --
 
--- ***************** --
--- * MORNING SNACK * --
--- ***************** --
-INSERT INTO "meals" ("uid", "weekday", "meal_type")
-VALUES (1, 1, 2), (1, 2, 2), (1, 3, 2), (1, 4, 2), (1, 5, 2), (1, 6, 2);
-INSERT INTO "ingredients" ("ingredient_name")
-VALUES ("Banana"), ("Almonds"), ("Apples");
+
+
+-- *************************************** --
+-- *****        MORNING SNACK        ***** --
+-- *************************************** --
 -- Monday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
     ((SELECT id FROM meals WHERE uid = 1 AND weekday = 1 AND meal_type = 2), (SELECT id FROM ingredients WHERE ingredient_name = 'Banana'), 100),
     ((SELECT id FROM meals WHERE uid = 1 AND weekday = 1 AND meal_type = 2), (SELECT id FROM ingredients WHERE ingredient_name = 'Almonds'), 10);
+INSERT INTO "ingredients_usage" ("meal_id", "option_id", "ingredient_id", "quantity")
+VALUES
+    (
+        (SELECT id FROM meals WHERE uid = 1 AND weekday = 1 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT id FROM meals WHERE uid = 1 AND weekday = 1 AND meal_type = 2)),
+        (SELECT id FROM ingredients WHERE ingredient_name = 'Apples'),
+        140
+    ),
+    (
+        (SELECT id FROM meals WHERE uid = 1 AND weekday = 1 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT id FROM meals WHERE uid = 1 AND weekday = 1 AND meal_type = 2)), 
+        (SELECT id FROM ingredients WHERE ingredient_name = 'Almonds'),
+        10
+    );
 -- Tuesday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
     ((SELECT id FROM meals WHERE uid = 1 AND weekday = 2 AND meal_type = 2), (SELECT id FROM ingredients WHERE ingredient_name = 'Banana'), 100),
     ((SELECT id FROM meals WHERE uid = 1 AND weekday = 2 AND meal_type = 2), (SELECT id FROM ingredients WHERE ingredient_name = 'Almonds'), 10);
+INSERT INTO "ingredients_usage" ("meal_id", "option_id", "ingredient_id", "quantity")
+VALUES
+    (
+        (SELECT id FROM meals WHERE uid = 1 AND weekday = 2 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT id FROM meals WHERE uid = 1 AND weekday = 2 AND meal_type = 2)),
+        (SELECT id FROM ingredients WHERE ingredient_name = 'Apples'),
+        120
+    ),
+    (
+        (SELECT id FROM meals WHERE uid = 1 AND weekday = 2 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT id FROM meals WHERE uid = 1 AND weekday = 2 AND meal_type = 2)), 
+        (SELECT id FROM ingredients WHERE ingredient_name = 'Almonds'),
+        10
+    );
 -- Wednesday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
     ((SELECT id FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 2), (SELECT id FROM ingredients WHERE ingredient_name = 'Banana'), 150),
     ((SELECT id FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 2), (SELECT id FROM ingredients WHERE ingredient_name = 'Almonds'), 10);
+INSERT INTO "ingredients_usage" ("meal_id", "option_id", "ingredient_id", "quantity")
+VALUES
+    (
+        (SELECT id FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT id FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 2)),
+        (SELECT id FROM ingredients WHERE ingredient_name = 'Apples'),
+        150
+    ),
+    (
+        (SELECT id FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT id FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 2)), 
+        (SELECT id FROM ingredients WHERE ingredient_name = 'Almonds'),
+        10
+    );
 -- Thursday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
     ((SELECT id FROM meals WHERE uid = 1 AND weekday = 4 AND meal_type = 2), (SELECT id FROM ingredients WHERE ingredient_name = 'Banana'), 100),
-    ((SELECT id FROM meals WHERE uid = 1 AND weekday = 4 AND meal_type = 2), (SELECT id FROM ingredients WHERE ingredient_name = 'Almonds'), 10);
+    ((SELECT id FROM meals WHERE uid = 1 AND weekday = 4 AND meal_type = 2), (SELECT id FROM ingredients WHERE ingredient_name = 'Hazelnuts'), 10);
+INSERT INTO "ingredients_usage" ("meal_id", "option_id", "ingredient_id", "quantity")
+VALUES
+    (
+        (SELECT id FROM meals WHERE uid = 1 AND weekday = 4 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT id FROM meals WHERE uid = 1 AND weekday = 4 AND meal_type = 2)),
+        (SELECT id FROM ingredients WHERE ingredient_name = 'Apples'),
+        140
+    ),
+    (
+        (SELECT id FROM meals WHERE uid = 1 AND weekday = 4 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT id FROM meals WHERE uid = 1 AND weekday = 4 AND meal_type = 2)), 
+        (SELECT id FROM ingredients WHERE ingredient_name = 'Hazelnuts'),
+        10
+    );
 -- Friday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
     ((SELECT id FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 2), (SELECT id FROM ingredients WHERE ingredient_name = 'Banana'), 150),
-    ((SELECT id FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 2), (SELECT id FROM ingredients WHERE ingredient_name = 'Almonds'), 10);
+    ((SELECT id FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 2), (SELECT id FROM ingredients WHERE ingredient_name = 'Walnuts'), 10);
+INSERT INTO "ingredients_usage" ("meal_id", "option_id", "ingredient_id", "quantity")
+VALUES
+    (
+        (SELECT id FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT id FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 2)),
+        (SELECT id FROM ingredients WHERE ingredient_name = 'Apples'),
+        160
+    ),
+    (
+        (SELECT id FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT id FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 2)), 
+        (SELECT id FROM ingredients WHERE ingredient_name = 'Hazelnuts'),
+        10
+    );
 -- Saturday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
     ((SELECT id FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 2), (SELECT id FROM ingredients WHERE ingredient_name = 'Banana'), 100),
-    ((SELECT id FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 2), (SELECT id FROM ingredients WHERE ingredient_name = 'Almonds'), 10);
+    ((SELECT id FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 2), (SELECT id FROM ingredients WHERE ingredient_name = 'Walnuts'), 10);
+INSERT INTO "ingredients_usage" ("meal_id", "option_id", "ingredient_id", "quantity")
+VALUES
+    (
+        (SELECT id FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT id FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 2)),
+        (SELECT id FROM ingredients WHERE ingredient_name = 'Apples'),
+        130
+    ),
+    (
+        (SELECT id FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT id FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 2)), 
+        (SELECT id FROM ingredients WHERE ingredient_name = 'Walnuts'),
+        10
+    );
+-- ****************************************************************** --
 
 
 
--- ************* --
--- *   LUNCH   * --
--- ************* --
+-- *************************************** --
+-- *****            LUNCH            ***** --
+-- *************************************** --
 INSERT INTO "meals" ("uid", "weekday", "meal_type")
 VALUES (1, 1, 3), (1, 2, 3);
-INSERT INTO "ingredients" ("ingredient_name")
-VALUES ("Pasta"), ("Parmigiano"), ("Ricotta"), ("Spinach"), ("EVO"), ("Parboiled rice"), ("Beans"), ("Carrots");
 -- Monday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
@@ -254,16 +362,13 @@ VALUES
     ((SELECT id FROM meals WHERE uid = 1 AND weekday = 2 AND meal_type = 3), (SELECT id FROM ingredients WHERE ingredient_name = 'Beans'), 100),
     ((SELECT id FROM meals WHERE uid = 1 AND weekday = 2 AND meal_type = 3), (SELECT id FROM ingredients WHERE ingredient_name = 'Carrots'), 160),
     ((SELECT id FROM meals WHERE uid = 1 AND weekday = 2 AND meal_type = 3), (SELECT id FROM ingredients WHERE ingredient_name = 'EVO'), 20);
+-- Wednesday --
 
 
 
--- ******************* --
--- * AFTERNOON SNACK * --
--- ******************* --
-INSERT INTO "meals" ("uid", "weekday", "meal_type")
-VALUES (1, 1, 4), (1, 2, 4), (1, 3, 4), (1, 4, 4), (1, 5, 4), (1, 6, 4);
-INSERT INTO "ingredients" ("ingredient_name")
-VALUES ("Whole wheat bread"), ("Bresaola (low fat)"), ("Fruit yogurt (low fat)"), ("Walnuts");
+-- *************************************** --
+-- *****       AFTERNOON SNACK       ***** --
+-- *************************************** --
 -- Monday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
@@ -294,18 +399,13 @@ INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
     ((SELECT id FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 4), (SELECT id FROM ingredients WHERE ingredient_name = 'Fruit yogurt (low fat)'), 220),
     ((SELECT id FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 4), (SELECT id FROM ingredients WHERE ingredient_name = 'Almonds'), 10);
+-- ****************************************************************** --
 
 
 
-
-
--- ************** --
--- *   DINNER   * --
--- ************** --
-INSERT INTO "meals" ("uid", "weekday", "meal_type")
-VALUES (1, 1, 5);
-INSERT INTO "ingredients" ("ingredient_name")
-VALUES ("Potatoes"), ("Mozzarella (cow)"), ("Broccoli");
+-- *************************************** --
+-- *****           DINNER            ***** --
+-- *************************************** --
 -- Monday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
@@ -316,37 +416,35 @@ VALUES
 -- Tuesday --
 -- INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 
--- *************** --
--- * NIGHT SNACK * --
--- *************** --
-INSERT INTO "meals" ("uid", "weekday", "meal_type")
-VALUES (1, 1, 6), (1, 2, 6), (1, 3, 6), (1, 4, 6), (1, 5, 6), (1, 6, 6);
-INSERT INTO "ingredients" ("ingredient_name") VALUES ("Greek yogurt");
+
+
+-- *************************************** --
+-- *****         NIGHT SNACK         ***** --
+-- *************************************** --
 -- Monday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
-    ((SELECT id FROM meals WHERE uid = 1 AND weekday = 1 AND meal_type = 6), (SELECT id FROM ingredients WHERE ingredient_name = 'Greek yogurt'), 160);
+    ((SELECT id FROM meals WHERE uid = 1 AND weekday = 1 AND meal_type = 6), (SELECT id FROM ingredients WHERE ingredient_name = 'Greek yogurt (no fats)'), 160);
 -- Tuesday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
-    ((SELECT id FROM meals WHERE uid = 1 AND weekday = 2 AND meal_type = 6), (SELECT id FROM ingredients WHERE ingredient_name = 'Greek yogurt'), 150);
+    ((SELECT id FROM meals WHERE uid = 1 AND weekday = 2 AND meal_type = 6), (SELECT id FROM ingredients WHERE ingredient_name = 'Greek yogurt (no fats)'), 150);
 -- Wednesday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
-    ((SELECT id FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 6), (SELECT id FROM ingredients WHERE ingredient_name = 'Greek yogurt'), 160);
+    ((SELECT id FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 6), (SELECT id FROM ingredients WHERE ingredient_name = 'Greek yogurt (no fats)'), 160);
 -- Thursday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
-    ((SELECT id FROM meals WHERE uid = 1 AND weekday = 4 AND meal_type = 6), (SELECT id FROM ingredients WHERE ingredient_name = 'Greek yogurt'), 150);
+    ((SELECT id FROM meals WHERE uid = 1 AND weekday = 4 AND meal_type = 6), (SELECT id FROM ingredients WHERE ingredient_name = 'Greek yogurt (no fats)'), 150);
 -- Friday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
-    ((SELECT id FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 6), (SELECT id FROM ingredients WHERE ingredient_name = 'Greek yogurt'), 150);
+    ((SELECT id FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 6), (SELECT id FROM ingredients WHERE ingredient_name = 'Greek yogurt (no fats)'), 150);
 -- Satuday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
-    ((SELECT id FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 6), (SELECT id FROM ingredients WHERE ingredient_name = 'Greek yogurt'), 160);
-
-
+    ((SELECT id FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 6), (SELECT id FROM ingredients WHERE ingredient_name = 'Greek yogurt (no fats)'), 160);
+-- ****************************************************************** --
 
 COMMIT;
