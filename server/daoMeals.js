@@ -24,7 +24,7 @@ exports.fetchMeal = (uid, weekday, meal_type) => {
     return new Promise((resolve, reject) => {
         const sql = `
         SELECT 
-            m.id AS meal_id,
+            m.mid AS meal_id,
             m.weekday,
             m.meal_type,
             iu.option_id,
@@ -33,15 +33,15 @@ exports.fetchMeal = (uid, weekday, meal_type) => {
         FROM 
             meals m
         JOIN 
-            ingredients_usage iu ON m.id = iu.meal_id
+            ingredients_usage iu ON m.mid = iu.meal_id
         JOIN 
-            ingredients i ON iu.ingredient_id = i.id
+            ingredients i ON iu.ingredient_id = i.iid
         WHERE 
             m.uid = ?
             AND m.weekday = ?
             AND m.meal_type = ?
         ORDER BY 
-            iu.option_id;
+            m.mid;
         `;
         db.all(sql, [uid, weekday, meal_type], (err, rows) => {
             if (err) { reject(err); }
