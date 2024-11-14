@@ -3,6 +3,7 @@
 const db = require("./db");
 
 const returnWorkout = (r) => ({
+    "#": r.enum,
     name: r.name,
     sets: r.sets,
     reps: r.reps,
@@ -13,7 +14,16 @@ const returnWorkout = (r) => ({
 exports.fetchWorkout = (uid, weekday) => {
     return new Promise((resolve, reject) => {
         const sql = `
-            SELECT exercises.*
+            SELECT
+                (SELECT COUNT(*) 
+                FROM exercises AS e 
+                WHERE e.wid = exercises.wid 
+                AND e.eid <= exercises.eid) AS enum,
+                exercises.name, 
+                exercises.sets, 
+                exercises.reps, 
+                exercises.weight,
+                exercises.rest
             FROM exercises
             INNER JOIN workouts ON exercises.wid = workouts.wid
             WHERE workouts.uid = ? AND workouts.weekday = ?;

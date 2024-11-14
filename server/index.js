@@ -11,7 +11,7 @@ const { body, check, param, query, validationResult } = require("express-validat
 const daoBias = require("./daoBias");
 const daoUsers = require("./daoUsers");
 const daoMeals = require("./daoMeals");
-const { fetchWorkout } = require("./daoWorkouts");
+const daoWorkouts = require("./daoWorkouts");
 
 const app = new express();
 
@@ -237,7 +237,7 @@ app.post("/api/bia/", isLogged,
 /***   MEALS API   ***/
 /*********************/
 
-app.get("/api/meals", isLogged,
+app.get("/api/meals/", isLogged,
   [
     query('weekday')
       .isInt({ min: 1, max: 6 }).withMessage("'weekday' must an integer in [1, 6]"),
@@ -265,8 +265,8 @@ app.get("/api/meals", isLogged,
 /*      WORKOUT      */
 /*********************/
 
-app.get("/api/workouts", isLogged,
-  [query('weekday').isInt().isIn([1, 3, 5]).withMessage("'weekday' must be integer among 1, 3, 5]")],
+app.get("/api/workouts/:weekday", isLogged,
+  [param('weekday').isInt({ min: 1, max: 3}).withMessage("'weekday' must be integer in [1, 3]")],
   async (req, res) => {
     const errors = validationResult(req).formatWith(errorFormatter);
     if (!errors.isEmpty()) {
@@ -274,8 +274,8 @@ app.get("/api/workouts", isLogged,
     }
     try {
       const uid = req.user.uid;
-      const weekday = req.query.weekday;
-      const workout = await fetchWorkout(uid, weekday);
+      const weekday = req.params.weekday;
+      const workout = await daoWorkouts.fetchWorkout(uid, weekday);
       return res.status(200).json(workout);
     } catch (err) {
       return res.status(404).json({ error: err });
