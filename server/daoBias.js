@@ -41,7 +41,7 @@ exports.fetchBias = (uid) => {
         FROM users
         LEFT JOIN bias ON users.uid = bias.uid
         WHERE users.uid = ?
-        ORDER BY bias.id DESC;
+        ORDER BY bias.bid DESC;
         `;
         db.get("SELECT * FROM users WHERE uid = ?", [uid], (err, row) => {
             if (err) { reject(err); }
