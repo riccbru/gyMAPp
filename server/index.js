@@ -266,7 +266,7 @@ app.get("/api/meals/", isLogged,
 /*********************/
 
 app.get("/api/workouts/:weekday", isLogged,
-  [param('weekday').isInt({ min: 1, max: 3}).withMessage("'weekday' must be integer in [1, 3]")],
+  [param('weekday').isInt({ min: 1, max: 6}).withMessage("'weekday' must be integer in [1, 3]")],
   async (req, res) => {
     const errors = validationResult(req).formatWith(errorFormatter);
     if (!errors.isEmpty()) {
