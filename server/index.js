@@ -252,7 +252,7 @@ app.get("/api/meals", isLogged,
       const uid = req.user.uid;
       const weekday = req.query.weekday;
       const meal = req.query.meal;
-      const meals = await daoMeals.fetchMealWithOptions(uid, weekday, meal);
+      const meals = await daoMeals.fetchMeal(uid, weekday, meal);
       return res.status(200).json(meals);
     } catch (err) {
       return res.status(404).json({ error: err });
