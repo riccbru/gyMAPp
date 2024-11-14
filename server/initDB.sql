@@ -64,6 +64,23 @@ CREATE TABLE IF NOT EXISTS "ingredients_usage" (
     FOREIGN KEY (ingredient_id) REFERENCES ingredients(iid) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS "workouts" (
+    wid INTEGER PRIMARY KEY AUTOINCREMENT,
+    uid INTEGER NOT NULL,
+    weekday INTEGER NOT NULL CHECK (weekday IN (1, 3, 5)),
+    FOREIGN KEY (uid) REFERENCES users(uid)
+);
+
+CREATE TABLE IF NOT EXISTS "exercises" (
+    eid INTEGER PRIMARY KEY AUTOINCREMENT,
+    wid INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    sets INTEGER,
+    reps INTEGER,
+    weight INTEGER,
+    rest INTEGER NOT NULL,
+    FOREIGN KEY (wid) REFERENCES workouts(wid)
+);
 
 
 -- *************************************** --
@@ -117,6 +134,54 @@ INSERT INTO "bias" (
     40.3,
     31.0
 );
+
+
+
+-- *************************************** --
+-- *****           WORKOUTS          ***** --
+-- *************************************** --
+INSERT INTO "workouts" ("uid", "weekday") VALUES (1, 1), (1, 3), (1, 5);
+-- Monday --
+INSERT INTO "exercises" ("wid", "name", "sets", "reps", "rest") VALUES ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Pull up", 5, 4, 150);
+INSERT INTO "exercises" ("wid", "name", "sets", "reps", "weight", "rest")
+VALUES
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Dip", 5, 8, 10, 150),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Bench press", 5, 15, 40, 30),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Incline bench press", 5, 15, 30, 30),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Pulley", 5, 15, 20, 30),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Pull down", 5, 15, 15, 30),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Hammer curl", 5, 15, 6, 30),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Seated bicep curl", 5, 15, 4, 30);
+INSERT INTO "exercises" ("wid", "name", "rest") VALUES ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "ABS circuit", 0);
+-- Wednesday --
+INSERT INTO "exercises" ("wid", "name", "sets", "reps", "weight", "rest")
+VALUES
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 3), "Leg extension", 5, 15, 25, 30),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 3), "Leg curl", 5, 15, 30, 30),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 3), "Leg press", 5, 10, 45, 90),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 3), "Lunges", 4, 20, 45, 60),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 3), "Single leg deadlift", 4, 15, 12, 60),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 3), "Seated calf raise", 5, 15, 20, 30),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 3), "Calf raise", 5, 15, 20, 0);
+INSERT INTO "exercises" ("wid", "name", "rest") VALUES ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 3), "ABS circuit", 0);
+-- Friday --
+INSERT INTO "exercises" ("wid", "name", "sets", "reps", "rest")
+VALUES
+
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Chin up", 5, 5, 120),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Push up & 10s plank piramid", 4, 25, 180);
+INSERT INTO "exercises" ("wid", "name", "sets", "reps", "weight", "rest")
+VALUES
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Shoulder fly", 5, 15, 5, 30),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Shoulder press", 5, 15, 5, 60),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Fly", 5, 20, 5, 60),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Push down (bullballz)", 5, 15, 25, 30),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Push down (W wheel)", 5, 15, 20, 30),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Kick back", 5, 15, 5, 30);
+INSERT INTO "exercises" ("wid", "name", "rest") VALUES ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "ABS circuit", 0);
+
+
+
 
 
 

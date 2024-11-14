@@ -11,6 +11,7 @@ const { body, check, param, query, validationResult } = require("express-validat
 const daoBias = require("./daoBias");
 const daoUsers = require("./daoUsers");
 const daoMeals = require("./daoMeals");
+const { fetchWorkout } = require("./daoWorkouts");
 
 const app = new express();
 
@@ -259,3 +260,25 @@ app.get("/api/meals", isLogged,
     }
   }
 );
+
+/*********************/
+/*      WORKOUT      */
+/*********************/
+
+app.get("/api/workouts", isLogged,
+  [query('weekday').isInt().isIn([1, 3, 5]).withMessage("'weekday' must be integer among 1, 3, 5]")],
+  async (req, res) => {
+    const errors = validationResult(req).formatWith(errorFormatter);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array()[0] });
+    }
+    try {
+      const uid = req.user.uid;
+      const weekday = req.query.weekday;
+      const workout = await fetchWorkout(uid, weekday);
+      return res.status(200).json(workout);
+    } catch (err) {
+      return res.status(404).json({ error: err });
+    }
+  }
+)
