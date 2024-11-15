@@ -24,8 +24,8 @@
         ease-linear cursor-pointer;
     }
 
-    .authNButton {
-        @apply bg-background text-white hover:bg-gray
+    .authButton {
+        @apply bg-primary text-white hover:bg-gray
         dark:bg-background dark:text-white dark:hover:bg-gray
         hover:rounded-xl;
     }
@@ -38,6 +38,12 @@
         transition-all duration-200
         ease-linear cursor-pointer;
     }
+
+    .tooltipContent {
+        @apply bg-primary text-white
+        dark:bg-background border-gray;
+    }
+
 }
 
 @layer base {

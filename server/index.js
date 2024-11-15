@@ -104,14 +104,6 @@ passport.deserializeUser(function (user, callback) {
 /*** AuthN APIs ***/
 /******************/
 
-app.get("/api/session", (req, res) => {
-  if (req.isAuthenticated()) {
-    res.status(200).json(req.user);
-  } else {
-    res.status(401).json({ error: "No active session" });
-  }
-});
-
 app.post("/api/login", function (req, res, next) {
   passport.authenticate("local", (err, user, info) => {
     if (err) return next(err);
@@ -128,47 +120,47 @@ app.post("/api/login", function (req, res, next) {
 app.post("/api/signup",
   [
     body("name")
-      .notEmpty()
-      .withMessage("Your name can't be an empty string")
-      .isString()
-      .withMessage("Name must be string")
-      .isLength({ min: 1, max: maxUserLength })
-      .withMessage("Name length must be between 1 and 20"),
+    .notEmpty()
+    .withMessage("Your name can't be an empty string")
+    .isString()
+    .withMessage("Name must be string")
+    .isLength({ min: 1, max: maxUserLength })
+    .withMessage("Name length must be between 1 and 20"),
     body("email")
-      .notEmpty()
-      .withMessage("Your email can't be an empty string")
-      .isString()
-      .withMessage("Last time I checked emails were strings")
-      .isLength({ min: minEmailChars })
-      .withMessage("Your email can't be that short")
-      .isEmail()
-      .withMessage("Invalid email: user@domain.tld"),
+    .notEmpty()
+    .withMessage("Your email can't be an empty string")
+    .isString()
+    .withMessage("Last time I checked emails were strings")
+    .isLength({ min: minEmailChars })
+    .withMessage("Your email can't be that short")
+    .isEmail()
+    .withMessage("Invalid email: user@domain.tld"),
     body("birthdate")
-      .notEmpty()
-      .withMessage("Your birthdate can't be an empty string")
-      .isString()
-      .withMessage("Birthdate must be a string")
-      .isLength({ min: minDateChars })
-      .withMessage("Invalid birthdate")
-      .matches(/^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-\d{4}$/)
-      .withMessage("Birthdate must be in MM-DD-YYYY format")
-      .bail()
-      .isDate({ format: "MM-DD-YYYY", strictMode: true })
-      .withMessage("Invalid birthdate"),
+    .notEmpty()
+    .withMessage("Your birthdate can't be an empty string")
+    .isString()
+    .withMessage("Birthdate must be a string")
+    .isLength({ min: minDateChars })
+    .withMessage("Invalid birthdate")
+    .matches(/^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-\d{4}$/)
+    .withMessage("Birthdate must be in MM-DD-YYYY format")
+    .bail()
+    .isDate({ format: "MM-DD-YYYY", strictMode: true })
+    .withMessage("Invalid birthdate"),
     body("username")
-      .notEmpty()
-      .withMessage("Your username can't be an empty string")
-      .isString()
-      .withMessage("Username must be a string")
-      .isLength({ max: maxUserLength })
-      .withMessage(`Username cannot exceed ${maxUserLength} characters`),
+    .notEmpty()
+    .withMessage("Your username can't be an empty string")
+    .isString()
+    .withMessage("Username must be a string")
+    .isLength({ max: maxUserLength })
+    .withMessage(`Username cannot exceed ${maxUserLength} characters`),
     body("password")
-      .notEmpty()
-      .withMessage("Your password can't be an empty string")
-      .isString()
-      .withMessage("Password must be a string")
-      .isLength({ min: minPassLength })
-      .withMessage(`Password must be at least ${minPassLength} characters`),
+    .notEmpty()
+    .withMessage("Your password can't be an empty string")
+    .isString()
+    .withMessage("Password must be a string")
+    .isLength({ min: minPassLength })
+    .withMessage(`Password must be at least ${minPassLength} characters`),
   ],
   async (req, res) => {
     if (req.isAuthenticated()) {
@@ -193,7 +185,15 @@ app.post("/api/signup",
   }
 );
 
-app.get("/api/logout", isLogged, (req, res) => {
+app.get("/api/session", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.status(200).json(req.user);
+  } else {
+    res.status(401).json({ error: "No active session" });
+  }
+});
+
+app.delete("/api/session", isLogged, (req, res) => {
   req.logout(() => {
     res.status(200).json({ success: "Logged out" });
   });

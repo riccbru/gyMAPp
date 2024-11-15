@@ -1,5 +1,5 @@
+import { AuthButton } from "./AuthButton";
 import { ThemeButton } from "./ThemeButton";
-import { AuthNButton } from "./AuthNButton";
 import { useNavigate } from "react-router-dom";
 import { Calendar, ChartNoAxesCombined, Dumbbell, Home, Settings, Utensils } from "lucide-react"
 import {
@@ -17,7 +17,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
- 
+
 const items = [
   {
     title: "Home",
@@ -49,36 +49,36 @@ const items = [
     url: "/settings",
     icon: Settings,
   },
-]
+];
 
-function SideBar(props) {
+function SideBar() {
     const navigate = useNavigate();
-    const { isLogged, setIsLogged } = props;
+
     return(
         <Sidebar className='sidebar' style={{width: '10rem'}}>
-        <SidebarContent>
-          <SidebarGroup>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                <div className='sidebarMenu'>
-                {items.map((item) => (
-                  <TooltipProvider delayDuration={0}>
-                    <Tooltip>
-                      <TooltipTrigger>
-                        <SidebarMenuItem className='sidebarMenuItem' key={item.title}>
-                          <SidebarMenuButton onClick={(e) => { navigate(item.url); }}>
-                            <item.icon style={{width: '1.5rem', height: '1.5rem'}} />
-                          </SidebarMenuButton>
-                        </SidebarMenuItem>
-                      </TooltipTrigger>
-                      <TooltipContent className='rounded-full'>
-                        {item.title}
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                ))}
-                <AuthNButton isLogged={isLogged} setIsLogged={setIsLogged}/>
-                <ThemeButton />
+          <SidebarContent>
+            <SidebarGroup>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  <div className='sidebarMenu'>
+                    <TooltipProvider delayDuration={0}>
+                      {items.map((item) => (
+                        <Tooltip key={`tootltip${item.title}`}>
+                          <TooltipTrigger>
+                            <SidebarMenuItem className='sidebarMenuItem' key={item.title}>
+                              <SidebarMenuButton onClick={(e) => { navigate(item.url); }}>
+                                <span><item.icon style={{width: '1.5rem', height: '1.5rem'}} /></span>
+                              </SidebarMenuButton>
+                            </SidebarMenuItem>
+                          </TooltipTrigger>
+                          <TooltipContent className='tooltipContent rounded-full'>
+                            {item.title}
+                          </TooltipContent>
+                        </Tooltip>
+                      ))}
+                      <AuthButton />
+                      <ThemeButton />
+                    </TooltipProvider>
                 </div>
               </SidebarMenu>
             </SidebarGroupContent>
