@@ -1,10 +1,7 @@
 import './App.css'
-import { useDarkMode } from './hooks/useDarkMode';
-import { Button } from './components/ui/button';
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
-import { Sun, Moon } from 'lucide-react';
-
 import { Home } from '@/pages/Home';
+import { useState } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
@@ -20,9 +17,11 @@ function App() {
 
 function AppRouted() {
 
+  const [isLogged, setIsLogged] = useState(false);
+
   return (
     <Routes>
-        <Route path="/" element={<Home />}>
+        <Route path="/" element={<Home isLogged={isLogged} setIsLogged={setIsLogged} />}>
           <Route path="*" element={<></>} />
         </Route>
     </Routes>

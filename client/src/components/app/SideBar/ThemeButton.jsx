@@ -12,7 +12,7 @@ function ThemeButton() {
     return (
       <SidebarMenuItem key={"Theme"}>
         <SidebarMenuButton
-          className="justify-center bg-primary dark:bg-white text-white dark:text-background rounded-3xl hover:bg-background hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer"
+          className='rounded-3xl themeButton'
           onClick={handleClick}
         >
           {darkTheme ? <Sun /> : <Moon />}

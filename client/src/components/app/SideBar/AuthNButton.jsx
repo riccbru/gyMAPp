@@ -7,9 +7,13 @@ function AuthNButton(props) {
     const { isLogged, setIsLogged } = props;
     return(
         <SidebarMenuItem key={"AuthN"}>
-            <SidebarMenuButton onClick={() => { setIsLogged(!isLogged); }}>
+            <SidebarMenuButton
+            className='rounded-3xl authNButton
+            transition-all duration-200
+            ease-linear cursor-pointer' 
+            onClick={() => { setIsLogged(!isLogged); }}>
                 <div style={{width: '1.5rem', height: '1.5rem'}}>
-                    {!isLogged ? <LogIn /> : <LogOut className='rotate-180'/>}
+                    {isLogged ? <LogIn /> : <LogOut className='rotate-180'/>}
                 </div>
             </SidebarMenuButton>
         </SidebarMenuItem>

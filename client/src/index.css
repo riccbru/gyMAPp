@@ -8,19 +8,34 @@
         --foreground: hsl(259.09, 95.65%, 9.02%);
     }
     .sidebar {
-        @apply w-48 bg-background text-white dark:bg-primary;
+        @apply w-36 bg-background text-white dark:bg-primary;
     }
     .sidebarMenu {
         @apply flex flex-col mx-auto justify-between h-screen py-12;
     }
-    /* .themeButton {
+
+    .sidebarMenuItem {
+        @apply bg-primary text-white hover:bg-gray
+        dark:bg-background dark:text-white dark:hover:bg-gray
+        rounded-3xl hover:rounded-xl
+        transition-all duration-200
+        ease-linear cursor-pointer;
+    }
+
+    .authNButton {
+        @apply bg-background text-white hover:bg-gray
+        dark:bg-background dark:text-white dark:hover:bg-gray
+        hover:rounded-xl;
+    }
+
+    .themeButton {
         @apply justify-center
-        bg-primary text-white
+        bg-gray hover:bg-gray dark:hover:bg-gray
         dark:bg-white dark:text-background
-        rounded- hover:rounded-full
-        hover:bg-background dark:hover:bg-white
-        transition-all duration-300 ease-linear cursor-pointer;
-    } */
+        rounded-3xl hover:rounded-xl
+        transition-all duration-200
+        ease-linear cursor-pointer;
+    }
 }
 
 @layer base {
