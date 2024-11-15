@@ -1,8 +1,13 @@
-import { useState } from 'react';
 import { ThemeButton } from "./ThemeButton";
 import { AuthNButton } from "./AuthNButton";
 import { useNavigate } from "react-router-dom";
 import { Calendar, ChartNoAxesCombined, Dumbbell, Home, Settings, Utensils } from "lucide-react"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import {
   Sidebar,
   SidebarContent,
@@ -13,7 +18,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
  
-// Menu items.
 const items = [
   {
     title: "Home",
@@ -58,11 +62,20 @@ function SideBar(props) {
               <SidebarMenu>
                 <div className='sidebarMenu'>
                 {items.map((item) => (
-                  <SidebarMenuItem className='sidebarMenuItem' key={item.title}>
-                    <SidebarMenuButton onClick={(e) => { navigate(item.url); }}>
-                        <item.icon style={{width: '1.5rem', height: '1.5rem'}} />
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
+                  <TooltipProvider delayDuration={0}>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <SidebarMenuItem className='sidebarMenuItem' key={item.title}>
+                          <SidebarMenuButton onClick={(e) => { navigate(item.url); }}>
+                            <item.icon style={{width: '1.5rem', height: '1.5rem'}} />
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      </TooltipTrigger>
+                      <TooltipContent className='rounded-full'>
+                        {item.title}
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 ))}
                 <AuthNButton isLogged={isLogged} setIsLogged={setIsLogged}/>
                 <ThemeButton />

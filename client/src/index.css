@@ -7,9 +7,11 @@
         --background: hsl(240, 100%, 99.8%);
         --foreground: hsl(259.09, 95.65%, 9.02%);
     }
+
     .sidebar {
         @apply w-36 bg-background text-white dark:bg-primary;
     }
+
     .sidebarMenu {
         @apply flex flex-col mx-auto justify-between h-screen py-12;
     }
@@ -30,7 +32,7 @@
 
     .themeButton {
         @apply justify-center
-        bg-gray hover:bg-gray dark:hover:bg-gray
+        bg-gray hover:bg-gray dark:hover:bg-white
         dark:bg-white dark:text-background
         rounded-3xl hover:rounded-xl
         transition-all duration-200
