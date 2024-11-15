@@ -25,7 +25,6 @@ const AuthProvider = ({ children }) => {
       }
     };
     checkAuth();
-    console.log(`AuthContext.useEffect:\tisLogged = ${isLogged}`);
   }, []);
 
   const login = async (credentials) => {
@@ -34,7 +33,7 @@ const AuthProvider = ({ children }) => {
       setIsLogged(true);
       setUser(userData);
     } catch (err) {
-      console.log(`AuthContext:\n${err}`);
+      throw err;
     }
   };
 
@@ -56,7 +55,12 @@ const AuthProvider = ({ children }) => {
     }
   }
 
-  const value = { isLogged, setIsLogged, user, login, logout, signup };
+  const value = {
+    isLogged, setIsLogged,
+    loading,
+    user,
+    login, logout, signup
+  };
 
   return (
     <AuthContext.Provider value={value}>

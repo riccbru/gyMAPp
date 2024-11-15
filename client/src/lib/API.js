@@ -31,14 +31,19 @@ async function info() {
 }
 
 async function login(credentials) {
-    return getJSON(
-        fetch(SERVER_URL + "/api/sessions", {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            credentials: 'include',
-            body: JSON.stringify(credentials)
-        })
-    );
+    const res = await fetch(SERVER_URL + "/api/login", {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'include',
+        body: JSON.stringify(credentials)
+    });
+
+    if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message);
+    }
+    const responseData = await res.json();
+    return responseData;
 }
 
 const logout = async () => {
@@ -60,4 +65,33 @@ async function signup(userData) {
     );
 }
 
-export default { info, login, logout, signup };
+const bia = () => {
+    return getJSON(
+        fetch(SERVER_URL + "/api/bia", {
+            credentials: 'include'
+        })
+    );
+}
+
+const meal = () => {
+    const url = new URL(SERVER_URL + "/api/meals");
+    url.searchParams.append('weekday', weekday);
+    url.searchParams.append('meal', meal);
+
+    return getJSON(
+        fetch(url, {
+            credentials: 'include'
+        })
+    );
+}
+
+const workout = (weekday) => {
+    const url = new URL(SERVER_URL + `/api/workouts/${weekday}`);
+    return getJSON(
+        fetch(SERVER_URL, {
+            credentials: 'include'
+        })
+    );
+}
+
+export default { info, login, logout, signup, bia, meal, workout };
