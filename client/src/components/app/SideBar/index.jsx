@@ -47,18 +47,18 @@ const items = [
   },
 ]
 
-function SideBar() {
-    const [isLogged, setIsLogged] = useState(false);
+function SideBar(props) {
     const navigate = useNavigate();
+    const { isLogged, setIsLogged } = props;
     return(
-        <Sidebar className='sidebar'>
+        <Sidebar className='sidebar' style={{width: '10rem'}}>
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupContent>
               <SidebarMenu>
                 <div className='sidebarMenu'>
                 {items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
+                  <SidebarMenuItem className='sidebarMenuItem' key={item.title}>
                     <SidebarMenuButton onClick={(e) => { navigate(item.url); }}>
                         <item.icon style={{width: '1.5rem', height: '1.5rem'}} />
                     </SidebarMenuButton>
