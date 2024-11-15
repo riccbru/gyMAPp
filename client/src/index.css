@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    :root {
+        --background: hsl(240, 100%, 99.8%);
+        --foreground: hsl(259.09, 95.65%, 9.02%);
+    }
+    .sidebar {
+        @apply w-48 bg-background text-white dark:bg-primary;
+    }
+    .sidebarMenu {
+        @apply flex flex-col mx-auto justify-between h-screen py-12;
+    }
+    /* .themeButton {
+        @apply justify-center
+        bg-primary text-white
+        dark:bg-white dark:text-background
+        rounded- hover:rounded-full
+        hover:bg-background dark:hover:bg-white
+        transition-all duration-300 ease-linear cursor-pointer;
+    } */
+}
+
+@layer base {
+    body {
+      @apply bg-background text-foreground
+      dark:bg-foreground dark:text-background;
+    }
+  }
