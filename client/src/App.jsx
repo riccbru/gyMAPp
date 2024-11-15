@@ -2,10 +2,12 @@ import './App.css'
 import { Home } from '@/pages/Home';
 import { Login } from '@/pages/Login';
 import { Signup } from '@/pages/Signup';
+import { Common } from '@/pages/Common';
 import { useAuth } from '@/hooks/useAuth';
 import { NotFound } from '@/pages/NotFound';
 import { AuthProvider } from '@/context/AuthContext';
 import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { DataProvider } from './context/DataContext';
 
 const handleErrors = (err) => {
   let msg = '';
@@ -29,19 +31,22 @@ function App() {
       }}
     >
       <AuthProvider>
-        <AppRouted />
+        <DataProvider>
+          <AppRouted />
+        </DataProvider>
       </AuthProvider>
     </BrowserRouter>
   );
 }
 
 function AppRouted() {
-  const navigate = useNavigate();
-  const { isLogged, setIsLogged } = useAuth();
+  
+  const { isLogged } = useAuth();
 
   return (
     <Routes>
-        <Route path="/" element={<Home />}>
+        <Route path="/" element={isLogged ? <Common /> : <Navigate to="/login" />}>
+          <Route path="/home" element={<Home />} />
           <Route path="*" element={<NotFound />} />
         </Route>
         <Route path="/signup" element={<Signup />} />
@@ -51,4 +56,4 @@ function AppRouted() {
 }
 
 
-export default App
+export default App;
