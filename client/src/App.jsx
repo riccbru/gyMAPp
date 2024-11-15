@@ -1,10 +1,11 @@
 import './App.css'
-import API from './lib/API';
-import { useContext, useState } from 'react';
 import { Home } from '@/pages/Home';
-import { AuthProvider } from '@/context/AuthContext';
+import { Login } from '@/pages/Login';
+import { Signup } from '@/pages/Signup';
 import { useAuth } from '@/hooks/useAuth';
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { NotFound } from '@/pages/NotFound';
+import { AuthProvider } from '@/context/AuthContext';
+import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 
 const handleErrors = (err) => {
   let msg = '';
@@ -41,8 +42,10 @@ function AppRouted() {
   return (
     <Routes>
         <Route path="/" element={<Home />}>
-          <Route path="*" element={<></>} />
+          <Route path="*" element={<NotFound />} />
         </Route>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={!isLogged ? <Login /> : <Navigate to="/" />} />
     </Routes>
   );
 }

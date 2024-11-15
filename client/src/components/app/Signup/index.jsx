@@ -1,9 +1,9 @@
-function LoginForm() {
+function SignupForm() {
     return(
         <div className='authnForm'>
-            Login Form
+            Signup Form
         </div>
     );
 }
 
-export { LoginForm };
+export { SignupForm };

@@ -44,6 +44,10 @@
         dark:bg-background border-gray;
     }
 
+    .authnForm {
+        @apply flex items-center justify-center min-h-screen;
+    }
+
 }
 
 @layer base {
