@@ -6,15 +6,18 @@ import { Common } from '@/pages/Common';
 import { useAuth } from '@/hooks/useAuth';
 import { NotFound } from '@/pages/NotFound';
 import { AuthProvider } from '@/context/AuthContext';
+import { DataProvider } from '@/context/DataContext';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { DataProvider } from './context/DataContext';
 
 function App() {
+
+  const future = {
+    v7_startTransition:   true,
+    v7_relativeSplatPath: true,
+  }; 
   return (
     <BrowserRouter
-      future={{
-        v7_relativeSplatPath: true,
-      }}
+      future={future}
     >
       <AuthProvider>
         <DataProvider>
@@ -35,8 +38,8 @@ function AppRouted() {
           <Route path="/home" element={<Home />} />
           <Route path="*" element={<NotFound />} />
         </Route>
-        <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={!isLogged ? <Login /> : <Navigate to="/" />} />
+        <Route path="/signup" element={!isLogged ? <Signup /> : <Navigate to="/" />} />
     </Routes>
   );
 }

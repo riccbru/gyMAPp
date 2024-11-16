@@ -104,7 +104,7 @@ passport.deserializeUser(function (user, callback) {
 /*** AuthN APIs ***/
 /******************/
 
-app.post("/api/login",
+app.post("/api/v1/login",
   (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) return next(err);
@@ -118,7 +118,7 @@ app.post("/api/login",
   })(req, res, next);
 });
 
-app.post("/api/signup",
+app.post("/api/v1/signup",
   [
     body("name")
     .notEmpty()
@@ -178,15 +178,17 @@ app.post("/api/signup",
       } catch (err) {
         if (err.message.endsWith('not available')) {
           return res.status(409).json({ error: err.message });
-        } else {
-          return res.status(500).json({ error: err.message });
+        } else if (err.message.endsWith('users.email')) {
+          return res.status(409).json({ error: `Email ${req.body.email} not available`});
+        } else if (err.message.startsWith('SQL')) {
+          return res.status(500).json({ error: "DB ERROR: please try again" });
         }
       }
     }
   }
 );
 
-app.get("/api/session",
+app.get("/api/v1/session",
   (req, res) => {
   if (req.isAuthenticated()) {
     res.status(200).json(req.user);
@@ -195,7 +197,7 @@ app.get("/api/session",
   }
 });
 
-app.delete("/api/session", isLogged,
+app.delete("/api/v1/session", isLogged,
   (req, res) => {
   req.logout(() => {
     res.status(200).json({ success: "Logged out" });
@@ -206,7 +208,7 @@ app.delete("/api/session", isLogged,
 /***   BIA API   ***/
 /*******************/
 
-app.get("/api/bia/:uid?", isLogged,
+app.get("/api/v1/bia/:uid?", isLogged,
   async (req, res) => {
       try {
         const reqUID = req.params.uid || req.user.uid;
@@ -219,7 +221,7 @@ app.get("/api/bia/:uid?", isLogged,
   }
 );
 
-app.post("/api/bia/", isLogged,
+app.post("/api/v1/bia/", isLogged,
   async (req, res) => {
     const errors = validationResult(req).formatWith(errorFormatter);
     if (!errors.isEmpty()) {
@@ -240,7 +242,7 @@ app.post("/api/bia/", isLogged,
 /***   MEALS API   ***/
 /*********************/
 
-app.get("/api/meals/", isLogged,
+app.get("/api/v1/meals/", isLogged,
   [
     query('weekday')
       .isInt({ min: 1, max: 6 }).withMessage("'weekday' must an integer in [1, 6]"),
@@ -268,7 +270,7 @@ app.get("/api/meals/", isLogged,
 /*      WORKOUT      */
 /*********************/
 
-app.get("/api/workouts/:weekday", isLogged,
+app.get("/api/v1/workouts/:weekday", isLogged,
   [param('weekday').isInt({ min: 1, max: 6}).withMessage("'weekday' must be integer in [1, 3]")],
   async (req, res) => {
     const errors = validationResult(req).formatWith(errorFormatter);
