@@ -3,7 +3,8 @@ import { SideAuth } from "./SideAuth";
 import { SideTheme } from "./SideTheme";
 import { Calendar, ChartNoAxesCombined, Dumbbell, Home, Settings, Utensils } from "lucide-react";
 
-export const sidebarItems = [
+const sidebarItems = [
+
   {
     type: "menu",
     title: "Home",
@@ -48,4 +49,7 @@ export const sidebarItems = [
     type: "component",
     component: SideTheme,
   },
+
 ];
+
+export { sidebarItems };

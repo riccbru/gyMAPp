@@ -16,14 +16,12 @@ function SideTheme() {
           <SidebarMenuItem
             key={"Theme"}
             onClick={handleClick}
-            className='sidebarTheme'
+            className="sidebarTheme"
           > 
-              <span className='sideTheme'>
-                {darkTheme ? <Sun /> : <Moon />}
-              </span>
+              <span>{darkTheme ? <Sun /> : <Moon />}</span>
           </SidebarMenuItem>
         </TooltipTrigger>
-        <TooltipContent className='tooltipContent rounded-full'>
+        <TooltipContent className="tooltipContent rounded-full">
           {darkTheme ? "Light theme" : "Dark theme"}
         </TooltipContent>
       </Tooltip>
