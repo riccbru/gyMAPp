@@ -34,9 +34,9 @@ POST http://localhost:3001/api/signup HTTP/1.1
 Content-Type: application/json
 
 {
-    "name":         "Ciclarimpo",
-    "email":        "ciclarimpo@gymapp.dev",
-    "username":     "ciclarimpo",
+    "name":         "Ciclarimpus",
+    "email":        "ciclarimpus@gymapp.dev",
+    "username":     "ciclarimpus",
     "password":     "password",
     "birthdate":    "01-01-0001"
 }

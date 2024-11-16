@@ -40,7 +40,7 @@ async function login(credentials) {
 
     if (!res.ok) {
         const errorData = await res.json();
-        throw new Error(errorData.message || `Login failed with ${res.status} ${res.statusText}`);
+        throw new Error(errorData.error || `Login failed with ${res.status} ${res.statusText}`);
     }
     return await res.json();
 }

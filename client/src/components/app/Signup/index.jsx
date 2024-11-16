@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { CalendarIcon } from 'lucide-react';
 import { DayPicker } from "react-day-picker";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
@@ -8,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { CalendarIcon, Eye, EyeOff } from 'lucide-react';
 import {
     Popover,
     PopoverContent,
@@ -37,6 +37,7 @@ function SignupForm() {
     });
     
     const [errors, setErrors] = useState({
+        show:       false,
         name:       false,
         email:      false,
         signup:     false,
@@ -51,6 +52,7 @@ function SignupForm() {
     }
 
     const selectDate = (date) => {
+        setErrors((prevData) => ({ ...prevData, birthdate: false}));
         const month = date.getMonth() + 1;
         const day = date.getDate();
         const yyyy = date.getFullYear();
@@ -66,7 +68,7 @@ function SignupForm() {
     const showErrorToast = (field, title, message) => {
         setErrors((prev) => ({ ...prev, [field]: true }));
         toast({
-            duration: 2500,
+            duration: 3000,
             title: title,
             description: message,
             className: "bg-red text-white rounded-xl"
@@ -97,7 +99,6 @@ function SignupForm() {
             return;
         }
         try {
-            console.log("index.Signup: TRY (before)");
             const userData = {
                 name: signupData.name,
                 email: signupData.email,
@@ -106,18 +107,19 @@ function SignupForm() {
                 password: signupData.password
             }
             await signup(userData);
-            console.log("index.Signup: TRY (after)");
             navigate("/login");
         } catch (err) {
-            console.log("index.Signup: CATCH");
-            console.log(err.error);
             showErrorToast("signup", "SIGNUP FAILED", err.error || "Please, try again");
         }
     }
+
+    const flipShow = () => {
+        setErrors((prevData) => ({ ...prevData, show: !prevData.show }));
+      }
     
     return(
         <div className="authnForm">
-            <Card className={`bg-primary rounded-xl ${!errors.signup ? '' : 'border-red border-2'}`}>
+            <Card className={`bg-primary rounded-xl ${!errors.signup ? '' : 'border-red border-3'}`}>
 
                 <CardHeader>
                     <CardTitle className="flex items-center">
@@ -152,7 +154,7 @@ function SignupForm() {
                         <Label className="mt-2 mb-2">Birthdate</Label>
                         <Popover>
                             <PopoverTrigger asChild>
-                                <Button className={`bg-white hover:bg-panna text-background rounded-xl ${!errors.birthdate ? '' : 'border-red border-2'}`}>
+                                <Button className={`bg-white hover:bg-panna text-background rounded-xl ${!errors.birthdate ? 'bg-white' : 'border-red border-2 bg-gray'}`}>
                                     <div className="flex justify-between items-center w-full text-background">
                                     {signupData.birthdate ? signupData.birthdate : "Pick birthdate"}
                                     <CalendarIcon />
@@ -182,14 +184,17 @@ function SignupForm() {
                         />
 
                         <Label className="mt-2 mb-1.5" htmlFor="password">Password</Label>
-                        <Input
-                          className={`rounded-3xl authnInput ${!errors.password ? '' : 'border-red border-2'}`}
-                          type="password"
-                          name="password"
-                          value={signupData.password}
-                          placeholder="Enter a password"
-                          onChange={(e) => handleChange(e)}
-                        />
+                        <div className="flex justify-between items-center w-full text-background">
+                            <Input
+                              className={`rounded-3xl authnInput ${!errors.password ? '' : 'border-red border-2'}`}
+                              type={errors.show ? "text" : "password"}
+                              name="password"
+                              value={signupData.password}
+                              placeholder="Enter a password"
+                              onChange={(e) => handleChange(e)}
+                            />
+                            {errors.show ? <Eye className='showButton' onClick={flipShow} /> : <EyeOff className='showButton' onClick={flipShow} />}
+                        </div>
 
                         <Button
                             type="submit"
