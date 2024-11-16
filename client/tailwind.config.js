@@ -22,6 +22,8 @@ export default {
             red: 'hsl(350 99.2% 50%)',                  /* fe012d */
             mahogany: 'hsl(0 100% 15.5%)',              /* 4f0000 */
             panna: 'hsl(240 50% 89.8%)',
+            sred: 'hsl(358.9, 97.32%, 43.92%)',         /* dd0307 */
+            lightRed: 'hsl(350 76% 45%)',               /* ca1c39 */
   		}
   	}
   },

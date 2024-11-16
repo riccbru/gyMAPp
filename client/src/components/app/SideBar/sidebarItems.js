@@ -1,6 +1,6 @@
 'use strict';
-import { SideAuth } from "./SideAuth";
-import { SideTheme } from "./SideTheme";
+import { SideAuthItem } from "./SideAuthItem";
+import { SideThemeItem } from "./SideThemeItem";
 import { Calendar, ChartNoAxesCombined, Dumbbell, Home, Settings, Utensils } from "lucide-react";
 
 const sidebarItems = [
@@ -43,11 +43,11 @@ const sidebarItems = [
   },
   {
     type: "component",
-    component: SideAuth,
+    component: SideAuthItem,
   },
   {
     type: "component",
-    component: SideTheme,
+    component: SideThemeItem,
   },
 
 ];
