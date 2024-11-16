@@ -44,14 +44,15 @@ const AuthProvider = ({ children }) => {
       setUser(null);
     } catch (err) {
       console.log(`AuthContext:\n${err}`);
+      throw err;
     }
   };
 
   const signup = async (userData) => {
     try {
-      const res = await API.signup(userData);
+      await API.signup(userData);
     } catch (err) {
-      console.log(`AuthContext.signup:\n${err}`);
+      throw err;
     }
   }
 
