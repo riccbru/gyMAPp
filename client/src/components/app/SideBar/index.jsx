@@ -11,6 +11,7 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -19,6 +20,32 @@ import {
 
 function SideBar() {
     const navigate = useNavigate();
+
+    // return(
+    //   <Sidebar className='sidebar' style={{width: '10rem'}}>
+    //     <SidebarContent>
+    //       <SidebarGroup>
+    //         <SidebarGroupLabel>TEST SIDEBAR</SidebarGroupLabel>
+    //         <SidebarGroupContent>
+    //           <SidebarMenu>
+    //             <div className='sidebarMenu'>
+    //               {sidebarItems.map((item) => (
+    //                 <SidebarMenuItem className='sidebarMenuItem' key={item.title}>
+    //                   <SidebarMenuButton onClick={(e) => { navigate(item.url); }}>
+    //                     <a href={item.url}>
+    //                       <item.icon />
+    //                       {/* <span>{item.title}</span> */}
+    //                     </a>
+    //                   </SidebarMenuButton>
+    //                 </SidebarMenuItem>
+    //               ))}
+    //             </div>
+    //           </SidebarMenu>
+    //         </SidebarGroupContent>
+    //       </SidebarGroup>
+    //     </SidebarContent>
+    //   </Sidebar>
+    // );
 
     return(
         <Sidebar className='sidebar' style={{width: '10rem'}}>
@@ -31,17 +58,15 @@ function SideBar() {
                       {sidebarItems.map((item, index) => (
                         item.type !== 'menu' ?
                         (
-                          <div key={`custom-${index}`} className="sidebarMenuItem">
+                          <div key={`custom-${index}`}>
                             <item.component />
                           </div>
                         )
                         : (
-                          <Tooltip key={`tootltip-${item.title}`}>
+                          <Tooltip key={`tooltip-${item.title}`}>
                             <TooltipTrigger>
-                              <SidebarMenuItem className='sidebarMenuItem' key={item.title}>
-                                <SidebarMenuButton onClick={(e) => { navigate(item.url); }}>
+                              <SidebarMenuItem className='sidebarMenuItem' key={item.title} onClick={(e) => { navigate(item.url); }}>
                                   <span><item.icon style={{width: '1.5rem', height: '1.5rem'}} /></span>
-                                </SidebarMenuButton>
                               </SidebarMenuItem>
                             </TooltipTrigger>
                             <TooltipContent className='tooltipContent rounded-full'>
@@ -50,8 +75,6 @@ function SideBar() {
                           </Tooltip>
                         )
                       ))}
-                    {/* <AuthButton /> */}
-                    {/* <ThemeButton /> */}
                     </TooltipProvider>
                 </div>
               </SidebarMenu>

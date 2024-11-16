@@ -27,21 +27,22 @@
     .sidebarMenuItem {
         @apply bg-primary text-white hover:bg-gray
         dark:bg-background dark:text-white dark:hover:bg-gray
+        p-1.5
         rounded-3xl hover:rounded-xl
         transition-all duration-200
         ease-linear cursor-pointer;
     }
 
-    .authButton {
+    .sideAuth {
         @apply bg-primary text-white hover:bg-gray
         dark:bg-background dark:text-white dark:hover:bg-gray
         hover:rounded-xl;
     }
 
-    .themeButton {
-        @apply justify-center
-        bg-gray hover:bg-gray dark:hover:bg-white
-        dark:bg-white dark:text-background
+    .sidebarTheme {
+        @apply dark:bg-panna dark:text-background hover:bg-gray
+        bg-gray text-white dark:hover:bg-gray
+        p-1.5
         rounded-3xl hover:rounded-xl
         transition-all duration-200
         ease-linear cursor-pointer;

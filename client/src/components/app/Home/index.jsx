@@ -10,7 +10,7 @@ function TestHome() {
 
     return(
         <div>
-            
+            HOME
         </div>
     );
 }

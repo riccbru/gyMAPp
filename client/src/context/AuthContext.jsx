@@ -43,7 +43,6 @@ const AuthProvider = ({ children }) => {
       setIsLogged(false);
       setUser(null);
     } catch (err) {
-      console.log(`AuthContext:\n${err}`);
       throw err;
     }
   };

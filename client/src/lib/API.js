@@ -1,6 +1,6 @@
 'use strict';
 
-const SERVER_URL = 'http://localhost:3001';
+const SERVER_URL = 'http://localhost:3001/api/v1';
 
 function getJSON(httpResponsePromise) {
     return new Promise((resolve, reject) => {
@@ -24,14 +24,14 @@ function getJSON(httpResponsePromise) {
 
 async function info() {
     return getJSON(
-        fetch(SERVER_URL + "/api/session", {
+        fetch(SERVER_URL + "/session", {
             credentials: 'include'
         })
     );
 }
 
 async function login(credentials) {
-    const res = await fetch(SERVER_URL + "/api/login", {
+    const res = await fetch(SERVER_URL + "/login", {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         credentials: 'include',
@@ -47,7 +47,7 @@ async function login(credentials) {
 
 const logout = async () => {
     return getJSON(
-        fetch(SERVER_URL + "/api/session", {
+        fetch(SERVER_URL + "/session", {
             method: 'DELETE',
             credentials: 'include'
         })
@@ -55,26 +55,26 @@ const logout = async () => {
 }
 
 async function signup(userData) {
-    return getJSON(fetch(SERVER_URL + "/api/signup", {
+    return getJSON(fetch(SERVER_URL + "/signup", {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        credentials: 'include',
+        // credentials: 'include',
         body: JSON.stringify(userData)
     })).then((res) => {
-        console.log(res);
+        // empty
     }).catch((err) => { throw err; });
 }
 
 const bia = () => {
     return getJSON(
-        fetch(SERVER_URL + "/api/bia", {
+        fetch(SERVER_URL + "/bia", {
             credentials: 'include'
         })
     );
 }
 
 const meal = () => {
-    const url = new URL(SERVER_URL + "/api/meals");
+    const url = new URL(SERVER_URL + "/meals");
     url.searchParams.append('weekday', weekday);
     url.searchParams.append('meal', meal);
 
@@ -86,7 +86,7 @@ const meal = () => {
 }
 
 const workout = (weekday) => {
-    const url = new URL(SERVER_URL + `/api/workouts/${weekday}`);
+    const url = new URL(SERVER_URL + `/workouts/${weekday}`);
     return getJSON(
         fetch(SERVER_URL, {
             credentials: 'include'
