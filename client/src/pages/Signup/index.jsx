@@ -1,5 +1,5 @@
 import { Toaster } from '@/components/ui/toaster';
-import { SignupForm } from '@/components/app/Signup';
+import { SignupForm } from '@/components/app/AuthN/Signup';
 
 function Signup() {
     return(

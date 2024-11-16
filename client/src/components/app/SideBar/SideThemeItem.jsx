@@ -1,9 +1,13 @@
 import { Moon, Sun } from 'lucide-react';
 import { useDarkMode } from "@/hooks/useDarkMode";
-import { SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { SidebarMenuItem } from '@/components/ui/sidebar';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from '@/components/ui/tooltip';
 
-function SideTheme() {
+function SideThemeItem() {
     const [darkTheme, setDarkTheme] = useDarkMode();
   
     const handleClick = () => {
@@ -21,11 +25,11 @@ function SideTheme() {
               <span>{darkTheme ? <Sun /> : <Moon />}</span>
           </SidebarMenuItem>
         </TooltipTrigger>
-        <TooltipContent className="tooltipContent rounded-full">
+        <TooltipContent className="tooltipContent">
           {darkTheme ? "Light theme" : "Dark theme"}
         </TooltipContent>
       </Tooltip>
     );
   }
 
-export { SideTheme };
+export { SideThemeItem };

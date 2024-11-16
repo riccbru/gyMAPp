@@ -1,18 +1,20 @@
+import { useAuth } from '@/hooks/useAuth';
 import { LogIn, LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { useAuth } from '@/hooks/useAuth';
+import { SidebarMenuItem } from '@/components/ui/sidebar';
+import { 
+Tooltip, 
+TooltipContent, 
+TooltipTrigger
+} from '@/components/ui/tooltip';
 
-function SideAuth() {
+function SideAuthItem() {
     const navigate = useNavigate();
     const { isLogged, logout } = useAuth();
 
     const handleClick = () => {
-      if (isLogged) {
-        logout();
-      } else {
-        navigate("/login");
+      if (isLogged) { logout(); }
+      else { navigate("/login");
       }
     };
 
@@ -27,11 +29,11 @@ function SideAuth() {
               <span>{!isLogged ? <LogIn /> : <LogOut className="rotate-180" />}</span>
             </SidebarMenuItem>
           </TooltipTrigger>
-          <TooltipContent className="tooltipContent rounded-full">
+          <TooltipContent className="tooltipContent">
             {!isLogged ? "Log in" : "Log out"}
           </TooltipContent>
         </Tooltip>
     );
 }
 
-export { SideAuth };
+export { SideAuthItem };

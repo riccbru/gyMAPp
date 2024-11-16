@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import { sidebarItems } from "./sidebarItems";
+import { useNavigate } from "react-router-dom";
 import {
   Tooltip,
   TooltipContent,
@@ -11,41 +11,13 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
 
 function SideBar() {
     const navigate = useNavigate();
-
-    // return(
-    //   <Sidebar className='sidebar' style={{width: '10rem'}}>
-    //     <SidebarContent>
-    //       <SidebarGroup>
-    //         <SidebarGroupLabel>TEST SIDEBAR</SidebarGroupLabel>
-    //         <SidebarGroupContent>
-    //           <SidebarMenu>
-    //             <div className='sidebarMenu'>
-    //               {sidebarItems.map((item) => (
-    //                 <SidebarMenuItem className='sidebarMenuItem' key={item.title}>
-    //                   <SidebarMenuButton onClick={(e) => { navigate(item.url); }}>
-    //                     <a href={item.url}>
-    //                       <item.icon />
-    //                       {/* <span>{item.title}</span> */}
-    //                     </a>
-    //                   </SidebarMenuButton>
-    //                 </SidebarMenuItem>
-    //               ))}
-    //             </div>
-    //           </SidebarMenu>
-    //         </SidebarGroupContent>
-    //       </SidebarGroup>
-    //     </SidebarContent>
-    //   </Sidebar>
-    // );
 
     return(
         <Sidebar className='sidebar' style={{width: '10rem'}}>
@@ -54,7 +26,7 @@ function SideBar() {
               <SidebarGroupContent>
                 <SidebarMenu>
                   <div className='sidebarMenu'>
-                    <TooltipProvider delayDuration={150}>
+                    <TooltipProvider delayDuration={400}>
                       {sidebarItems.map((item, index) => (
                         item.type !== 'menu' ?
                         (
@@ -69,7 +41,7 @@ function SideBar() {
                                   <span><item.icon style={{width: '1.5rem', height: '1.5rem'}} /></span>
                               </SidebarMenuItem>
                             </TooltipTrigger>
-                            <TooltipContent className='tooltipContent rounded-full'>
+                            <TooltipContent className='tooltipContent'>
                               {item.title}
                             </TooltipContent>
                           </Tooltip>
