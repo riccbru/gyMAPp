@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { Eye, EyeOff } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
@@ -25,15 +26,20 @@ function LoginForm() {
     });
     
     const [errors, setErrors] = useState({
-      login: false,
+      login:    false,
       username: false,
       password: false,
+      show:     false,
     });
+
+    const flipShow = () => {
+      setErrors((prevData) => ({ ...prevData, show: !prevData.show }));
+    }
 
     const showErrorToast = (field, title, message) => {
       setErrors((prev) => ({ ...prev, [field]: true }));
       toast({
-          duration: 2500,
+          duration: 3000,
           title: title,
           description: message,
           className: "bg-red text-white rounded-xl"
@@ -88,17 +94,21 @@ function LoginForm() {
                 onChange={(e) => handleChange(e)}
               />
 
+
               <Label className="mt-2 mb-1.5" htmlFor="password">
                 Password
               </Label>
-              <Input
-                className={`rounded-3xl authnInput ${!errors.password ? '' : 'border-red border-2'}`}
-                type="password"
-                name="password"
-                value={loginData.password}
-                placeholder="Enter password"
-                onChange={(e) => handleChange(e)}
-              />
+              <div className="flex justify-between items-center w-full text-background">
+                <Input
+                  className={`rounded-3xl text-white authnInput ${!errors.password ? '' : 'border-red border-2'}`}
+                  type={errors.show ? "text" : "password"}
+                  name="password"
+                  value={loginData.password}
+                  placeholder="Enter password"
+                  onChange={(e) => handleChange(e)}
+                />
+                {errors.show ? <Eye className='showButton' onClick={flipShow} /> : <EyeOff className='showButton' onClick={flipShow} />}
+              </div>
 
               <Button
                 type="submit"

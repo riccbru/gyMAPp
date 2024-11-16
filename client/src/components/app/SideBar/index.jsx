@@ -27,7 +27,7 @@ function SideBar() {
               <SidebarGroupContent>
                 <SidebarMenu>
                   <div className='sidebarMenu'>
-                    <TooltipProvider>
+                    <TooltipProvider delayDuration={150}>
                       {sidebarItems.map((item, index) => (
                         item.type !== 'menu' ?
                         (

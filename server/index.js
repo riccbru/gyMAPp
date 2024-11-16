@@ -104,7 +104,8 @@ passport.deserializeUser(function (user, callback) {
 /*** AuthN APIs ***/
 /******************/
 
-app.post("/api/login", function (req, res, next) {
+app.post("/api/login",
+  (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) return next(err);
     if (!user) {
@@ -134,7 +135,7 @@ app.post("/api/signup",
     .isLength({ min: minEmailChars })
     .withMessage("Your email can't be that short")
     .isEmail()
-    .withMessage("Invalid email: user@domain.tld"),
+    .withMessage("Invalid email, example: user@domain.tld"),
     body("birthdate")
     .notEmpty()
     .withMessage("Your birthdate can't be an empty string")
@@ -185,7 +186,8 @@ app.post("/api/signup",
   }
 );
 
-app.get("/api/session", (req, res) => {
+app.get("/api/session",
+  (req, res) => {
   if (req.isAuthenticated()) {
     res.status(200).json(req.user);
   } else {
@@ -193,7 +195,8 @@ app.get("/api/session", (req, res) => {
   }
 });
 
-app.delete("/api/session", isLogged, (req, res) => {
+app.delete("/api/session", isLogged,
+  (req, res) => {
   req.logout(() => {
     res.status(200).json({ success: "Logged out" });
   });
