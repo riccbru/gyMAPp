@@ -2,7 +2,7 @@ import { Moon, Sun } from 'lucide-react';
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 
-function ThemeButton() {
+function SideTheme() {
     const [darkTheme, setDarkTheme] = useDarkMode();
   
     const handleClick = () => {
@@ -21,4 +21,4 @@ function ThemeButton() {
     );
   }
 
-export { ThemeButton };
+export { SideTheme };

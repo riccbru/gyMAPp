@@ -40,10 +40,9 @@ async function login(credentials) {
 
     if (!res.ok) {
         const errorData = await res.json();
-        throw new Error(errorData.message);
+        throw new Error(errorData.message || `Login failed with ${res.status} ${res.statusText}`);
     }
-    const responseData = await res.json();
-    return responseData;
+    return await res.json();
 }
 
 const logout = async () => {
@@ -56,13 +55,14 @@ const logout = async () => {
 }
 
 async function signup(userData) {
-    return getJSON(
-        fetch(SERVER_URL + "/api/singup", {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(userData)
-        })
-    );
+    return getJSON(fetch(SERVER_URL + "/api/signup", {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'include',
+        body: JSON.stringify(userData)
+    })).then((res) => {
+        console.log(res);
+    }).catch((err) => { throw err; });
 }
 
 const bia = () => {

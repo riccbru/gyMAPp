@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import {
     Card,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
     CardTitle
@@ -20,61 +19,59 @@ function LoginForm() {
     const { toast } = useToast();
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState("");
-    const [userError, setUserError] = useState(false);
-    const [password, setPassword] = useState("");
-    const [passError, setPassError] = useState(false);
-    const [loginError, setLoginError] = useState(false);
+    const [loginData, setLoginData] = useState({
+      username: "",
+      password: "",
+    });
+    
+    const [errors, setErrors] = useState({
+      login: false,
+      username: false,
+      password: false,
+    });
+
+    const showErrorToast = (field, title, message) => {
+      setErrors((prev) => ({ ...prev, [field]: true }));
+      toast({
+          duration: 2500,
+          title: title,
+          description: message,
+          className: "bg-red text-white rounded-xl"
+      });
+    };
+
+    const handleChange = (e) => {
+      setErrors((prev) => ({ ...prev, [e.target.name]: false }));
+      setLoginData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const credentials = { username, password };
-        setUserError(false);
-        setPassError(false);
-        setLoginError(false);
-        if (!username) {
-            setUserError(true);
-            toast({
-                duration: 2000,
-                title: "MISSING CREDENTIALS",
-                description: "Username is required",
-                className: "bg-red text-white rounded-xl"
-            });
-            return;
-        } else if (!password) {
-            setPassError(true);
-            toast({
-                duration: 2000,
-                title: "MISSING CREDENTIALS",
-                description: "Password required",
-                className: "bg-red text-white rounded-xl"
-            });
-            return;
-
+        setErrors({ username: false, password: false, login: false });
+        if (!loginData.username) {
+          showErrorToast("username", "MISSING CREDENTIALS", "Username is required");
+          return;
+        } else if (!loginData.password) {
+          showErrorToast("password", "MISSING CREDENTIALS", "Password is required");
+          return;
         }
         try {
-            await login(credentials);
-            navigate("/");
+          const credentials = { username: loginData.username, password: loginData.password };
+          await login(credentials);
+          navigate("/");
         } catch (err) {
-            setLoginError(true);
-            toast({
-                duration: 2000,
-                title: "LOGIN FAILED",
-                description: "Incorrect username and/or password",
-                className: "bg-red text-white rounded-xl"
-            });
+          showErrorToast("login", "LOGIN FAILED", err.message || "Incorrect username and/or password");
         }
     }
 
     return (
       <div className="authnForm">
-        <Card className={`bg-primary rounded-xl ${!loginError ? '' : 'border-red border-2'}`}>
+        <Card className={`bg-primary rounded-xl ${!errors.login ? '' : 'border-red border-2'}`}>
           <CardHeader>
             <CardTitle className="flex items-center">
               <img alt="Icon" src="/gamma-96.png" className="ml-3 w-12 h-12" />
               <h1 className="mx-auto">Login gyMAPp</h1>
             </CardTitle>
-            {/* <CardDescription>description</CardDescription> */}
           </CardHeader>
 
           <CardContent>
@@ -83,35 +80,29 @@ function LoginForm() {
                 Username
               </Label>
               <Input
-                className={`rounded-3xl authnInput ${!userError ? '' : 'border-red border-2'}`}
-                name="username"
+                className={`rounded-3xl authnInput ${!errors.username ? '' : 'border-red border-2'}`}
                 type="text"
-                value={username}
+                name="username"
+                value={loginData.username}
                 placeholder="Enter username"
-                onChange={(e) => {
-                  setUserError(false);
-                  setUsername(e.target.value);
-                }}
+                onChange={(e) => handleChange(e)}
               />
 
               <Label className="mt-2 mb-1.5" htmlFor="password">
                 Password
               </Label>
               <Input
-                className={`rounded-3xl authnInput ${!passError ? '' : 'border-red border-2'}`}
-                name="password"
+                className={`rounded-3xl authnInput ${!errors.password ? '' : 'border-red border-2'}`}
                 type="password"
-                value={password}
+                name="password"
+                value={loginData.password}
                 placeholder="Enter password"
-                onChange={(e) => {
-                  setPassError(false);
-                  setPassword(e.target.value);
-                }}
+                onChange={(e) => handleChange(e)}
               />
 
               <Button
                 type="submit"
-                className="mt-5 bg-white hover:bg-white text-background rounded-3xl hover:rounded-xl"
+                className="bg-white hover:bg-white text-background rounded-3xl hover:rounded-xl mt-5"
               >
                 LOGIN
               </Button>

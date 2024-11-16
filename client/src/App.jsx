@@ -6,22 +6,8 @@ import { Common } from '@/pages/Common';
 import { useAuth } from '@/hooks/useAuth';
 import { NotFound } from '@/pages/NotFound';
 import { AuthProvider } from '@/context/AuthContext';
-import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { DataProvider } from './context/DataContext';
-
-const handleErrors = (err) => {
-  let msg = '';
-  if (err.error)
-    msg = err.error;
-  else if (err.errors) {
-    if (err.errors[0].msg)
-      msg = err.errors[0].msg + " : " + err.errors[0].path;
-  } else if (Array.isArray(err))
-    msg = err[0].msg + " : " + err[0].path;
-  else if (typeof err === "string") msg = String(err);
-  else msg = "Unknown Error";
-  // console.log(`handleErrors(App.jsx) - msg:\t${msg}`);
-}
 
 function App() {
   return (
