@@ -17,16 +17,14 @@ function SideAuth() {
     };
 
     return (
-        <Tooltip key={"tooltip-Auth"}>
+        <Tooltip key={"tooltip-AuthN"}>
           <TooltipTrigger>
             <SidebarMenuItem
               key={"AuthN"}
               onClick={handleClick}
               className="sidebarMenuItem"
             >
-              <span style={{ display: "inline", width: "1.5rem", height: "1.5rem" }}>
-                {!isLogged ? <LogIn /> : <LogOut className="rotate-180" />}
-              </span>
+              <span>{!isLogged ? <LogIn /> : <LogOut className="rotate-180" />}</span>
             </SidebarMenuItem>
           </TooltipTrigger>
           <TooltipContent className="tooltipContent rounded-full">
