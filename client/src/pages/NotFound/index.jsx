@@ -1,6 +1,6 @@
 function NotFound() {
     return(
-        <div>
+        <div className="text-center mt-10">
             Page in development...
         </div>
     );

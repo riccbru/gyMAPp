@@ -8,7 +8,12 @@ function PasswordField({ label, name, value, submit, onChange, error, onToggleSh
   };
   return (
     <div>
-        <Label htmlFor={name} className="mt-2 mb-1.5">{label}</Label>
+        <Label
+        htmlFor={name}
+        className={`mt-2 mb-1.5 ${!error ? '' : 'text-red'}`}
+        >
+          {label}
+          </Label>
         <div className="flex justify-between items-center w-full text-background">
             <Input
               name={name}

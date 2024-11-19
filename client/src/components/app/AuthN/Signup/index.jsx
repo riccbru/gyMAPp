@@ -82,7 +82,7 @@ function SignupForm() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setErrors({ name: false, email: false, birthdate: false, username: false, password: false});
+        setErrors({ name: false, email: false, signup: false, username: false, password: false, birthdate: false });
         if (!signupData.name) { 
             showErrorToast("name", "MISSING CREDENTIALS", "Name is required");
             return;
@@ -105,8 +105,10 @@ function SignupForm() {
         }
         try {
             await signup(signupData);
+            setErrors((prevData) => ({ ...prevData, signup: false }));
             navigate("/login");
-        } catch (err) {
+          } catch (err) {
+          setErrors((prevData) => ({ ...prevData, signup: true }));
             showErrorToast("signup", "SIGNUP FAILED", err.error || "Please, try again");
         } 
     }
@@ -114,7 +116,7 @@ function SignupForm() {
     return (
       <div className="authnForm">
         <Card
-          className={`authnCard ${!errors.signup ? '!border-green' : '!border-red'}`}
+          className={`authnCard ${!errors?.signup ? '!border-green' : '!border-red'}`}
         >
           <CardHeader>
             <CardTitle className="flex items-center">
@@ -128,7 +130,7 @@ function SignupForm() {
                 name="name"
                 label="Name"
                 error={errors.name}
-                submit={errors.signup}
+                submit={errors.signup.toString()}
                 onChange={handleChange}
                 value={signupData.name}
                 placeholder="Enter your name"
@@ -137,7 +139,7 @@ function SignupForm() {
                 name="email"
                 label="Email"
                 error={errors.email}
-                submit={errors.signup}
+                submit={errors.signup.toString()}
                 onChange={handleChange}
                 value={signupData.email}
                 placeholder="Enter your email"
@@ -154,7 +156,7 @@ function SignupForm() {
                     className={`
                         calendarButton
                         ${
-                            !errors.signup ?
+                            !errors?.signup ?
                             (signupData.birthdate ?
                                 (errors.birthdate ? '' : '!bg-green')
                                 : (errors.birthdate ? '!bg-lightRed border-red' : '!bg-panna'))
@@ -174,7 +176,7 @@ function SignupForm() {
                   <Calendar // or DayPicker
                     mode="single"
                     captionLayout="dropdown"
-                    className="bg-background text-white"
+                    className="justif-center bg-panna dark:bg-background text-background dark:text-white"
                     selected={signupData.birthdate}
                     onSelect={(date) => selectDate(date)}
                     // disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
@@ -190,7 +192,7 @@ function SignupForm() {
                 label="Username"
                 onChange={handleChange}
                 error={errors.username}
-                submit={errors.signup}
+                submit={errors.signup.toString()}
                 value={signupData.username}
                 placeholder="Enter a username"
               />
@@ -198,7 +200,7 @@ function SignupForm() {
               <PasswordField
                 name="password"
                 label="Password"
-                submit={errors.signup}
+                submit={errors.signup.toString()}
                 onChange={handleChange}
                 error={errors.password}
                 onToggleShow={flipShow}

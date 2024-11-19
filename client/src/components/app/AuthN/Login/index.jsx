@@ -63,20 +63,22 @@ function LoginForm() {
         try {
           const credentials = { username: loginData.username, password: loginData.password };
           await login(credentials);
-          navigate("/");
+          navigate("/home");
         } catch (err) {
-          showErrorToast("login", "LOGIN FAILED", err.message || "Incorrect username and/or password");
+          // HERE DEBUG MOBILE
+          console.log(err);
+          showErrorToast("login", "LOGIN FAILED", err.message || "Please try again");
         }
-    }
+      }
 
     return (
       <div className="authnForm">
         <Card className={`authnCard ${!errors.login ? '!border-green' : '!border-red'}`}>
 
           <CardHeader>
-            <CardTitle className="flex items-center">
+            <CardTitle className="flex items-center text-center">
               <img alt="Icon" src="/gamma-96.png" className="ml-3 w-12 h-12" />
-              <h1 className="mx-auto">Login gyMAPp</h1>
+              <h1 className={`mx-auto ${!errors.login ? '' : 'text-red'}`}>Login gyMAPp</h1>
             </CardTitle>
           </CardHeader>
 
@@ -85,7 +87,7 @@ function LoginForm() {
               <InputField 
                 name="username"
                 label="Username"
-                submit={errors.login}
+                submit={errors.login.toString()}
                 onChange={handleChange}
                 error={errors.username}
                 value={loginData.username}
@@ -94,7 +96,7 @@ function LoginForm() {
               <PasswordField 
                 name="password"
                 label="Password"
-                submit={errors.login}
+                submit={errors.login.toString()}
                 onChange={handleChange}
                 error={errors.password}
                 onToggleShow={flipShow}

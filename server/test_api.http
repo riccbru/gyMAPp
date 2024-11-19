@@ -36,7 +36,7 @@ Content-Type: application/json
 {
     "name":         "Ciclarimpus",
     "email":        "ciclarimpus@gymapp.dev",
-    "username":     "picci",
+    "username":     "ciclarimpus",
     "password":     "password",
     "birthdate":    "01-01-0001"
 }
