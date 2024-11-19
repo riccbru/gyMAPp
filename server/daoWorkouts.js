@@ -30,7 +30,7 @@ exports.fetchWorkout = (uid, weekday) => {
         `;
         db.all(sql, [uid, weekday], (err, rows) => {
             if (err) { reject(err); }
-            else if (!rows.length) { reject("Workout not found"); }
+            else if (!rows.length) { reject("No workout"); }
             else {
                 const workout = rows.map(r => returnWorkout(r));
                 resolve(workout);

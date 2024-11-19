@@ -13,11 +13,12 @@
     }
 
     .outlet {
-        @apply flex w-full items-center justify-center mx-auto;
+        @apply flex-grow mx-auto;
     }
 
     .sidebar {
-        @apply w-36 bg-background text-white dark:bg-primary;
+        /* w-36 */
+        @apply bg-background text-white dark:bg-primary;
     }
 
     .sidebarMenu {
@@ -44,7 +45,7 @@
     }
 
     .authnForm {
-        @apply flex items-center justify-center min-h-screen -mt-12;
+        @apply flex items-center justify-center min-h-screen;
     }
 
     .authnCard {
@@ -73,6 +74,11 @@
 
     .footerLink {
         @apply ml-1 underline text-blue-300 dark:text-gray;
+    }
+
+    .calendar {
+        @apply bg-panna dark:bg-background
+        text-background dark:text-white;
     }
 
 }

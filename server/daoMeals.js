@@ -3,21 +3,18 @@
 const db = require("./db");
 
 const returnMeal = (rows) => {
-    const meals = {
-        options: {}
-    };
+    const options = [];
     rows.forEach(row => {
         const { option_id, ingredient_name, quantity } = row;
-        const key = option_id;
-        if (!meals.options[key]) {
-            meals.options[key] = [];
+        if (!options[option_id]) {
+            options[option_id] = [];
         }
-        meals.options[key].push({
+        options[option_id].push({
             ingredient: ingredient_name,
-            quantity: quantity
-        });   
+            quantity: quantity,
+        });
     });
-    return meals;
+    return options.filter(option => option);
 };
 
 exports.fetchMeal = (uid, weekday, meal_type) => {
@@ -45,7 +42,7 @@ exports.fetchMeal = (uid, weekday, meal_type) => {
         `;
         db.all(sql, [uid, weekday, meal_type], (err, rows) => {
             if (err) { reject(err); }
-            else if (!rows.length) { reject(`Meal not found`); }
+            else if (!rows.length) { reject(`No meal`); }
             else {
                 const meal = returnMeal(rows);
                 resolve(meal);

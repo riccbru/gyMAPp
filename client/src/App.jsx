@@ -1,4 +1,6 @@
 import './App.css'
+import { useEffect } from 'react';
+import { Bia } from './pages/Bia';
 import { Home } from '@/pages/Home';
 import { Login } from '@/pages/Login';
 import { Signup } from '@/pages/Signup';
@@ -14,11 +16,10 @@ function App() {
   const future = {
     v7_startTransition:   true,
     v7_relativeSplatPath: true,
-  }; 
+  };
+
   return (
-    <BrowserRouter
-      future={future}
-    >
+    <BrowserRouter future={future}>
       <AuthProvider>
         <DataProvider>
           <AppRouted />
@@ -36,10 +37,11 @@ function AppRouted() {
     <Routes>
         <Route path="/" element={isLogged ? <Common /> : <Navigate to="/login" />}>
           <Route path="/home" element={<Home />} />
+          <Route path="/bia" element={<Bia />} />
           <Route path="*" element={<NotFound />} />
         </Route>
-        <Route path="/login" element={!isLogged ? <Login /> : <Navigate to="/" />} />
-        <Route path="/signup" element={!isLogged ? <Signup /> : <Navigate to="/" />} />
+        <Route path="/login" element={!isLogged ? <Login /> : <Navigate to="/home" />} />
+        <Route path="/signup" element={!isLogged ? <Signup /> : <Navigate to="/home" />} />
     </Routes>
   );
 }

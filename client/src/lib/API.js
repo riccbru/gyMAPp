@@ -66,18 +66,7 @@ async function signup(userData) {
 }
 
 const bia = () => {
-    return getJSON(
-        fetch(SERVER_URL + "/bia", {
-            credentials: 'include'
-        })
-    );
-}
-
-const meal = () => {
-    const url = new URL(SERVER_URL + "/meals");
-    url.searchParams.append('weekday', weekday);
-    url.searchParams.append('meal', meal);
-
+    const url = new URL(SERVER_URL + "/bia");
     return getJSON(
         fetch(url, {
             credentials: 'include'
@@ -85,13 +74,22 @@ const meal = () => {
     );
 }
 
-const workout = (weekday) => {
+const meal = async (weekday, mealtype) => {
+    const url = new URL(SERVER_URL + `/meals?weekday=${weekday}&meal=${mealtype}`);
+
+    const res = await fetch(url, {
+        credentials: 'include'
+    });
+
+    return await res.json();
+}
+
+const workout = async (weekday) => {
     const url = new URL(SERVER_URL + `/workouts/${weekday}`);
-    return getJSON(
-        fetch(SERVER_URL, {
+    const res = await fetch(url, {
             credentials: 'include'
-        })
-    );
+    });
+    return await res.json();
 }
 
 export default { info, login, logout, signup, bia, meal, workout };

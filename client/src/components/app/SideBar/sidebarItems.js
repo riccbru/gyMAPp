@@ -1,7 +1,7 @@
 'use strict';
 import { SideAuthItem } from "./SideAuthItem";
 import { SideThemeItem } from "./SideThemeItem";
-import { Calendar, ChartNoAxesCombined, Dumbbell, Home, Settings, Utensils } from "lucide-react";
+import { ChartNoAxesCombined, Dumbbell, Home, ShoppingBasket, Utensils } from "lucide-react";
 
 const sidebarItems = [
 
@@ -25,21 +25,15 @@ const sidebarItems = [
   },
   {
     type: "menu",
-    title: "Progress",
-    url: "/progresses",
+    title: "BIAs",
+    url: "/bia",
     icon: ChartNoAxesCombined,
   },
   {
     type: "menu",
-    title: "Calendar",
-    url: "/calendar",
-    icon: Calendar,
-  },
-  {
-    type: "menu",
-    title: "Settings",
-    url: "/settings",
-    icon: Settings,
+    title: "Groceries",
+    url: "/groceries",
+    icon: ShoppingBasket,
   },
   {
     type: "component",

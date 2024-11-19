@@ -26,7 +26,13 @@ const minEmailChars = 4;
 const maxUserLength = 20;
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  // origin: true,
+  // origin: "http://localhost:5173",
+  origin: [
+    "http://localhost:5173",
+    "http:192.168.13.30:5173",
+    "http:192.168.13.56:5173"
+  ],
   credentials: true,
 };
 
@@ -47,7 +53,7 @@ app.use(session(sessionOptions));
 app.use(passport.authenticate("session"));
 
 const errorFormatter = ({ location, msg }) => {
-  return `${msg}, check ${location}`;
+  return `${msg}`;
 };
 
 const isLogged = (req, res, next) => {
@@ -133,7 +139,7 @@ app.post("/api/v1/signup",
     .isString()
     .withMessage("Last time I checked emails were strings")
     .isLength({ min: minEmailChars })
-    .withMessage("Your email can't be that short")
+    .withMessage("Your email can't be that short (user@domain.tld)")
     .isEmail()
     .withMessage("Invalid email, example: user@domain.tld"),
     body("birthdate")
@@ -214,7 +220,7 @@ app.get("/api/v1/bia/:uid?", isLogged,
         const reqUID = req.params.uid || req.user.uid;
         const uid = req.user.admin && req.params.uid ? reqUID : req.user.uid;
         const bias = await daoBias.fetchBias(uid);
-        res.status(200).json(bias);
+        res.status(200).json({ "BIAs" : bias });
       } catch (err) {
         res.status(404).json({ error: err });
       }
@@ -245,9 +251,9 @@ app.post("/api/v1/bia/", isLogged,
 app.get("/api/v1/meals/", isLogged,
   [
     query('weekday')
-      .isInt({ min: 1, max: 6 }).withMessage("'weekday' must an integer in [1, 6]"),
+      .isInt({ min: 0, max: 6 }).withMessage("'weekday' must an integer in [0, 6]"),
     query('meal')
-      .isInt({ min: 1, max: 6 }).withMessage("'meal' must an integer in [1, 6]")
+      .isInt({ min: 0, max: 6 }).withMessage("'meal' must an integer in [0, 6]")
   ],
   async (req, res) => {
     const errors = validationResult(req).formatWith(errorFormatter);
@@ -257,9 +263,13 @@ app.get("/api/v1/meals/", isLogged,
     try {
       const uid = req.user.uid;
       const weekday = req.query.weekday;
-      const meal = req.query.meal;
-      const meals = await daoMeals.fetchMeal(uid, weekday, meal);
-      return res.status(200).json(meals);
+      if (!weekday) {
+        console.log("No meal");
+      } else {
+        const meal = req.query.meal;
+        const meals = await daoMeals.fetchMeal(uid, weekday, meal);
+        return res.status(200).json({ "options": meals });
+      }
     } catch (err) {
       return res.status(404).json({ error: err });
     }
@@ -271,7 +281,7 @@ app.get("/api/v1/meals/", isLogged,
 /*********************/
 
 app.get("/api/v1/workouts/:weekday", isLogged,
-  [param('weekday').isInt({ min: 1, max: 6}).withMessage("'weekday' must be integer in [1, 3]")],
+  [param('weekday').isInt({ min: 0, max: 6}).withMessage("'weekday' must be integer in [0, 6]")],
   async (req, res) => {
     const errors = validationResult(req).formatWith(errorFormatter);
     if (!errors.isEmpty()) {
@@ -281,7 +291,7 @@ app.get("/api/v1/workouts/:weekday", isLogged,
       const uid = req.user.uid;
       const weekday = req.params.weekday;
       const workout = await daoWorkouts.fetchWorkout(uid, weekday);
-      return res.status(200).json(workout);
+      return res.status(200).json({ "exercises": workout });
     } catch (err) {
       return res.status(404).json({ error: err });
     }

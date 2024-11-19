@@ -9,7 +9,12 @@ function InputField({ label, name, value, error, submit, onChange, placeholder, 
 
   return (
     <div>
-      <Label htmlFor={name} className="mt-2 mb-1.5">{label}</Label>
+      <Label
+      htmlFor={name}
+      className={`mt-2 mb-1.5 ${!error ? '' : 'text-red'}`}
+      >
+        {label}
+        </Label>
       <Input
         type={type}
         name={name}
