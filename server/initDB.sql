@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS "bias" (
     "date" TEXT NOT NULL,
     "height" REAL NOT NULL,
     "weight" REAL NOT NULL,
-    "bmi" REAL NOT NULL,
+    "body_mass_index" REAL NOT NULL,
     "basal_metabolic_rate" REAL NOT NULL,
     "total_daily_energy_expenditure" REAL NOT NULL,
     "na_k" REAL NOT NULL,
@@ -104,7 +104,7 @@ INSERT INTO "users" (
 );
 
 INSERT INTO "bias" (
-    "uid", "date", "height", "weight", "bmi",
+    "uid", "date", "height", "weight", "body_mass_index",
     "basal_metabolic_rate",
     "total_daily_energy_expenditure",
     "na_k",
