@@ -36,11 +36,11 @@ function AppRouted() {
   return (
     <Routes>
         <Route path="/" element={isLogged ? <Common /> : <Navigate to="/login" />}>
-          <Route path="/home" element={<Home />} />
+          <Route index path="/home" element={<Home />} />
           <Route path="/bia" element={<Bia />} />
           <Route path="*" element={<NotFound />} />
         </Route>
-        <Route path="/login" element={!isLogged ? <Login /> : <Navigate to="/home" />} />
+        <Route path="/login" element={!isLogged ? <Login /> : <Navigate to="/bia" />} />
         <Route path="/signup" element={!isLogged ? <Signup /> : <Navigate to="/home" />} />
     </Routes>
   );

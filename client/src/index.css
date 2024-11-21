@@ -81,6 +81,14 @@
         text-background dark:text-white;
     }
 
+    .accordionTrigger {
+        @apply bg-white
+        dark:bg-primary
+        hover:bg-panna dark:hover:border-green
+        border-gray dark:border-blue-700
+        justify-center border-2 rounded-full;
+    }
+
 }
 
 @layer base {

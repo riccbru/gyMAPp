@@ -8,7 +8,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 function TestHome() {
 
     const { isLogged } = useAuth();
-    const [bia, setBia] = useState([]);
     const [meal, setMeal] = useState([]);
     const [workout, setWorkout] = useState([]);
 
@@ -16,44 +15,37 @@ function TestHome() {
         if (isLogged) {
             const weekday = getWeekday();
             const mealtype = getMealType();
-            API.bia()
-                .then((bia) => {
-                    setBia(bia.BIAs);
-                })
-                .catch((err) => {
-                    console.log(`index.useEffect(BIA):\n${err}`);
-                });
             API.workout(weekday)
-                .then((workout) => {
-                    setWorkout(workout.workout);
+                .then((res) => {
+                    setWorkout(res.exercises);
                 })
                 .catch((err) => {
-                    console.log(`index.useEffect(workout):\n${err}`);
+                    console.log(`HOME.index.useEffect(workout):\n${err}`);
                 });
             API.meal(weekday, mealtype)
-                .then((meal) => {
-                    setMeal(meal.options);
+                .then((res) => {
+                    setMeal(res.options);
                 })
                 .catch((err) => {
-                    console.log(`index.useEffect(meal):\n${err}`);
+                    console.log(`HOME.index.useEffect(meal):\n${err}`);
                 });
         }
     }, [isLogged]);
 
     return (
       <div className="flex flex-col">
-        <div className="text-center font-extrabold text-2xl mt-10 mb-10">
+        <div className="mt-10 mb-10 text-center font-extrabold text-2xl">
           {dayjs().format("dddd D MMMM YYYY[,] HH:mm:ss").toUpperCase()}
         </div>
         <div className="flex flex-row justify-between w-full">
           <div className="flex-1 items-center text-center justify-center">
-            <p className="text-xl">MEALS</p>
-            <p>options</p>
+            <p className="text-xl">MEALS {meal ? 'SET' : 'UNSET'}</p>
+            <p>options: {meal?.length}</p>
           </div>
           <div className="flex-1 items-center text-center justify-center">
-            <p className="text-xl">WORKOUT</p>
-            <p>exercises</p>9
-''          </div>
+            <p className="text-xl">WORKOUT {workout ? 'SET' : 'UNSET'}</p>
+            <p>exercises: {workout?.length}</p>
+          </div>
         </div>
       </div>
     );
