@@ -22,7 +22,7 @@ function getJSON(httpResponsePromise) {
     });
 }
 
-async function info() {
+const info = async () => {
     return getJSON(
         fetch(SERVER_URL + "/session", {
             credentials: 'include'
@@ -30,7 +30,7 @@ async function info() {
     );
 }
 
-async function login(credentials) {
+const login = async (credentials) => {
     const res = await fetch(SERVER_URL + "/login", {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -54,7 +54,7 @@ const logout = async () => {
     );
 }
 
-async function signup(userData) {
+const signup = async (userData) => {
     return getJSON(fetch(SERVER_URL + "/signup", {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},

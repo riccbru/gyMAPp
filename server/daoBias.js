@@ -11,6 +11,7 @@ const returnBia = (b) => ({
     date:                                       b.date,
     height:                                     b.height,
     weight:                                     b.weight,
+    bmi:                                        b.bmi,
     basal_metabolic_rate:                       b.basal_metabolic_rate,
     total_daily_energy_expenditure:             b.total_daily_energy_expenditure,
     na_k:                                       b.na_k,
