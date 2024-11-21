@@ -9,11 +9,11 @@ function getJSON(httpResponsePromise) {
                 if (response.ok) {
                     response.json()
                         .then(json => resolve(json))
-                        .catch(err => reject({ error: `Cannot parse server response ok-catch:\n${err}` }))
+                        .catch(err => reject({ error: `API.getJSON: Cannot parse server response ok-catch:\n${err}` }))
                 } else {
                     response.json()
                         .then(obj => reject(obj))
-                        .catch(err => reject({ error: `Cannot parse server response !ok-catch:\n${err}` }))
+                        .catch(err => reject({ error: `API.getJSON: Cannot parse server response !ok-catch:\n${err}` }))
                 }
             })
             .catch(err =>

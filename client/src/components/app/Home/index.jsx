@@ -3,7 +3,6 @@ import API from "@/lib/API";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
 import { getWeekday, getMealType } from "@/lib/parameters";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 function TestHome() {
 
@@ -11,13 +10,24 @@ function TestHome() {
     const [meal, setMeal] = useState([]);
     const [workout, setWorkout] = useState([]);
 
+    const mealMap = {
+      "1": "breakfast",
+      "2": "morning snack",
+      "3": "lunch",
+      "4": "afternoon snack",
+      "5": "dinner",
+      "6": "midnight snack"
+    }
+
     useEffect(() => {
         if (isLogged) {
             const weekday = getWeekday();
             const mealtype = getMealType();
             API.workout(weekday)
                 .then((res) => {
+                  if (res.exercises !== undefined) {
                     setWorkout(res.exercises);
+                  }
                 })
                 .catch((err) => {
                     console.log(`HOME.index.useEffect(workout):\n${err}`);
@@ -32,20 +42,24 @@ function TestHome() {
         }
     }, [isLogged]);
 
+
     return (
       <div className="flex flex-col">
         <div className="mt-10 mb-10 text-center font-extrabold text-2xl">
           {dayjs().format("dddd D MMMM YYYY[,] HH:mm:ss").toUpperCase()}
         </div>
         <div className="flex flex-row justify-between w-full">
+
           <div className="flex-1 items-center text-center justify-center">
-            <p className="text-xl">MEALS {meal ? 'SET' : 'UNSET'}</p>
-            <p>options: {meal?.length}</p>
+            <div className="text-xl font-bold">MEALS</div>
+            <div>{meal?.length} options for {mealMap[getWeekday()]}</div>
           </div>
+
           <div className="flex-1 items-center text-center justify-center">
-            <p className="text-xl">WORKOUT {workout ? 'SET' : 'UNSET'}</p>
-            <p>exercises: {workout?.length}</p>
+            <div className="text-xl font-bold">WORKOUT</div>
+            <div>{workout?.length !== 0 ? `exercises: ${meal?.length}` : 'rest day'}</div>
           </div>
+
         </div>
       </div>
     );

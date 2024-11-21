@@ -11,8 +11,13 @@ const beautyName = (entry) => {
     if (entry.length <= 3) return entry.toUpperCase()
     return entry.split("_")
                 .map((word) => word.charAt(0).toUpperCase())
-                .join("");
-    
+                .join("");  
+}
+
+const standardName = (entry) => {
+    return entry.split("_")
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ");
 }
 
 function BiaRow({ name, value, percentage }) {
@@ -24,12 +29,14 @@ function BiaRow({ name, value, percentage }) {
                     {beautyName(name.toString())}
                 </TooltipTrigger>
             </div>
-            <div className="basis-1/4 items-center text-center">{value}</div>
-            <div className="basis-1/2 items-center text-center text-gray mr-3">{percentage ? `${percentage} %` : ''}</div>
+            <div className="basis-1/4 items-center text-center">
+                <div>{value}</div>
+                <div className="text-gray">{percentage ? `(${percentage} %)` : ''}</div>
+            </div>
+            <div className="basis-1/7 items-center text-center text-gray mr-3">bello</div>
         </div>
         <TooltipContent side="left" className='tooltipContent text-start text-pretty'>
-            <p className="text-lg">ACRONYM TITLE</p>
-            <div className="text-md text-pretty">acronym description one two three four five six seven eight nine ten eleven twelve thirteen fourten fifteen</div>
+            <div className="text-md text-pretty text-gray">{standardName(name)}</div>
         </TooltipContent>
         </Tooltip>
     );

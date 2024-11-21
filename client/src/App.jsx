@@ -40,8 +40,8 @@ function AppRouted() {
           <Route path="/bia" element={<Bia />} />
           <Route path="*" element={<NotFound />} />
         </Route>
-        <Route path="/login" element={!isLogged ? <Login /> : <Navigate to="/bia" />} />
-        <Route path="/signup" element={!isLogged ? <Signup /> : <Navigate to="/home" />} />
+        <Route path="/login" element={!isLogged ? <Login /> : <Navigate to="/home" />} />
+        <Route path="/signup" element={!isLogged ? <Signup /> : <Navigate to="/login" />} />
     </Routes>
   );
 }

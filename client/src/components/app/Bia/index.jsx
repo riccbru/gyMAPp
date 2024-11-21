@@ -1,6 +1,5 @@
 import dayjs from 'dayjs';
 import API from '@/lib/API';
-import { BiaRow } from './BiaRow';
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
 import { BiaAccordion } from './BiaAccordion';
