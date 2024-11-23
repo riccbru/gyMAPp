@@ -38,7 +38,7 @@ exports.fetchMeal = (uid, weekday, meal_type) => {
             AND m.weekday = ?
             AND m.meal_type = ?
         ORDER BY 
-            m.mid;
+            i.ingredient_name ASC;
         `;
         db.all(sql, [uid, weekday, meal_type], (err, rows) => {
             if (err) { reject(err); }

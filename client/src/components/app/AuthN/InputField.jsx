@@ -1,10 +1,10 @@
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 function InputField({ label, name, value, error, submit, onChange, placeholder, type = "text" }) {
 
-  const getColor = (value, error, action) => {
-    return !action ? (value ? (error ? '' : 'border-green') : (error ? 'border-red' : 'border-blue-700')) : 'border-blue-700';
+  const getColor = (value, error) => {
+    return !error ? (value ? '!bg-green' : '') : '!bg-red';
   };
 
   return (
@@ -22,7 +22,7 @@ function InputField({ label, name, value, error, submit, onChange, placeholder, 
         submit={submit}
         onChange={onChange}
         placeholder={placeholder}
-        className={`authnInput ${getColor(value, error, submit)}`}
+        className={`authnInput ${getColor(value, error)}`}
       />
     </div>
   );
