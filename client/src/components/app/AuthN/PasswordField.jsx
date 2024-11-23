@@ -21,7 +21,7 @@ function PasswordField({ label, name, value, submit, onChange, error, onToggleSh
               submit={submit}
               onChange={onChange}
               type={showPassword ? "text" : "password"}
-              className={`authnInput ${getColor(value, error, submit)}`}
+              className={`authnInput ${getColor(value, error, submit)} ${!error ? (value.length > 7 ? '!bg-green' : '') : '!bg-red'}`}
             />
             <div className="showButton" onClick={onToggleShow}>
                 {showPassword ? <Eye /> : <EyeOff />}

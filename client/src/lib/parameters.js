@@ -15,9 +15,9 @@ const getMealType = () => {
         { id: 1, min:  7, max:  10 },  
         { id: 2, min: 10, max: 12 },
         { id: 3, min: 12, max: 15 },
-        { id: 4, min: 15, max: 18 },  
-        { id: 5, min: 18, max: 22 },    
-        { id: 6, min: 22, max: 31 },  
+        { id: 4, min: 15, max: 18.5 },  
+        { id: 5, min: 18.5, max: 22 },    
+        { id: 6, min: 22, max: 7 },  
       ];
 
     const meal = mealTimes.find(({ min, max }) => {

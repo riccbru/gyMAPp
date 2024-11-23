@@ -6,7 +6,7 @@ function Common() {
     return(
         <>
             <div className='flex mx-auto'>
-                <aside className='block md:block sm:block'>
+                <aside className='block md:block'>
                     <SidebarProvider>
                         <SideBar />
                         <SidebarTrigger />

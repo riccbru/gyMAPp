@@ -29,17 +29,21 @@ function BiaTable() {
         <div className='flex flex-col'>
             <div className="mt-10 mb-10 text-center font-extrabold text-3xl">BIAs</div>
 
-            {bias?.map((bia, index) => (
-                <div key={index}>
-                    <div className='flex flex-row justify-center mb-5'>
-                        <div className='flex items-center text-center'>
-                            <Accordion type="multiple" collapsible="false" style={{width: '36rem'}}>
-                                <BiaAccordion index={index} bia={bia} />
-                            </Accordion>
+            {bias[0]?.date ?
+                bias.map((bia, index) => (
+                    <div key={index}>
+                        <div className='flex flex-row justify-center mb-5'>
+                            <div className='flex items-center text-center'>
+                                <Accordion type="multiple" collapsible="false" style={{width: '36rem'}}>
+                                    <BiaAccordion index={index} bia={bia} />
+                                </Accordion>
+                            </div>
                         </div>
                     </div>
-                </div>
-            ))}
+                ))
+                :
+                <div className='text-center'>No BIAs uploaded</div>
+            }
                         
         </div>
     );

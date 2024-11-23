@@ -176,10 +176,10 @@ function SignupForm() {
                   <Calendar // or DayPicker
                     mode="single"
                     captionLayout="dropdown"
-                    className="justif-center bg-panna dark:bg-background text-background dark:text-white"
+                    className="calendar"
                     selected={signupData.birthdate}
                     onSelect={(date) => selectDate(date)}
-                    // disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+                    disabled={(date) => date > new Date() || date < new Date("1924-01-01")}
                   />
                 </PopoverContent>
               </Popover>

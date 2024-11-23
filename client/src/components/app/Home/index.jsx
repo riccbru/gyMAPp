@@ -1,43 +1,44 @@
+'use strict';
+
 import dayjs from "dayjs";
 import API from "@/lib/API";
+import { Options } from "./Options";
+import { Exercises } from "./Exercises";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
 import { getWeekday, getMealType } from "@/lib/parameters";
+import { OptionAccordion } from "./OptionAccordion";
+import { ExerciseAccordion } from "./ExerciseAccordion";
 
 function TestHome() {
 
     const { isLogged } = useAuth();
-    const [meal, setMeal] = useState([]);
-    const [workout, setWorkout] = useState([]);
-
-    const mealMap = {
-      "1": "breakfast",
-      "2": "morning snack",
-      "3": "lunch",
-      "4": "afternoon snack",
-      "5": "dinner",
-      "6": "midnight snack"
-    }
+    const [options, setOptions] = useState([]);
+    const [exercises, setExercises] = useState([]);
 
     useEffect(() => {
         if (isLogged) {
+          // const weekday = 5;
+          // const mealtype = 5;
             const weekday = getWeekday();
             const mealtype = getMealType();
+            API.meal(weekday, mealtype)
+                .then((res) => {
+                  if (res.options !== undefined) {
+                    setOptions(res.options);        // array of JSONs
+                  }
+                })
+                .catch((err) => {
+                    console.log(`HOME.index.useEffect(meal):\n${err}`);
+                });
             API.workout(weekday)
                 .then((res) => {
                   if (res.exercises !== undefined) {
-                    setWorkout(res.exercises);
+                    setExercises(res.exercises);    // array of JSONs
                   }
                 })
                 .catch((err) => {
                     console.log(`HOME.index.useEffect(workout):\n${err}`);
-                });
-            API.meal(weekday, mealtype)
-                .then((res) => {
-                    setMeal(res.options);
-                })
-                .catch((err) => {
-                    console.log(`HOME.index.useEffect(meal):\n${err}`);
                 });
         }
     }, [isLogged]);
@@ -48,16 +49,22 @@ function TestHome() {
         <div className="mt-10 mb-10 text-center font-extrabold text-2xl">
           {dayjs().format("dddd D MMMM YYYY[,] HH:mm:ss").toUpperCase()}
         </div>
-        <div className="flex flex-row justify-between w-full">
+        <div className="flex flex-row justify-between w-full mx-auto">
 
           <div className="flex-1 items-center text-center justify-center">
-            <div className="text-xl font-bold">MEALS</div>
-            <div>{meal?.length} options for {mealMap[getWeekday()]}</div>
+            <Options mealOptions={options} />
+            {/* {!options?.length ? null :
+              options.map((option, index) => {
+                <OptionAccordion key={index} index={index} mealOption={option} />
+              })} */}
           </div>
 
           <div className="flex-1 items-center text-center justify-center">
-            <div className="text-xl font-bold">WORKOUT</div>
-            <div>{workout?.length !== 0 ? `exercises: ${meal?.length}` : 'rest day'}</div>
+            <Exercises workoutExercises={exercises} />
+            {/* {!exercises?.length ? null :
+              exercises.map((exercise, index) => {
+                <ExerciseAccordion key={index} index={index} workoutExercise={exercise} />
+              })} */}
           </div>
 
         </div>

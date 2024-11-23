@@ -3,7 +3,6 @@
 const db = require("./db");
 
 const returnWorkout = (r) => ({
-    "#": r.enum,
     name: r.name,
     sets: r.sets,
     reps: r.reps,
