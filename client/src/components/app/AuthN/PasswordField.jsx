@@ -3,8 +3,8 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
 function PasswordField({ label, name, value, submit, onChange, error, onToggleShow, showPassword }) {
-  const getColor = (data, err, action) => {
-    return !action ? (value ? (error ? '' : 'border-green') : (error ? 'border-red' : 'border-blue-700')) : 'border-blue-700';
+  const getColor = (value, error) => {
+    return !error ? (value ? '!bg-green' : '') : '!bg-red';
   };
   return (
     <div>
@@ -21,7 +21,7 @@ function PasswordField({ label, name, value, submit, onChange, error, onToggleSh
               submit={submit}
               onChange={onChange}
               type={showPassword ? "text" : "password"}
-              className={`authnInput ${getColor(value, error, submit)} ${!error ? (value.length > 7 ? '!bg-green' : '') : '!bg-red'}`}
+              className={`authnInput  ${!submit ? '' : (!error ? (value.length > 7 ? '!bg-green' : '') : '!bg-red')}`}
             />
             <div className="showButton" onClick={onToggleShow}>
                 {showPassword ? <Eye /> : <EyeOff />}

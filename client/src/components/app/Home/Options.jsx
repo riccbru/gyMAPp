@@ -1,4 +1,4 @@
-import { getWeekday } from "@/lib/parameters";
+import { getMealType, getWeekday } from "@/lib/parameters";
 import {
     Accordion,
     AccordionItem,
@@ -6,29 +6,25 @@ import {
     AccordionContent,
 } from "@/components/ui/accordion";
 
-const mealMap = {
-    "1": "breakfast",
-    "2": "morning snack",
-    "3": "lunch",
-    "4": "afternoon snack",
-    "5": "dinner",
-    "6": "midnight snack"
-}
-
-const beautyMealName = () => {
-    const meal = mealMap[getWeekday()];
-    return meal;
-}
 
 function Options({ mealOptions }) {
-
     
+    const mealMap = {
+        '1': "breakfast",
+        '2': "morning snack",
+        '3': "lunch",
+        '4': "afternoon snack",
+        '5': "dinner",
+        '6': "midnight snack"
+    };
     
+    const beautyMealName = () => {
+        return mealMap[getMealType()];
+    }
 
     return (
         <div className="flex flex-col items-center text-center justify-center">
-            <div className="homeTitle">{beautyMealName()}</div>
-            <div>{!mealOptions?.length ? `No meal options for ${beautyMealName()}` : ''}</div>
+            <div className="homeTitle">MEALS ({mealOptions?.length ? beautyMealName() : 'TREAT DAY'})</div>
 
             {
                 !mealOptions?.length ? null :
@@ -45,13 +41,13 @@ function Options({ mealOptions }) {
                                 </AccordionTrigger>
                                 <AccordionContent className='accordionContent'>
                                     <ol className="text-start">
-                                        {option?.map((opt) => (
-                                            <>
-                                                <li className="flex flex-row justify-between font-bold">
+                                        {option?.map((opt, ind) => (
+                                            <div key={ind}>
+                                                <li className="liOption">
                                                     <div className="ingredient">{opt.ingredient.toString().toUpperCase()}</div>
                                                     <div className="quantity">{opt.quantity} g</div>
                                                 </li>
-                                            </>
+                                            </div>
                                         ))}
                                     </ol>
                                 </AccordionContent>

@@ -65,7 +65,7 @@ exports.pushBia = (bia) => {
     return new Promise((resolve, reject) => {
         const sql = `
         INSERT INTO bias (
-            uid, date, height, weight, bmi, 
+            uid, date, height, weight, body_mass_index, 
             basal_metabolic_rate, total_daily_energy_expenditure, na_k, 
             phase_angle, total_body_water, extra_cellular_water, intra_cellular_water, 
             fat_free_mass, fat_mass, body_composition_measurement, muscle_mass, 
@@ -74,7 +74,7 @@ exports.pushBia = (bia) => {
         VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );
         `;
         const biaArray = [
-            bia.uid, bia.date, bia.height, bia.weight, bia.bmi,
+            bia.uid, bia.date, bia.height, bia.weight, bia.body_mass_index,
             bia.basal_metabolic_rate, bia.total_daily_energy_expenditure, bia.na_k, bia.phase_angle,
             bia.total_body_water, bia.extra_cellular_water, bia.intra_cellular_water,
             bia.fat_free_mass, bia.fat_mass, bia.body_composition_measurement, bia.muscle_mass,
