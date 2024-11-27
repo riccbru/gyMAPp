@@ -1,4 +1,4 @@
-import { getWeekday } from "@/lib/parameters";
+import params from "@/lib/parameters";
 import {
     Accordion,
     AccordionItem,
@@ -8,22 +8,9 @@ import {
 
 function Exercises({ workoutExercises }) {
 
-    const workoutMap = {
-        "0": "sunday",
-        "1": "monday",
-        "2": "tuesday",
-        "3": "wednesday",
-        "4": "thursday",
-        "5": "friday",
-        "6": "saturday"
-    }
-    const beautyWorkoutDay = () => {
-        return workoutMap[getWeekday()];
-    }
-
     return (
         <div className="flex flex-col items-center text-center justify-center">
-            <div className="homeTitle">WORKOUT ({workoutExercises?.length ? beautyWorkoutDay() : 'REST DAY'})</div>
+            <div className="homeTitle">WORKOUT ({workoutExercises?.length ? params.getWeekdayName() : 'REST DAY'})</div>
 
             {
                 !workoutExercises?.length ? null :
@@ -39,11 +26,31 @@ function Exercises({ workoutExercises }) {
                                     <div className="ml-5 text-lg">Exercise {index + 1}</div>
                                 </AccordionTrigger>
                                 <AccordionContent className='accordionContent'>
-                                    <ul className="text-start">
-                                        <li className="flex flex-row justify-between font-bold">
-                                            <div className="ml-5">{exercise.name}</div>
-                                        </li>
-                                    </ul>
+                                    <div className="overflow-x-auto">
+                                        <table className="table-auto w-full text-white text-center">
+                                            <thead>
+                                                <tr>
+                                                    {Object.keys(exercise).map((key) => (
+                                                        <th key={key} className="px-4 py-2 font-bold text-blue-300">
+                                                            {key.toUpperCase()}
+                                                        </th>
+                                                    ))}
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr className="font-bold text-white dark:text-gray dark:hover:text-white">
+                                                    {Object.values(exercise).map((value, idx) => (
+                                                        <td
+                                                            key={idx}
+                                                            className="px-4 py-2"
+                                                        >
+                                                            {value !== null ? value.toString().toUpperCase() : '-'}
+                                                        </td>
+                                                    ))}
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </AccordionContent>
                             </AccordionItem>
                         </Accordion>

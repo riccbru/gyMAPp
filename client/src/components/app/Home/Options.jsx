@@ -1,4 +1,4 @@
-import { getMealType, getWeekday } from "@/lib/parameters";
+import params from "@/lib/parameters";
 import {
     Accordion,
     AccordionItem,
@@ -8,23 +8,10 @@ import {
 
 
 function Options({ mealOptions }) {
-    
-    const mealMap = {
-        '1': "breakfast",
-        '2': "morning snack",
-        '3': "lunch",
-        '4': "afternoon snack",
-        '5': "dinner",
-        '6': "midnight snack"
-    };
-    
-    const beautyMealName = () => {
-        return mealMap[getMealType()];
-    }
 
     return (
         <div className="flex flex-col items-center text-center justify-center">
-            <div className="homeTitle">MEALS ({mealOptions?.length ? beautyMealName() : 'TREAT DAY'})</div>
+            <div className="homeTitle">MEALS ({mealOptions?.length ? params.getMealTypeName() : 'TREAT DAY'})</div>
 
             {
                 !mealOptions?.length ? null :
