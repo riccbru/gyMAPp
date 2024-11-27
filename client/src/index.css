@@ -40,7 +40,7 @@
     }
 
     .tooltipContent {
-        @apply bg-primary dark:bg-white
+        @apply bg-primary dark:bg-panna
         dark:text-primary text-white
         border-gray !rounded-3xl;
     }
@@ -83,21 +83,37 @@
     }
 
     .accordionTrigger {
-        @apply bg-white dark:bg-primary
-        hover:bg-panna dark:hover:border-green
+        @apply bg-panna hover:bg-white
+        dark:bg-primary dark:hover:border-green
         border-gray dark:border-blue-700
         justify-center border-2 rounded-full;
     }
 
     .accordionContent {
         @apply mt-2 rounded-2xl
-        bg-gray text-white
-        dark:bg-primary dark:text-blue-400
+        bg-primary text-white
+        dark:text-blue-400
         border-2 border-background dark:border-green;
     }
 
-    .homeTitle {
-        @apply mb-5 text-xl font-bold;
+    .biaCard {
+        @apply !rounded-3xl bg-primary text-white dark:bg-panna dark:text-primary;
+    }
+
+    .pageTitle {
+        @apply mt-10 mb-10 text-center font-extrabold text-3xl;
+    }
+
+    .pageDivider {
+        @apply flex flex-col md:flex-row justify-between w-full mx-auto
+    }
+
+    .itemDivided {
+        @apply flex-1 items-center text-center justify-center;
+    }
+
+    .itemTitle {
+        @apply mt-5 mb-5 font-bold text-xl;
     }
 
     .liOption {

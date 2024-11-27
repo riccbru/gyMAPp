@@ -1,8 +1,8 @@
 import './App.css'
-import { useEffect } from 'react';
 import { Bia } from './pages/Bia';
 import { Home } from '@/pages/Home';
 import { Login } from '@/pages/Login';
+import { Meals } from './pages/Meals';
 import { Signup } from '@/pages/Signup';
 import { Common } from '@/pages/Common';
 import { useAuth } from '@/hooks/useAuth';
@@ -38,6 +38,7 @@ function AppRouted() {
         <Route path="/" element={isLogged ? <Common /> : <Navigate to="/login" />}>
           <Route index path="/home" element={<Home />} />
           <Route path="/bia" element={<Bia />} />
+          <Route path="/meals" element={<Meals />} />
           <Route path="*" element={<NotFound />} />
         </Route>
         <Route path="/login" element={!isLogged ? <Login /> : <Navigate to="/home" />} />

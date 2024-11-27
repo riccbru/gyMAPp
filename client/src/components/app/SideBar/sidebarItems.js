@@ -13,6 +13,12 @@ const sidebarItems = [
   },
   {
     type: "menu",
+    title: "BIAs",
+    url: "/bia",
+    icon: ChartNoAxesCombined,
+  },
+  {
+    type: "menu",
     title: "Meals",
     url: "/meals",
     icon: Utensils,
@@ -22,12 +28,6 @@ const sidebarItems = [
     title: "Workouts",
     url: "/workouts",
     icon: Dumbbell,
-  },
-  {
-    type: "menu",
-    title: "BIAs",
-    url: "/bia",
-    icon: ChartNoAxesCombined,
   },
   {
     type: "menu",
