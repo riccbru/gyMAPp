@@ -18,7 +18,7 @@
 
     .sidebar {
         /* w-36 */
-        @apply bg-background text-white dark:bg-primary;
+        @apply bg-primary text-white dark:bg-primary;
     }
 
     .sidebarMenu {
@@ -40,8 +40,9 @@
     }
 
     .tooltipContent {
-        @apply bg-primary text-white
-        dark:bg-background border-gray !rounded-full;
+        @apply bg-primary dark:bg-white
+        dark:text-primary text-white
+        border-gray !rounded-3xl;
     }
 
     .authnForm {
@@ -91,7 +92,8 @@
     .accordionContent {
         @apply mt-2 rounded-2xl
         bg-gray text-white
-        dark:bg-primary dark:text-blue-400;
+        dark:bg-primary dark:text-blue-400
+        border-2 border-background dark:border-green;
     }
 
     .homeTitle {
@@ -99,7 +101,8 @@
     }
 
     .liOption {
-        @apply flex flex-row justify-between;
+        @apply flex flex-row justify-between font-bold
+        hover:text-background dark:hover:text-white;
     }
 
     .ingredient {

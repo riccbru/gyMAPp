@@ -7,8 +7,6 @@ import { Exercises } from "./Exercises";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
 import { getWeekday, getMealType } from "@/lib/parameters";
-import { OptionAccordion } from "./OptionAccordion";
-import { ExerciseAccordion } from "./ExerciseAccordion";
 
 function TestHome() {
 
@@ -40,6 +38,9 @@ function TestHome() {
                 .catch((err) => {
                     console.log(`HOME.index.useEffect(workout):\n${err}`);
                 });
+        } else {
+          setOptions([]);
+          setExercises([]);
         }
     }, [isLogged]);
 
@@ -53,18 +54,10 @@ function TestHome() {
 
           <div className="flex-1 items-center text-center justify-center">
             <Options mealOptions={options} />
-            {/* {!options?.length ? null :
-              options.map((option, index) => {
-                <OptionAccordion key={index} index={index} mealOption={option} />
-              })} */}
           </div>
 
           <div className="flex-1 items-center text-center justify-center">
             <Exercises workoutExercises={exercises} />
-            {/* {!exercises?.length ? null :
-              exercises.map((exercise, index) => {
-                <ExerciseAccordion key={index} index={index} workoutExercise={exercise} />
-              })} */}
           </div>
 
         </div>

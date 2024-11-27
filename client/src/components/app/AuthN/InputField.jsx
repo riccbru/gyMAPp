@@ -22,7 +22,7 @@ function InputField({ label, name, value, error, submit, onChange, placeholder, 
         submit={submit}
         onChange={onChange}
         placeholder={placeholder}
-        className={`authnInput ${getColor(value, error)}`}
+        className={`authnInput ${submit ? getColor(value, error) : ''}`}
       />
     </div>
   );

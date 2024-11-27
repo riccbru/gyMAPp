@@ -49,7 +49,6 @@ POST http://localhost:3001/api/v1/bia/ HTTP/1.1
 Content-Type: application/json
 
 {
-    "bmi": 28.9,
     "na_k": 0.9,
     "weight": 84.2,
     "height": 178,
@@ -58,6 +57,7 @@ Content-Type: application/json
     "muscle_mass": 60.4,
     "date": "08-31-2024",
     "fat_free_mass": 75.0,
+    "body_mass_index": 28.9,
     "total_body_water": 55.1,
     "extra_cellular_water": 21.7,
     "intra_cellular_water": 33.4,
