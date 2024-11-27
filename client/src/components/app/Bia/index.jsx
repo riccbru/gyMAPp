@@ -27,7 +27,7 @@ function BiaTable() {
 
     return(
         <div className='flex flex-col'>
-            <div className="mt-10 mb-10 text-center font-extrabold text-3xl">BIAs</div>
+            <div className="pageTitle">BIAs</div>
 
             {bias[0]?.date ?
                 bias.map((bia, index) => (

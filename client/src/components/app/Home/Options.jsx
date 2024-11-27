@@ -11,7 +11,7 @@ function Options({ mealOptions }) {
 
     return (
         <div className="flex flex-col items-center text-center justify-center">
-            <div className="homeTitle">MEALS ({mealOptions?.length ? params.getMealTypeName() : 'TREAT DAY'})</div>
+            <div className="itemTitle">MEALS ({mealOptions?.length ? params.getMealTypeName() : 'TREAT DAY'})</div>
 
             {
                 !mealOptions?.length ? null :

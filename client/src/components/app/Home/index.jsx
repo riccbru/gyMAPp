@@ -16,10 +16,9 @@ function TestHome() {
 
     useEffect(() => {
         if (isLogged) {
-          const weekday = 5;
+          // const weekday = 5;
           // const mealtype = 5;
-            // const weekday = params.getWeekdayNum();
-            
+            const weekday = params.getWeekdayNum();
             const mealtype = params.getMealTypeNum();
             API.meal(weekday, mealtype)
                 .then((res) => {
@@ -48,16 +47,16 @@ function TestHome() {
 
     return (
       <div className="flex flex-col">
-        <div className="mt-10 mb-10 text-center font-extrabold text-2xl">
+        <div className="pageTitle">
           {dayjs().format("dddd D MMMM YYYY[,] HH:mm:ss").toUpperCase()}
         </div>
-        <div className="flex flex-row justify-between w-full mx-auto">
+        <div className="pageDivider">
 
-          <div className="flex-1 items-center text-center justify-center">
+          <div className="itemDivided">
             <Options mealOptions={options} />
           </div>
 
-          <div className="flex-1 items-center text-center justify-center">
+          <div className="itemDivided">
             <Exercises workoutExercises={exercises} />
           </div>
 
