@@ -1,5 +1,5 @@
 import './App.css'
-import { Bia } from './pages/Bia';
+import { Stats } from './pages/Stats';
 import { Home } from '@/pages/Home';
 import { Login } from '@/pages/Login';
 import { Meals } from './pages/Meals';
@@ -37,7 +37,7 @@ function AppRouted() {
     <Routes>
         <Route path="/" element={isLogged ? <Common /> : <Navigate to="/login" />}>
           <Route index path="/home" element={<Home />} />
-          <Route path="/bia" element={<Bia />} />
+          <Route path="/stats" element={<Stats />} />
           <Route path="/meals" element={<Meals />} />
           <Route path="*" element={<NotFound />} />
         </Route>

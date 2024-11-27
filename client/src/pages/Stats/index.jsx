@@ -1,6 +1,6 @@
 import { BiaTable } from "@/components/app/Bia";
 
-function Bia() {
+function Stats() {
     return(
         <div>
             <BiaTable />
@@ -8,4 +8,4 @@ function Bia() {
     );
 }
 
-export { Bia };
+export { Stats };
