@@ -13,8 +13,8 @@ const sidebarItems = [
   },
   {
     type: "menu",
-    title: "BIAs",
-    url: "/bia",
+    title: "Stats",
+    url: "/stats",
     icon: ChartNoAxesCombined,
   },
   {
