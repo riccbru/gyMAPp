@@ -22,7 +22,7 @@ GET http://localhost:3001/api/v1/meals?weekday=5&meal=3 HTTP/1.1
 
 ###
 
-GET http://localhost:3001/api/v1/workouts/1 HTTP/1.1
+GET http://localhost:3001/api/v1/workouts/3 HTTP/1.1
 
 ###
 

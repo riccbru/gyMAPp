@@ -3,10 +3,10 @@
 import dayjs from "dayjs";
 import API from "@/lib/API";
 import { Options } from "./Options";
+import params from "@/lib/parameters";
 import { Exercises } from "./Exercises";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
-import { getWeekday, getMealType } from "@/lib/parameters";
 
 function TestHome() {
 
@@ -16,10 +16,11 @@ function TestHome() {
 
     useEffect(() => {
         if (isLogged) {
-          // const weekday = 5;
+          const weekday = 5;
           // const mealtype = 5;
-            const weekday = getWeekday();
-            const mealtype = getMealType();
+            // const weekday = params.getWeekdayNum();
+            
+            const mealtype = params.getMealTypeNum();
             API.meal(weekday, mealtype)
                 .then((res) => {
                   if (res.options !== undefined) {

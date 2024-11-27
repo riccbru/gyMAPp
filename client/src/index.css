@@ -102,7 +102,7 @@
 
     .liOption {
         @apply flex flex-row justify-between font-bold
-        hover:text-background dark:hover:text-white;
+      hover:text-panna dark:hover:text-white;
     }
 
     .ingredient {
