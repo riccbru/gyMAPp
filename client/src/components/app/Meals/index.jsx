@@ -14,7 +14,7 @@ function MealsPanel() {
 
     useEffect(() => {
         if (isLogged) {
-            API.meal(weekday, meal)
+            API.fetchMeal(weekday, meal)
                 .then((res) => {
                     if (res.options !== undefined) {
                         setOptions(res.options);
@@ -31,7 +31,6 @@ function MealsPanel() {
     return (
       <div className="flex flex-col">
         <div className="pageTitle">MEALS</div>
-        <div className="text-center">SUBTITLE DROPDOWN</div>
         <div className="pageDivider">
             
             <div className="itemDivided">

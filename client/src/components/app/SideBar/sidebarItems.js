@@ -1,7 +1,7 @@
 'use strict';
 import { SideAuthItem } from "./SideAuthItem";
 import { SideThemeItem } from "./SideThemeItem";
-import { ChartNoAxesCombined, Dumbbell, Home, ShoppingBasket, Utensils } from "lucide-react";
+import { ChartNoAxesCombined, Dumbbell, FileDown, Home, Utensils } from "lucide-react";
 
 const sidebarItems = [
 
@@ -31,9 +31,9 @@ const sidebarItems = [
   },
   {
     type: "menu",
-    title: "Groceries",
-    url: "/groceries",
-    icon: ShoppingBasket,
+    title: "File Download",
+    url: "/file",
+    icon: FileDown,
   },
   {
     type: "component",

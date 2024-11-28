@@ -55,17 +55,18 @@ const logout = async () => {
 }
 
 const signup = async (userData) => {
-    return getJSON(fetch(SERVER_URL + "/signup", {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        // credentials: 'include',
-        body: JSON.stringify(userData)
-    })).then((res) => {
+    return getJSON(
+        fetch(SERVER_URL + "/signup", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(userData)
+        })
+    ).then((res) => {
         // empty
     }).catch((err) => { throw err; });
 }
 
-const bia = () => {
+const fetchBIAs = () => {
     const url = new URL(SERVER_URL + "/bia");
     return getJSON(
         fetch(url, {
@@ -74,7 +75,19 @@ const bia = () => {
     );
 }
 
-const meal = async (weekday, mealtype) => {
+const pushBIA = async (biaData) => {
+    return getJSON(
+        fetch(SERVER_URL + "/bia", {
+            method: 'POST',
+            credentials: 'include',
+            body: JSON.stringify(biaData),
+            headers: {'Content-Type': 'application/json'}
+        })
+    ).then((res) => {})
+    .catch((err) => { throw err; });
+}
+
+const fetchMeal = async (weekday, mealtype) => {
     const url = new URL(SERVER_URL + `/meals?weekday=${weekday}&meal=${mealtype}`);
 
     const res = await fetch(url, {
@@ -84,12 +97,31 @@ const meal = async (weekday, mealtype) => {
     return await res.json();
 }
 
-const workout = async (weekday) => {
-    const url = new URL(SERVER_URL + `/workouts/${weekday}`);
+const fetchWorkout = async (weekday) => {
+    const url = new URL(SERVER_URL + `/workouts?weekday=${weekday}`);
     const res = await fetch(url, {
             credentials: 'include'
     });
     return await res.json();
 }
 
-export default { info, login, logout, signup, bia, meal, workout };
+const fetchWeights = () => {
+    const url = new URL(SERVER_URL + "/weights");
+    return getJSON(
+        fetch(url, {
+            credentials: 'include'
+        })
+    );
+}
+
+const pushWeight = async (weight) => {
+    return getJSON(
+        fetch(SERVER_URL + `/weights?weight=${weight}`, {
+            method: 'POST',
+            credentials: 'include'
+        })
+    ).then((res) => {})
+    .catch((err) => { throw err; });
+}
+
+export default { info, login, logout, signup, fetchBIAs, pushBIA, fetchMeal, fetchWorkout, fetchWeights, pushWeight };

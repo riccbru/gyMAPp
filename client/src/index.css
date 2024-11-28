@@ -130,6 +130,10 @@
         dark:text-gray dark:hover:text-white;
     }
 
+    .selectItem {
+        @apply bg-primary text-white hover:bg-background;
+    }
+
 }
 
 @layer base {

@@ -22,7 +22,19 @@ GET http://localhost:3001/api/v1/meals?weekday=5&meal=3 HTTP/1.1
 
 ###
 
-GET http://localhost:3001/api/v1/workouts/3 HTTP/1.1
+GET http://localhost:3001/api/v1/workouts?weekday=3 HTTP/1.1
+
+###
+
+GET http://localhost:3001/api/v1/workouts/all HTTP/1.1
+
+###
+
+GET http://localhost:3001/api/v1/weights HTTP/1.1
+
+###
+
+POST http://localhost:3001/api/v1/weights?weight=99.9 HTTP/1.1
 
 ###
 
@@ -40,8 +52,6 @@ Content-Type: application/json
     "password":     "password",
     "birthdate":    "01-01-0001"
 }
-
-###
 
 ###
 
@@ -67,7 +77,5 @@ Content-Type: application/json
     "total_daily_energy_expenditure": 3523.1,
     "appendicular_skeletal_muscle_mass": 31.0
 }
-
-###
 
 ###

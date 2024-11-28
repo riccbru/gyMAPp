@@ -12,6 +12,7 @@ const daoBias = require("./daoBias");
 const daoUsers = require("./daoUsers");
 const daoMeals = require("./daoMeals");
 const daoWorkouts = require("./daoWorkouts");
+const daoWeights = require("./daoWeights");
 
 const app = new express();
 
@@ -270,12 +271,12 @@ app.get("/api/v1/meals/", isLogged,
   }
 );
 
-/*********************/
-/*      WORKOUT      */
-/*********************/
+/**********************/
+/*       WORKOUTS     */
+/**********************/
 
-app.get("/api/v1/workouts/:weekday", isLogged,
-  [param('weekday').isInt({ min: 0, max: 6}).withMessage("'weekday' must be integer in [0, 6]")],
+app.get("/api/v1/workouts", isLogged,
+  [query('weekday').isInt({ min: 0, max: 6}).withMessage("'weekday' must be integer in [0, 6]")],
   async (req, res) => {
     const errors = validationResult(req).formatWith(errorFormatter);
     if (!errors.isEmpty()) {
@@ -283,7 +284,7 @@ app.get("/api/v1/workouts/:weekday", isLogged,
     }
     try {
       const uid = req.user.uid;
-      const weekday = req.params.weekday;
+      const weekday = req.query.weekday;
       const workout = await daoWorkouts.fetchWorkout(uid, weekday);
       return res.status(200).json({ "exercises": workout });
     } catch (err) {
@@ -291,3 +292,56 @@ app.get("/api/v1/workouts/:weekday", isLogged,
     }
   }
 )
+
+app.get("/api/v1/workouts/all", isLogged,
+  async (req, res) => {
+    const errors = validationResult(req).formatWith(errorFormatter);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array()[0] });
+    }
+    try {
+      const uid = req.user.uid;
+      const workouts = await daoWorkouts.fetchAllWorkouts(uid);
+      return res.status(200).json({ "workouts": workouts });
+    } catch (err) {
+      return res.status(404).json({ error: err });
+    }
+  }
+);
+
+/*********************/
+/*      WEIGHTS      */
+/*********************/
+
+app.get("/api/v1/weights", isLogged,
+  async (req, res) => {
+    try {
+      const reqUID = req.params.uid || req.user.uid;
+      const uid = req.user.admin && req.params.uid ? reqUID : req.user.uid;
+      const weights = await daoWeights.fetchWeights(uid);
+      res.status(200).json({ "weights" : weights });
+    } catch (err) {
+      res.status(404).json({ error: err });
+    }
+  }
+);
+
+app.post("/api/v1/weights/", isLogged,
+  [query('weight')
+      .isFloat({ min: 0.0 }).withMessage("'weight must be a float")
+  ],
+  async (req, res) => {
+    const errors = validationResult(req).formatWith(errorFormatter);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ error: errors.array()[0] });
+    }
+    try {
+      const uid = req.user.uid;
+      const weight = req.query.weight;
+      const call = await daoWeights.pushWeight(uid, weight);
+      return res.status(201).json({ success: call });
+    } catch (err) {
+      return res.status(500).json({ error: err });
+    }
+  } 
+);

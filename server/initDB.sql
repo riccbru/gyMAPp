@@ -15,6 +15,15 @@ CREATE TABLE IF NOT EXISTS "users" (
     "salt" TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS "weights" (
+    "weid" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "uid" INTEGER NOT NULL,
+    "date" TEXT NOT NULL,
+    "weight" REAL NOT NULL,
+
+    FOREIGN KEY (uid) REFERENCES users(uid) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS "bias" (
     "bid" INTEGER PRIMARY KEY AUTOINCREMENT,
     "uid" INTEGER NOT NULL,
@@ -103,6 +112,9 @@ INSERT INTO "users" (
     "38d0246251f259a305c5af38b17d026b"
 );
 
+INSERT INTO "weights" ( "uid", "date", "weight" )
+VALUES ( 1, "08-31-2024", 91.2 );
+
 INSERT INTO "bias" (
     "uid", "date", "height", "weight", "body_mass_index",
     "basal_metabolic_rate",
@@ -134,6 +146,8 @@ INSERT INTO "bias" (
     40.3,
     31.0
 );
+
+
 
 
 

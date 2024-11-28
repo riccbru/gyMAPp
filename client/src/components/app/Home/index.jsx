@@ -20,7 +20,7 @@ function TestHome() {
           // const mealtype = 5;
             const weekday = params.getWeekdayNum();
             const mealtype = params.getMealTypeNum();
-            API.meal(weekday, mealtype)
+            API.fetchMeal(weekday, mealtype)
                 .then((res) => {
                   if (res.options !== undefined) {
                     setOptions(res.options);        // array of JSONs
@@ -29,7 +29,7 @@ function TestHome() {
                 .catch((err) => {
                     console.log(`HOME.index.useEffect(meal):\n${err}`);
                 });
-            API.workout(weekday)
+            API.fetchWorkout(weekday)
                 .then((res) => {
                   if (res.exercises !== undefined) {
                     setExercises(res.exercises);    // array of JSONs

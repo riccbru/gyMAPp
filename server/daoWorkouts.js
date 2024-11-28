@@ -37,3 +37,32 @@ exports.fetchWorkout = (uid, weekday) => {
         });
     });
 };
+
+exports.fetchAllWorkouts = (uid) => {
+    return new Promise((resolve, reject) => {
+        const sql = `
+            SELECT
+                (SELECT COUNT(*) 
+                FROM exercises AS e 
+                WHERE e.wid = exercises.wid 
+                AND e.eid <= exercises.eid) AS enum,
+                exercises.name, 
+                exercises.sets, 
+                exercises.reps, 
+                exercises.weight,
+                exercises.rest
+            FROM exercises
+            INNER JOIN workouts ON exercises.wid = workouts.wid
+            WHERE workouts.uid = ?
+            ORDER BY exercises.wid ASC;
+        `;
+        db.all(sql, [uid], (err, rows) => {
+            if (err) { reject(err); }
+            else if (!rows.length) { reject("No workout"); }
+            else {
+                const workouts = rows.map(r => returnWorkout(r));
+                resolve(workouts);
+            }
+        });
+    });
+};
