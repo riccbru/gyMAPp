@@ -3,6 +3,8 @@
 const standardName = (entry) => {
     if (entry === "na_k") {
         return "Na/K";
+    } else if (entry === "bid") {
+        return "BID";
     }
     return entry.split("_")
                 .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -10,11 +12,10 @@ const standardName = (entry) => {
 }
 
 const beautyName = (entry) => {
-    let append = "";
     if (!entry.includes("_")) {
         return entry.toUpperCase();
     }
-    if (entry.length <= 3) {
+    if (entry.length < 3) {
         return entry.toUpperCase();
     }
     const result = entry.split("_")
@@ -52,6 +53,9 @@ const beautyMetrics = (entry) => {
 }
 
 const metricBia = {
+    "bid": [`BIA IDentifier`, false],
+    "body_mass_index": [`It measures height/weight ratio to estimate the amount of body fat a subject has, but it’s not accurate in some cases.
+                        Based on BMI, a subject can determine if it's underweight (< 18.5), healthy (18.5 - 25), overweight (25 - 30) or obese (30 - 40).`, false],
     "basal_metabolic_rate": [`BMR is the energy expenditure of an organism at rest. It includes the energy required for vital metabolic functions (respiration, blood circulation, digestion, nervous system activity, and so on).`, false],
     "total_daily_energy_expenditure": [`This is the total daily energy expenditure, calculated as BMR + PAL (muscle physical activity), 
                                       assuming thermoregulation and thermogenesis expenditure as marginal.`, false],

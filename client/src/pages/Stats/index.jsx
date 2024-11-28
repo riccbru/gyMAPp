@@ -1,9 +1,9 @@
-import { BiaTable } from "@/components/app/Bia";
+import { StatsPanel } from "@/components/app/Stats";
 
 function Stats() {
     return(
         <div>
-            <BiaTable />
+            <StatsPanel />
         </div>
     );
 }

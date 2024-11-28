@@ -32,7 +32,7 @@ function BiaRow({ name, value, percentage }) {
             </TooltipTrigger>
             <TooltipContent side="left" className='tooltipContent text-start'>
                 <div className="font-bold text-md text-pretty text-white dark:text-primary">{biaMods.standardName(name)}</div>
-                {name === "height" || name === "weight" || name === "body_mass_index" ? null : <Separator orientation={'horizontal'} className="bg-gray" />}
+                {name === "height" || name === "weight" ? null : <Separator orientation={'horizontal'} className="bg-gray" />}
                 <div className="text-start break-words max-w-xs">{biaMods.metricBia[name]?.[0]}</div>
             </TooltipContent>
 

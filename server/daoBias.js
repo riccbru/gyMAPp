@@ -7,7 +7,7 @@ const returnPercentage = (num, den) => {
 }
 
 const returnBia = (b) => ({
-    id:                                         b.id,
+    bid:                                        b.bid,
     date:                                       b.date,
     height:                                     b.height,
     weight:                                     b.weight,

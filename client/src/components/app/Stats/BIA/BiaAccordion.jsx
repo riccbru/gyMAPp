@@ -1,12 +1,12 @@
 import dayjs from "dayjs";
+import { BiaRow } from "./BiaRow";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
-import { BiaRow } from "./BiaRow";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 const beautyDate = (date) => {
     return dayjs(date).format("MMMM D[,] YYYY");
@@ -19,7 +19,7 @@ function BiaAccordion({ index, bia }) {
         <AccordionItem value={`bia-${index}`}>
           <AccordionTrigger className="accordionTrigger">
             <div className="ml-5 font-bold text-lg">{index + 1}</div>
-            <div className="">{beautyDate(bia.date)}</div>
+            <div>{beautyDate(bia.date)}</div>
           </AccordionTrigger>
           <AccordionContent>
             <Card className='biaCard'>

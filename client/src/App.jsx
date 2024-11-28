@@ -6,6 +6,7 @@ import { Meals } from './pages/Meals';
 import { Signup } from '@/pages/Signup';
 import { Common } from '@/pages/Common';
 import { useAuth } from '@/hooks/useAuth';
+import { Workouts } from '@/pages/Workouts';
 import { NotFound } from '@/pages/NotFound';
 import { AuthProvider } from '@/context/AuthContext';
 import { DataProvider } from '@/context/DataContext';
@@ -39,6 +40,7 @@ function AppRouted() {
           <Route index path="/home" element={<Home />} />
           <Route path="/stats" element={<Stats />} />
           <Route path="/meals" element={<Meals />} />
+          <Route path="/workouts" element={<Workouts />} />
           <Route path="*" element={<NotFound />} />
         </Route>
         <Route path="/login" element={!isLogged ? <Login /> : <Navigate to="/home" />} />
