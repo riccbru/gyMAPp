@@ -27,7 +27,7 @@ const minEmailChars = 4;
 const maxUserLength = 20;
 
 const corsOptions = {
-  origin: ['http://158.180.238.156', 'http://localhost:5173'],
+  origin: [ 'http://158.180.238.156', 'http://localhost:5173' ],
   credentials: true
 };
 
