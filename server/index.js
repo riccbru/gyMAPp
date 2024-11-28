@@ -27,7 +27,7 @@ const minEmailChars = 4;
 const maxUserLength = 20;
 
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: ['http://158.180.238.156', 'http://localhost:5173'],
   credentials: true
 };
 
@@ -70,6 +70,25 @@ const isAdmin = (req, res, next) => {
 app.use((err, req, res, next) => {
   console.error(err.stack); // Log the error stack trace
   res.status(500).send("Internal Server Error"); // Return a 500 error to client
+});
+
+app.get('/', 
+  (req, res) => {
+    const text = "<html>" +
+      "<head>" +
+      "<style>" +
+      ".center {" +
+      "  text-align: center;" + 
+      "}" +
+      "</style>" +
+      "</head>" +
+      "<body>" +
+      "<div class='center'>" +
+      "<p><a href='/api/v1'>APIs</p>" +
+      "</div>" +
+      "</body>" +
+      "</html>"
+    res.send(text)
 });
 
 app.listen(PORT, () => {
