@@ -3,3 +3,4 @@ client/src/assets/*
 .DS_Store
 node_modules/
 refreshDB
+instructions
