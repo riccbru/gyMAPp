@@ -1,6 +1,6 @@
 'use strict';
 
-const SERVER_URL = 'http://localhost:3001/api/v1';
+const SERVER_URL = 'http://158.180.238.156:3001/api/v1';
 
 function getJSON(httpResponsePromise) {
     return new Promise((resolve, reject) => {
