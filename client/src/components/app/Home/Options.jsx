@@ -20,7 +20,7 @@ function Options({ mealOptions }) {
                         <Accordion
                             type="multiple"
                             collapsible="false"
-                            style={{width: '30rem'}}
+                            style={{width: '20rem'}}
                             >
                             <AccordionItem value={`accordion-item-option-${index + 1}`}>
                                 <AccordionTrigger className="accordionTrigger">
