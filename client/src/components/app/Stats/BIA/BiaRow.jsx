@@ -25,7 +25,7 @@ function BiaRow({ bid, name, value, percentage }) {
                 
                     <div className="basis-5/6 mr-3">
                         {!biaMods.metricBia[name]?.[1] ? null :
-                            <img src={`/public/bia/${bid}/${name}.png`} className="w-70 h-11"/>}
+                            <img src={`/bia/${bid}/${name}.png`} className="w-70 h-11"/>}
                     </div>
                     
                 </div>
