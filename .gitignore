@@ -4,3 +4,4 @@ client/src/assets/*
 node_modules/
 refreshDB
 instructions
+script.js

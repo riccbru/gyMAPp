@@ -100,7 +100,8 @@ INSERT INTO "users" (
     "admin", "name", "email", "birthdate", "username", "hash", "salt"
 ) VALUES (
     1, "Riccardo Bruno", "riccardo.bruno@gymapp.dev", "11-25-1999", "bankich",
-    "e982818124aab7af645a118a321edcc5af4798548a2f4819a192f21f173be85c9123d3911903f602c5d787f6074cdbf0d42114bcc5843ea2cbe9b3163b6508b8",
+    -- "e982818124aab7af645a118a321edcc5af4798548a2f4819a192f21f173be85c9123d3911903f602c5d787f6074cdbf0d42114bcc5843ea2cbe9b3163b6508b8", 'password'
+    "5e0ccfe6cdb2d4e502b8c7463c32f4a758fd91bf446645c98d65b6ad8367beb1b93f1d5b54d972b9daf5ef3438bea8f1a0210101e32dbb2f4ddef5fac0e348f5",
     "c631ac0affd7db484f8d0103e706d3c8"
 );
 
