@@ -232,7 +232,7 @@ VALUES
     -- Breakfast --
     ("Tea"), ("Honey"), ("Rusks"), ("Peanut Butter"), ("Jam (low sugars)"),
     -- Morning snack --
-    ("Banana"), ("Almonds"), ("Apples"), ("Hazelnuts"), ("Walnuts"),
+    ("Banana"), ("Almonds"), ("Apples"), ("Hazelnuts"), ("Walnuts"), ("Clementines"),
     -- Lunch --
     ("Pasta"), ("Parmigiano"), ("Ricotta"), ("Spinach"), ("EVO"), ("Parboiled rice"), ("Beans"), ("Carrots"),
     ("Whole wheat pasta"), ("Tuna tin"), ("Mixed salad"), ("Robiola"), ("Courgettes"),
@@ -323,6 +323,20 @@ VALUES
         (SELECT iid FROM ingredients WHERE ingredient_name = 'Almonds'),
         10
     );
+INSERT INTO "ingredients_usage" ("meal_id", "option_id", "ingredient_id", "quantity")
+VALUES
+    (
+        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 1 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 1 AND meal_type = 2)),
+        (SELECT iid FROM ingredients WHERE ingredient_name = 'Clementines'),
+        200
+    ),
+    (
+        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 1 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 1 AND meal_type = 2)), 
+        (SELECT iid FROM ingredients WHERE ingredient_name = 'Almonds'),
+        10
+    );
 -- Tuesday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
@@ -342,6 +356,20 @@ VALUES
         (SELECT iid FROM ingredients WHERE ingredient_name = 'Almonds'),
         10
     );
+INSERT INTO "ingredients_usage" ("meal_id", "option_id", "ingredient_id", "quantity")
+VALUES
+    (
+        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 2 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 2 AND meal_type = 2)),
+        (SELECT iid FROM ingredients WHERE ingredient_name = 'Clementines'),
+        100
+    ),
+    (
+        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 2 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 2 AND meal_type = 2)), 
+        (SELECT iid FROM ingredients WHERE ingredient_name = 'Walnuts'),
+        10
+    );
 -- Wednesday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
@@ -354,6 +382,20 @@ VALUES
         (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 2)),
         (SELECT iid FROM ingredients WHERE ingredient_name = 'Apples'),
         150
+    ),
+    (
+        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 2)), 
+        (SELECT iid FROM ingredients WHERE ingredient_name = 'Almonds'),
+        10
+    );
+INSERT INTO "ingredients_usage" ("meal_id", "option_id", "ingredient_id", "quantity")
+VALUES
+    (
+        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 2)),
+        (SELECT iid FROM ingredients WHERE ingredient_name = 'Clementines'),
+        200
     ),
     (
         (SELECT mid FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 2),
@@ -380,6 +422,20 @@ VALUES
         (SELECT iid FROM ingredients WHERE ingredient_name = 'Hazelnuts'),
         10
     );
+INSERT INTO "ingredients_usage" ("meal_id", "option_id", "ingredient_id", "quantity")
+VALUES
+    (
+        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 4 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 4 AND meal_type = 2)),
+        (SELECT iid FROM ingredients WHERE ingredient_name = 'Clementines'),
+        100
+    ),
+    (
+        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 4 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 4 AND meal_type = 2)), 
+        (SELECT iid FROM ingredients WHERE ingredient_name = 'Almonds'),
+        10
+    );
 -- Friday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
@@ -399,6 +455,20 @@ VALUES
         (SELECT iid FROM ingredients WHERE ingredient_name = 'Hazelnuts'),
         10
     );
+INSERT INTO "ingredients_usage" ("meal_id", "option_id", "ingredient_id", "quantity")
+VALUES
+    (
+        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 2)),
+        (SELECT iid FROM ingredients WHERE ingredient_name = 'Clementines'),
+        200
+    ),
+    (
+        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 2)), 
+        (SELECT iid FROM ingredients WHERE ingredient_name = 'Hazelnuts'),
+        10
+    );
 -- Saturday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
@@ -411,6 +481,20 @@ VALUES
         (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 2)),
         (SELECT iid FROM ingredients WHERE ingredient_name = 'Apples'),
         130
+    ),
+    (
+        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 2)), 
+        (SELECT iid FROM ingredients WHERE ingredient_name = 'Walnuts'),
+        10
+    );
+INSERT INTO "ingredients_usage" ("meal_id", "option_id", "ingredient_id", "quantity")
+VALUES
+    (
+        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 2),
+        (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 2)),
+        (SELECT iid FROM ingredients WHERE ingredient_name = 'Clementines'),
+        100
     ),
     (
         (SELECT mid FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 2),
