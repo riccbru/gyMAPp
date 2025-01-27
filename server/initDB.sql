@@ -116,6 +116,9 @@ INSERT INTO "users" (
 INSERT INTO "weights" ( "uid", "date", "weight" )
 VALUES ( 1, "08-31-2024", 91.2 );
 
+INSERT INTO "weights" ( "uid", "date", "weight" )
+VALUES ( 1, "12-19-2024", 82.4 );
+
 INSERT INTO "bias" (
     "uid", "date", "height", "weight", "body_mass_index",
     "basal_metabolic_rate",
@@ -148,7 +151,37 @@ INSERT INTO "bias" (
     31.0
 );
 
-
+INSERT INTO "bias" (
+    "uid", "date", "height", "weight", "body_mass_index",
+    "basal_metabolic_rate",
+    "total_daily_energy_expenditure",
+    "na_k",
+    "phase_angle",
+    "total_body_water",                     -- tbw% = weight / tbw
+    "extra_cellular_water",                 -- ecw% = ecw / tbw
+    "intra_cellular_water",                 -- icw% = icw / tbw
+    "fat_free_mass",                        -- %ffm = ffm / weight
+    "fat_mass",                             -- %fm = fm / weight
+    "body_composition_measurement",         -- %bcm = bcm / ffm
+    "muscle_mass",                          -- %mm = mm / weight
+    "skeletal_muscle_mass",                 -- %smm = smm / weight
+    "appendicular_skeletal_muscle_mass"
+) VALUES (
+    1, "12-19-2024", 177.5, 82.4, 26.2,
+    2046.3,
+    3478.7,
+    0.9,
+    8.2,
+    51.8,
+    19.4,
+    32.4,
+    70.8,
+    11.6,
+    44.7,
+    53.7,
+    38.6,
+    29.5
+);
 
 
 
