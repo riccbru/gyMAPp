@@ -5,7 +5,6 @@ function FileDownload() {
     return (
         <>  
             <FileDownloadPanel />
-            <Development />
         </>
     );
 }

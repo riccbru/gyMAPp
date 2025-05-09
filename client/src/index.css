@@ -137,6 +137,22 @@
         @apply bg-primary text-white hover:bg-background;
     }
 
+    .fileCard {
+        @apply mt-5
+        bg-panna dark:bg-primary
+        text-black dark:text-white
+        border-gray dark:border-blue-700;
+    }
+
+    .aHref {
+        @apply inline-block mt-2 px-4 py-2 
+        text-white text-base
+        bg-blue-500 hover:bg-blue-700
+        rounded-full hover:rounded-xl
+        transition-all duration-150
+        ease-linear cursor-pointer;
+    }
+
 }
 
 @layer base {
