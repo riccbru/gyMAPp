@@ -56,7 +56,7 @@ function StatsPanel() {
 
     return(
         <div className='flex flex-col'>
-            <div className='pageTitle'>STATISTICS</div>
+            <div className='pageTitle'>STATS</div>
 
             <div className='pageDivider'>
                 <div className='itemDivided'>

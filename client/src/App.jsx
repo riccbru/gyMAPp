@@ -8,6 +8,7 @@ import { Common } from '@/pages/Common';
 import { useAuth } from '@/hooks/useAuth';
 import { Workouts } from '@/pages/Workouts';
 import { NotFound } from '@/pages/NotFound';
+import { FileDownload } from '@/pages/FileDownload';
 import { AuthProvider } from '@/context/AuthContext';
 import { DataProvider } from '@/context/DataContext';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
@@ -41,7 +42,8 @@ function AppRouted() {
           <Route path="/stats" element={<Stats />} />
           <Route path="/meals" element={<Meals />} />
           <Route path="/workouts" element={<Workouts />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="/file" element={<FileDownload />} />
+          <Route path="/*" element={<NotFound />} />
         </Route>
         <Route path="/login" element={!isLogged ? <Login /> : <Navigate to="/home" />} />
         <Route path="/signup" element={!isLogged ? <Signup /> : <Navigate to="/login" />} />
