@@ -19,7 +19,7 @@ function Exercises({ workoutExercises }) {
                         <Accordion
                             type="multiple"
                             collapsible="false"
-                            style={{width: '30rem'}}
+                            style={{width: '20rem'}}
                             >
                             <AccordionItem value={`accordion-item-exercise-${index + 1}`}>
                                 <AccordionTrigger className='accordionTrigger'>
@@ -31,7 +31,7 @@ function Exercises({ workoutExercises }) {
                                             <thead>
                                                 <tr>
                                                     {Object.keys(exercise).map((key) => (
-                                                        <th key={key} className="px-4 py-2 font-bold text-blue-300">
+                                                        <th key={key} className="px-1.5 py-2 font-bold text-blue-300">
                                                             {key.toUpperCase()}
                                                         </th>
                                                     ))}
@@ -42,7 +42,7 @@ function Exercises({ workoutExercises }) {
                                                     {Object.values(exercise).map((value, idx) => (
                                                         <td
                                                             key={idx}
-                                                            className="px-4 py-2"
+                                                            className="py-2"
                                                         >
                                                             {value !== null ? value.toString().toUpperCase() : '-'}
                                                         </td>
