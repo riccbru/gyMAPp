@@ -66,6 +66,7 @@ function LoginForm() {
           navigate("/home");
         } catch (err) {
           // HERE DEBUG MOBILE
+          // https://stackoverflow.com/questions/71280168/javascript-typeerror-load-failed-error-when-calling-fetch-on-ios
           console.log(err);
           showErrorToast("login", "LOGIN FAILED", err.message || "Please try again");
         }

@@ -1,5 +1,7 @@
 "use strict";
 
+require('dotenv').config();
+
 const cors = require("cors");
 const morgan = require("morgan");
 const express = require("express");
@@ -27,7 +29,7 @@ const minEmailChars = 4;
 const maxUserLength = 20;
 
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: [ process.env.CORS_ORIGIN, 'http://localhost:5173' ],
   credentials: true
 };
 

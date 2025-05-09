@@ -32,6 +32,7 @@ function BiaAccordion({ index, bia }) {
                       return (
                         <BiaRow
                           key={key}
+                          bid={index+1}
                           name={key}
                           value={bia[key]}
                           percentage={bia[percentage]} 
