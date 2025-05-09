@@ -37,14 +37,14 @@ function StatsPanel() {
                     setBIAs(res.BIAs);
                 })
                 .catch((err) => {
-                    console.log(`STATS.index.useEffect(fetchBIAs):\n${err}`);
+                    console.log(`app/Stats.index.useEffect(fetchBIAs):\n${err}`);
                 });
             API.fetchWeights()
                 .then((res) => {
                     setWeights(res.weights);
                 })
                 .catch((err) => {
-                    console.log(`STATS.index.useEffect(fetchWeights):\n${err}`);
+                    console.log(`app/Stats.index.useEffect(fetchWeights):\n${err}`);
                 });
         } else {
             setBIAs([]);

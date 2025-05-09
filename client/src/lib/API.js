@@ -1,6 +1,6 @@
 'use strict';
 
-const SERVER_URL = 'http://localhost:3001/api/v1';
+const SERVER_URL = import.meta.env.BACKEND_URL;
 
 function getJSON(httpResponsePromise) {
     return new Promise((resolve, reject) => {

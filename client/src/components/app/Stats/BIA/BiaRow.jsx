@@ -6,7 +6,7 @@ import {
     TooltipTrigger
 } from "@/components/ui/tooltip";
 
-function BiaRow({ name, value, percentage }) {
+function BiaRow({ bid, name, value, percentage }) {
 
     return (
         <Tooltip key={`tooltip-${name}`}>
@@ -25,7 +25,7 @@ function BiaRow({ name, value, percentage }) {
                 
                     <div className="basis-5/6 mr-3">
                         {!biaMods.metricBia[name]?.[1] ? null :
-                            <img src={`/src/assets/bia/${name}.png`} className="w-70 h-11"/>}
+                            <img src={`/bia/${bid}/${name}.png`} className="w-70 h-11"/>}
                     </div>
                     
                 </div>

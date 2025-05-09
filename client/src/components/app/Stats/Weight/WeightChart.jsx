@@ -8,10 +8,9 @@ import {
   Tooltip,
   Legend,
   Title,
-  Filler
 } from 'chart.js';
 
-ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend, Title, Filler);
+ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend, Title);
 
 function WeightChart({ weights }) {
     const data = {
@@ -24,7 +23,7 @@ function WeightChart({ weights }) {
             backgroundColor: 'rgba(75, 192, 192, 1)',
             pointRadius: 4,
             pointHoverRadius: 6,
-            fill: true,
+            fill: false,
             tension: 0.4,
           },
         ],
