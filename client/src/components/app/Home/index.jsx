@@ -8,22 +8,24 @@ import { Exercises } from "./Exercises";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
 
-function TestHome() {
+function HomePanel() {
 
     const { isLogged } = useAuth();
     const [options, setOptions] = useState([]);
     const [exercises, setExercises] = useState([]);
+    const [currentTime, setCurrentTime] = useState({
+      date: dayjs().format("dddd MM[/]DD[/]YYYY").toUpperCase(),
+      time: dayjs().format("HH:mm:ss"),
+    });
 
     useEffect(() => {
         if (isLogged) {
-          // const weekday = 5;
-          // const mealtype = 5;
             const weekday = params.getWeekdayNum();
             const mealtype = params.getMealTypeNum();
             API.fetchMeal(weekday, mealtype)
                 .then((res) => {
                   if (res.options !== undefined) {
-                    setOptions(res.options);        // array of JSONs
+                    setOptions(res.options);        
                   }
                 })
                 .catch((err) => {
@@ -32,7 +34,7 @@ function TestHome() {
             API.fetchWorkout(weekday)
                 .then((res) => {
                   if (res.exercises !== undefined) {
-                    setExercises(res.exercises);    // array of JSONs
+                    setExercises(res.exercises);    
                   }
                 })
                 .catch((err) => {
@@ -42,14 +44,26 @@ function TestHome() {
           setOptions([]);
           setExercises([]);
         }
+
+        const intervalId = setInterval(() => {
+          const formattedDate = dayjs().format("dddd MM[/]DD[/]YYYY").toUpperCase();
+          const formattedTime = dayjs().format("HH:mm:ss");
+          setCurrentTime({ date: formattedDate, time: formattedTime });
+        }, 1000);
+        return () => clearInterval(intervalId);
+
     }, [isLogged]);
 
 
     return (
       <div className="flex flex-col">
+
         <div className="pageTitle">
-          {dayjs().format("dddd D MMMM YYYY[,] HH:mm:ss").toUpperCase()}
+          {currentTime.date}
+          <br></br>
+          {currentTime.time}
         </div>
+
         <div className="pageDivider">
 
           <div className="itemDivided">
@@ -65,4 +79,4 @@ function TestHome() {
     );
 }
 
-export { TestHome };
+export { HomePanel };
