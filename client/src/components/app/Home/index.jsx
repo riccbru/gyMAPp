@@ -46,7 +46,7 @@ function HomePanel() {
         }
 
         const intervalId = setInterval(() => {
-          const formattedDate = dayjs().format("dddd MM[/]DD[/]YYYY").toUpperCase();
+          const formattedDate = dayjs().format("dddd MM[/]DD[/]YYYY");
           const formattedTime = dayjs().format("HH:mm:ss");
           setCurrentTime({ date: formattedDate, time: formattedTime });
         }, 1000);
@@ -57,15 +57,14 @@ function HomePanel() {
 
     return (
       <div className="flex flex-col">
-
-        <div className="pageTitle">
-          {currentTime.date}
-          <br></br>
+        <div className="mt-10 mb-5 text-center font-extrabold text-3xl">HOME</div>
+        <div className="mb-3 text-center font-extrabold text-xl">
           {currentTime.time}
+          <br></br>
+          {currentTime.date}
         </div>
 
         <div className="pageDivider">
-
           <div className="itemDivided">
             <Options mealOptions={options} />
           </div>
@@ -73,7 +72,6 @@ function HomePanel() {
           <div className="itemDivided">
             <Exercises workoutExercises={exercises} />
           </div>
-
         </div>
       </div>
     );

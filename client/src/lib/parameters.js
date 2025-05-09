@@ -8,8 +8,8 @@ const weekMap = {
   '3': "wednesday",
   '4': "thursday",
   '5': "friday",
-  '6': "saturday (treat-day)",
-  '7': "sunday (treat-day)",
+  '6': "saturday",
+  '7': "sunday",
 };
 
 const mealMap = {

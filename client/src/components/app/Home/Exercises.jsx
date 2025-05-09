@@ -10,7 +10,7 @@ function Exercises({ workoutExercises }) {
 
     return (
         <div className="flex flex-col items-center text-center justify-center">
-            <div className="itemTitle">WORKOUT ({workoutExercises?.length ? params.getWeekdayName() : 'REST DAY'})</div>
+            <div className="itemTitle">WORKOUT ({workoutExercises?.length ? params.getWeekdayName() : 'rest day'})</div>
 
             {
                 !workoutExercises?.length ? null :

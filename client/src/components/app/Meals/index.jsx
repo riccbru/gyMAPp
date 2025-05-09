@@ -1,9 +1,9 @@
 import API from "@/lib/API";
-import { Selects } from "./Selects";
 import params from "@/lib/parameters";
 import { useAuth } from "@/hooks/useAuth";
 import { Options } from "../Home/Options";
 import { useEffect, useState } from "react";
+import { MealSelection } from "./MealSelection";
 
 function MealsPanel() {
 
@@ -36,7 +36,7 @@ function MealsPanel() {
             <div className="itemDivided">
                 <div className="itemTitle">Search meals</div>
                 <div className="flex flex-col items-center mx-auto space-y-5">
-                    <Selects setMeal={setMeal} setWeekday={setWeekday}/>
+                    <MealSelection setMeal={setMeal} setWeekday={setWeekday}/>
                 </div>
             </div>
             <div className="itemDivided">

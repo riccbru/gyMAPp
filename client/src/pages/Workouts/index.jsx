@@ -5,7 +5,6 @@ function Workouts() {
     return (
         <>
             <WorkoutsPanel />
-            <Development />
         </>
     );
 }

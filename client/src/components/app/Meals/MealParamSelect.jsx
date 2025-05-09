@@ -8,7 +8,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 
-function ParamSelect({ type, setValue }) {
+function MealParamSelect({ type, setValue }) {
     const isWeekday = type === "weekday";
 
     const placeholder = isWeekday
@@ -46,4 +46,4 @@ function ParamSelect({ type, setValue }) {
     );
 }
 
-export { ParamSelect };
+export { MealParamSelect };
