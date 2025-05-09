@@ -1,6 +1,11 @@
 # gyMAPp - Server
 
-## Local run
+## Installation
+```bash
+npm ci
+```
+
+## Run
 ```bash
 nodemon index.js
 ```
