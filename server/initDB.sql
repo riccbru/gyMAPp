@@ -752,31 +752,31 @@ VALUES
 INSERT INTO "ingredients_usage" ("meal_id", "option_id", "ingredient_id", "quantity")
 VALUES
     (
-        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 3),
+        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 3),
         (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 3)),
         (SELECT iid FROM ingredients WHERE ingredient_name = 'Whole wheat pasta'),
         140
     ),
     (
-        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 3),
+        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 3),
         (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 3)),
         (SELECT iid FROM ingredients WHERE ingredient_name = 'Parmigiano'),
         5
     ),
     (
-        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 3),
+        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 3),
         (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 3)),
         (SELECT iid FROM ingredients WHERE ingredient_name = 'Tuna tin'),
         130
     ),
     (
-        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 3),
+        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 3),
         (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 3)),
         (SELECT iid FROM ingredients WHERE ingredient_name = 'Mixed salad'),
         200
     ),
     (
-        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 3),
+        (SELECT mid FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 3),
         (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 5 AND meal_type = 3)), 
         (SELECT iid FROM ingredients WHERE ingredient_name = 'EVO'),
         20
