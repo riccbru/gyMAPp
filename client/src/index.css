@@ -140,13 +140,13 @@
     .fileCard {
         @apply mt-5
         bg-panna dark:bg-primary
-        text-black dark:text-white
+        text-blue-950 dark:text-white
         border-gray dark:border-blue-700;
     }
 
     .aHref {
         @apply inline-block mt-2 px-4 py-2 
-        text-white text-base
+        text-white text-base font-extrabold
         bg-blue-500 hover:bg-blue-700
         rounded-full hover:rounded-xl
         transition-all duration-150

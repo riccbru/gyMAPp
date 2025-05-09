@@ -7,9 +7,9 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-function FileCard({ title, path, description }) {
+function FileCard({ title, author, path, description }) {
     return(
-        <Card className="fileCard rounded-3xl">
+        <Card className="fileCard rounded-3xl border-4">
             <CardHeader className="text-center">
                 <CardTitle>
                     <a href={path} download
@@ -18,9 +18,10 @@ function FileCard({ title, path, description }) {
                     </a>
                 </CardTitle>
             </CardHeader>
-            <CardContent className="text-left">
+            <CardContent className="text-center font-bold">
                 {description}
             </CardContent>
+            <CardFooter className="text-center text-sm">{author}</CardFooter>
         </Card>
     );
 }
