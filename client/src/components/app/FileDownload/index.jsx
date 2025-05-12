@@ -11,13 +11,13 @@ function FileDownloadPanel() {
             title={"BIA #2"}
             author={"Mattia Cecchetti"}
             path={`${global}/bia_2.pdf`}
-            description={"19/12/2024"}
+            description={"12/19/2024"}
           />
           <FileCard
             title={"BIA #1"}
             author={"Mattia Cecchetti"}
             path={`${global}/bia_1.pdf`}
-            description={"31/08/2024"}
+            description={"08/31/2024"}
           />
         </div>
         <div className="itemDivided">
@@ -25,7 +25,7 @@ function FileDownloadPanel() {
             title={"MEAL #2"}
             author={"Mattia Cecchetti"}
             path={`${global}/meal_2.pdf`}
-            description={"02/01/2025"}
+            description={"01/02/2025"}
           />
           <FileCard
             title={"MEAL #1"}
