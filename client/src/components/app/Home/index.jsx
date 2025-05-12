@@ -46,7 +46,7 @@ function HomePanel() {
         }
 
         const intervalId = setInterval(() => {
-          const formattedDate = dayjs().format("dddd MM[/]DD[/]YYYY");
+          const formattedDate = dayjs().format("dddd MM[/]DD[/]YYYY").toUpperCase();
           const formattedTime = dayjs().format("HH:mm:ss");
           setCurrentTime({ date: formattedDate, time: formattedTime });
         }, 1000);
