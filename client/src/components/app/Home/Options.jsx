@@ -9,9 +9,14 @@ import {
 
 function Options({ mealOptions }) {
 
+    const mealName = params.toTitleCase(params.getMealTypeName());
+
     return (
         <div className="flex flex-col items-center text-center justify-center">
-            <div className="itemTitle">MEALS ({mealOptions?.length ? params.getMealTypeName() : 'TREAT DAY'})</div>
+            <div className="itemTitle">MEALS</div>
+            <div className="font-bold mb-5">
+                {mealOptions?.length ? mealName : 'TREAT DAY'}
+            </div>
 
             {
                 !mealOptions?.length ? null :

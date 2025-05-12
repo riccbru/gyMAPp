@@ -52,7 +52,6 @@ const getWeekdayNumByName = (name) => {
 
 const getMealTypeNum = () => {
   const currentHour = (dayjs().hour() + dayjs().minute() / 60).toFixed(1);
-  // console.log(`currentHour = ${currentHour}`);
 
   const meal = mealTimes.find(({ min, max }) => {
     if (min < max) {
@@ -76,7 +75,12 @@ const getMealTypeNumByName = (name) => {
   return Object.entries(mealMap).find(([k, v]) => (v === name))?.[0];
 }
 
+const toTitleCase = (string) => {
+  return string.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+};
+
 export default {
   getWeekdayNum, getWeekdayName, getAllWeekdayNames, getWeekdayNumByName,
-  getMealTypeNum, getMealTypeName, getAllMealTypeNames, getMealTypeNumByName
+  getMealTypeNum, getMealTypeName, getAllMealTypeNames, getMealTypeNumByName,
+  toTitleCase
 };

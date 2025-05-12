@@ -8,10 +8,14 @@ import {
 
 function Exercises({ workoutExercises }) {
 
+    const weekday = params.toTitleCase(params.getWeekdayName());
+
     return (
         <div className="flex flex-col items-center text-center justify-center">
-            <div className="itemTitle">WORKOUT ({workoutExercises?.length ? params.getWeekdayName() : 'rest day'})</div>
-
+            <div className="itemTitle">WORKOUT</div>
+            <div className="font-bold mb-5">
+                {workoutExercises?.length ? weekday : 'REST DAY'}
+            </div>
             {
                 !workoutExercises?.length ? null :
                 workoutExercises.map((exercise, index) => (

@@ -83,7 +83,7 @@ function StatsPanel() {
                     <div className='itemTitle'>BIAs</div>
                     {!BIAs?.length ? null :
                     BIAs.map((BIA, index) => (
-                        <Bia key={index} index={index} bia={BIA} />
+                        <Bia key={index} index={BIAs.length - index - 1} bia={BIA} />
                     ))}
                 </div>
             </div>
