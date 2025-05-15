@@ -1,9 +1,6 @@
 .env
-
-# misc
-client/src/assets/*
 .DS_Store
-node_modules/
 refreshDB
 instructions
-script.js
+node_modules/
+client/src/assets/*
