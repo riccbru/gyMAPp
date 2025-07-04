@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { PasswordField } from "../PasswordField";
 import { Calendar } from "@/components/ui/calendar";
-import { CalendarIcon, Eye, EyeOff } from 'lucide-react';
+import { CalendarIcon } from 'lucide-react';
 import {
     Popover,
     PopoverContent,

@@ -1,4 +1,3 @@
-import { Development } from "../Development";
 import { WorkoutsPanel } from "@/components/app/Workouts";
 
 function Workouts() {

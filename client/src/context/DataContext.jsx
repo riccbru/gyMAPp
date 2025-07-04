@@ -1,5 +1,4 @@
 import API from "@/lib/API";
-import { useAuth } from "@/hooks/useAuth";
 import { AuthContext } from "./AuthContext";
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
@@ -7,7 +6,6 @@ const DataContext = createContext();
 
 const DataProvider = ({ children }) => {
 
-  // const { isLogged } = useAuth();
   const { isLogged } = useContext(AuthContext);
 
   const [bia, setBia] = useState(null);

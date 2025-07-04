@@ -3,9 +3,6 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
 function PasswordField({ label, name, value, submit, onChange, error, onToggleShow, showPassword }) {
-  const getColor = (value, error) => {
-    return !error ? (value ? '!bg-green' : '') : '!bg-red';
-  };
   return (
     <div>
         <Label

@@ -118,7 +118,7 @@ function LoginForm() {
           </CardContent>
 
           <CardFooter className="flex justify-center text-sm">
-            Don't have an account?{" "} <a href="/signup" className="footerLink">Sign Up</a>
+            Don&apos;t have an account?{" "} <a href="/signup" className="footerLink">Sign Up</a>
           </CardFooter>
 
         </Card>

@@ -61,9 +61,8 @@ const signup = async (userData) => {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(userData)
         })
-    ).then((res) => {
-        // empty
-    }).catch((err) => { throw err; });
+    ).then(() => {})
+    .catch((err) => { throw err; });
 }
 
 const fetchBIAs = () => {
@@ -83,7 +82,7 @@ const pushBIA = async (biaData) => {
             body: JSON.stringify(biaData),
             headers: {'Content-Type': 'application/json'}
         })
-    ).then((res) => {})
+    ).then(() => {})
     .catch((err) => { throw err; });
 }
 
@@ -120,7 +119,7 @@ const pushWeight = async (weight) => {
             method: 'POST',
             credentials: 'include'
         })
-    ).then((res) => {})
+    ).then(() => {})
     .catch((err) => { throw err; });
 }
 
