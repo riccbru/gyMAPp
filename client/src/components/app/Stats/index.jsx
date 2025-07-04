@@ -1,16 +1,18 @@
-import { Bia } from './BIA/Bia';
 import API from '@/lib/API';
+import { Bia } from './BIA/Bia';
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
-import { WeightChart } from './Weight/WeightChart';
 import { PushWeight } from './Weight/PushWeight';
+import { WeightChart } from './Weight/WeightChart';
 
 function StatsPanel() {
 
     const { isLogged } = useAuth()
     const [BIAs, setBIAs] = useState([]);
     const [weight, setWeight] = useState("");
-    const [weights, setWeights] = useState([]);
+    const [totWeights, setTotWeights] = useState([]);
+    const [muscleWeights, setMuscleWeights] = useState([]);
+    const [fatWeights, setFatWeights] = useState([]);
     const [error, setError] = useState(false);
     const [refresh, setRefresh] = useState(false);
 
@@ -39,17 +41,17 @@ function StatsPanel() {
                 .catch((err) => {
                     console.log(`app/Stats.index.useEffect(fetchBIAs):\n${err}`);
                 });
-            API.fetchWeights()
+            API.fetchTotWeights()
                 .then((res) => {
-                    setWeights(res.weights);
+                    setTotWeights(res.weights);
                 })
                 .catch((err) => {
-                    console.log(`app/Stats.index.useEffect(fetchWeights):\n${err}`);
+                    console.log(`app/Stats.index.useEffect(fetchTotWeights):\n${err}`);
                 });
         } else {
             setBIAs([]);
             setWeight("");
-            setWeights([]);
+            setTotWeights([]);
             setError(false);
         }
     }, [refresh]);
@@ -60,7 +62,7 @@ function StatsPanel() {
 
             <div className='pageDivider'>
                 <div className='itemDivided'>
-                <div className='itemTitle'>Weight Tracker</div>
+                <div className='itemTitle'>Total Weight</div>
 
                     <div className='flex flex-col'>
                         <PushWeight
@@ -71,8 +73,8 @@ function StatsPanel() {
                             />
 
                         <div className='mt-10'>
-                            {!weights?.length ? "No weight tracked yet, cannot display WeightChart"
-                            : <WeightChart weights={weights} />
+                            {!totWeights?.length ? "No weight tracked yet, cannot display TotWeightChart"
+                            : <WeightChart weights={totWeights} />
                             }
                         </div>
                     </div>

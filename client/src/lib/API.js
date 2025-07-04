@@ -104,7 +104,7 @@ const fetchWorkout = async (weekday) => {
     return await res.json();
 }
 
-const fetchWeights = () => {
+const fetchTotWeights = () => {
     const url = new URL(SERVER_URL + "/weights");
     return getJSON(
         fetch(url, {
@@ -123,4 +123,35 @@ const pushWeight = async (weight) => {
     .catch((err) => { throw err; });
 }
 
-export default { info, login, logout, signup, fetchBIAs, pushBIA, fetchMeal, fetchWorkout, fetchWeights, pushWeight };
+const fetchFatsWeights = () => {
+    const url = new URL(SERVER_URL + "/weights");
+    return getJSON(
+        fetch(url, {
+            credentials: 'include'
+        })
+    );
+}
+
+const fetchMusclesWeights = () => {
+    const url = new URL(SERVER_URL + "/weights");
+    return getJSON(
+        fetch(url, {
+            credentials: 'include'
+        })
+    );
+}
+
+export default {
+  info,
+  login,
+  logout,
+  signup,
+  fetchBIAs,
+  pushBIA,
+  fetchMeal,
+  fetchWorkout,
+  fetchTotWeights,
+  pushWeight,
+  fetchFatsWeights,
+  fetchMusclesWeights,
+};

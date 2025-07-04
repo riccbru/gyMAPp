@@ -320,7 +320,7 @@ app.get("/api/v1/weights", isLogged,
     try {
       const reqUID = req.params.uid || req.user.uid;
       const uid = req.user.admin && req.params.uid ? reqUID : req.user.uid;
-      const weights = await daoWeights.fetchWeights(uid);
+      const weights = await daoWeights.fetchTotWeights(uid);
       res.status(200).json({ "weights" : weights });
     } catch (err) {
       res.status(404).json({ error: err });

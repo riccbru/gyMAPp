@@ -9,7 +9,7 @@ const returnWeight = (w) => ({
     weight: w.weight
 });
 
-exports.fetchWeights = (uid) => {
+exports.fetchTotWeights = (uid) => {
     return new Promise((resolve, reject) => {
         db.get("SELECT * FROM users WHERE uid = ?", [uid], (err, row) => {
             if (err) { reject(err); }
@@ -45,4 +45,44 @@ exports.pushWeight = (uid, weight) => {
             }
         )
     })
+}
+
+exports.fetchMuscleWeights = (uid) => {
+    return new Promise((resolve, reject) => {
+        db.get("SELECT * FROM users WHERE uid = ?", [uid], (err, row) => {
+            if (err) { reject(err); }
+            else if (!row) { reject(`User with UID #${uid} does not exist`); }
+        });
+        const sql = `SELECT date, muscle_mass FROM bias WHERE uid = ?`;
+        db.all(sql, [uid], (err, rows) => {
+            if (err) {
+                reject(err);
+            } else if (!rows.length) {
+                reject(`No weights tracked yet`);
+            } else {
+              const weights = rows.map((w) => returnWeight(w));
+              resolve(weights);
+            }
+        });
+    });
+}
+
+exports.fetchFatWeights = (uid) => {
+    return new Promise((resolve, reject) => {
+        db.get("SELECT * FROM users WHERE uid = ?", [uid], (err, row) => {
+            if (err) { reject(err); }
+            else if (!row) { reject(`User with UID #${uid} does not exist`); }
+        });
+        const sql = `SELECT date, fat_mass FROM bias WHERE uid = ?`;
+        db.all(sql, [uid], (err, rows) => {
+            if (err) {
+                reject(err);
+            } else if (!rows.length) {
+                reject(`No weights tracked yet`);
+            } else {
+              const weights = rows.map((w) => returnWeight(w));
+              resolve(weights);
+            }
+        });
+    });
 }
