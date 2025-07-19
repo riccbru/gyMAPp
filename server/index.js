@@ -320,7 +320,12 @@ app.get("/api/v1/weights", isLogged,
     try {
       const reqUID = req.params.uid || req.user.uid;
       const uid = req.user.admin && req.params.uid ? reqUID : req.user.uid;
-      const weights = await daoWeights.fetchTotWeights(uid);
+      const [tot, muscle, fat] = await Promise.all([
+        daoWeights.fetchTotWeights(uid).catch(() => []),
+        daoWeights.fetchMuscleWeights(uid).catch(() => []),
+        daoWeights.fetchFatWeights(uid).catch(() => [])
+      ]);
+      const weights = { tot, fat, muscle };
       res.status(200).json({ "weights" : weights });
     } catch (err) {
       res.status(404).json({ error: err });

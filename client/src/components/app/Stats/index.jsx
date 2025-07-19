@@ -7,12 +7,19 @@ import { WeightChart } from './Weight/WeightChart';
 
 function StatsPanel() {
 
+    const defaultWeights = {
+        tot: [],
+        fat: [],
+        muscle: []
+    }
+
     const { isLogged } = useAuth()
     const [BIAs, setBIAs] = useState([]);
     const [weight, setWeight] = useState("");
     const [totWeights, setTotWeights] = useState([]);
     const [muscleWeights, setMuscleWeights] = useState([]);
     const [fatWeights, setFatWeights] = useState([]);
+    const [weights, setWeights] = useState(defaultWeights);
     const [error, setError] = useState(false);
     const [refresh, setRefresh] = useState(false);
 
@@ -44,6 +51,23 @@ function StatsPanel() {
             API.fetchTotWeights()
                 .then((res) => {
                     setTotWeights(res.weights);
+                    setWeights(prev => ({...prev, tot: res.weights}));
+                })
+                .catch((err) => {
+                    console.log(`app/Stats.index.useEffect(fetchTotWeights):\n${err}`);
+                });
+            API.fetchFatsWeights()
+                .then((res) => {
+                    setTotWeights(res.weights);
+                    setWeights(prev => ({...prev, fat: res.weights}));
+                })
+                .catch((err) => {
+                    console.log(`app/Stats.index.useEffect(fetchTotWeights):\n${err}`);
+                });
+            API.fetchMusclesWeights()
+                .then((res) => {
+                    setTotWeights(res.weights);
+                    setWeights(prev => ({...prev, muscle: res.weights}));
                 })
                 .catch((err) => {
                     console.log(`app/Stats.index.useEffect(fetchTotWeights):\n${err}`);
@@ -51,46 +75,65 @@ function StatsPanel() {
         } else {
             setBIAs([]);
             setWeight("");
-            setTotWeights([]);
             setError(false);
+            setTotWeights([]);
+            setWeights(defaultWeights);
         }
     }, [refresh]);
 
-    return(
-        <div className='flex flex-col'>
-            <div className='pageTitle'>STATS</div>
+    return (
+      <div className="flex flex-col">
+        <div className="pageTitle">STATS</div>
 
-            <div className='pageDivider'>
-                <div className='itemDivided'>
-                <div className='itemTitle'>Total Weight</div>
+        <div className="pageDivider">
+          <div className="itemDivided">
+            <div className="itemTitle">Total Weight</div>
 
-                    <div className='flex flex-col'>
-                        <PushWeight
-                            error={error}
-                            setError={setError}
-                            setWeight={setWeight}
-                            handleClick={handleClick}
-                            />
+            <div className="flex flex-col">
+              <PushWeight
+                error={error}
+                setError={setError}
+                setWeight={setWeight}
+                handleClick={handleClick}
+              />
 
-                        <div className='mt-10'>
-                            {!totWeights?.length ? "No weight tracked yet, cannot display TotWeightChart"
-                            : <WeightChart weights={totWeights} />
-                            }
-                        </div>
-                    </div>
-
-                </div>
-                
-                <div className='itemDivided'>
-                    <div className='itemTitle'>BIAs</div>
-                    {!BIAs?.length ? null :
-                    BIAs.map((BIA, index) => (
-                        <Bia key={index} index={BIAs.length - index - 1} bia={BIA} />
-                    ))}
-                </div>
+              <div className="mt-10">
+                {!totWeights?.length ? (
+                  "No weight tracked yet, cannot display TotWeightChart"
+                ) : (
+                  <WeightChart weights={totWeights} />
+                )}
+              </div>
             </div>
-                        
+          </div>
+
+          <div className="itemDivided">
+            <div className="itemTitle">Body Composition</div>
+            <div className="">
+              {!weights.fat?.length ? (
+                "No weight tracked yet, cannot display Fat Mass chart"
+              ) : (
+                <WeightChart weights={weights.fat} />
+              )}
+            </div>
+            <div className="">
+              {!weights.muscle?.length ? (
+                "No weight tracked yet, cannot display Muscle Mass chart"
+              ) : (
+                <WeightChart weights={weights.muscle} />
+              )}
+            </div>
+          </div>
+
         </div>
+          <div className='flex flex-col items-center justify-center'>
+            <div className='itemTitle'>BIAs</div>
+            {!BIAs?.length ? null :
+                BIAs.map((BIA, index) => (
+                    <Bia key={index} index={BIAs.length - index - 1} bia={BIA} />
+            ))}
+          </div>
+      </div>
     );
 }
 
