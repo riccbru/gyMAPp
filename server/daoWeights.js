@@ -6,7 +6,7 @@ const dayjs = require("dayjs");
 const returnWeight = (w) => ({
     weid:   w.weid,
     date:   w.date,
-    weight: w.weight
+    weight: w.weight ?? w.muscle_mass ?? w.fat_mass ?? null
 });
 
 exports.fetchTotWeights = (uid) => {
@@ -15,7 +15,7 @@ exports.fetchTotWeights = (uid) => {
             if (err) { reject(err); }
             else if (!row) { reject(`User with UID #${uid} does not exist`); }
         });
-        const sql = `SELECT * FROM weights WHERE uid = ?`;
+        const sql = `SELECT date, weight FROM bias WHERE uid = ?`;
         db.all(sql, [uid], (err, rows) => {
             if (err) {
                 reject(err);
