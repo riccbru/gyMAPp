@@ -97,7 +97,7 @@
     }
 
     .biaCard {
-        @apply !rounded-3xl bg-primary text-white dark:bg-panna dark:text-primary;
+        @apply !rounded-3xl bg-panna text-primary;
     }
 
     .pageTitle {
