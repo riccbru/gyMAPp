@@ -1,6 +1,5 @@
 "use strict";
 
-const { query } = require("express-validator");
 const db = require("./db");
 const dayjs = require("dayjs");
 
@@ -13,7 +12,7 @@ const returnWeight = (w) => ({
 exports.fetchWeights = (uid, mass) => {
     return new Promise((resolve, reject) => {
         const sqlQueries = {
-            tot: "SELECT date, weight FROM bias WHERE uid = ?",
+            tot: "SELECT * FROM weights WHERE uid = ?",
             fat: "SELECT date, fat_mass FROM bias WHERE uid = ?",
             muscle: "SELECT date, muscle_mass FROM bias WHERE uid = ?",
         }
@@ -23,26 +22,6 @@ exports.fetchWeights = (uid, mass) => {
             if (err) { reject(err); }
             else if (!row) { reject(`User with UID #${uid} does not exist`); }
         });
-        db.all(sql, [uid], (err, rows) => {
-            if (err) {
-                reject(err);
-            } else if (!rows.length) {
-                reject(`No weights tracked yet`);
-            } else {
-              const weights = rows.map((w) => returnWeight(w));
-              resolve(weights);
-            }
-        });
-    });
-}
-
-exports.fetchTotWeights = (uid) => {
-    return new Promise((resolve, reject) => {
-        db.get("SELECT * FROM users WHERE uid = ?", [uid], (err, row) => {
-            if (err) { reject(err); }
-            else if (!row) { reject(`User with UID #${uid} does not exist`); }
-        });
-        const sql = `SELECT date, weight FROM bias WHERE uid = ?`;
         db.all(sql, [uid], (err, rows) => {
             if (err) {
                 reject(err);
@@ -72,44 +51,4 @@ exports.pushWeight = (uid, weight) => {
             }
         )
     })
-}
-
-exports.fetchMuscleWeights = (uid) => {
-    return new Promise((resolve, reject) => {
-        db.get("SELECT * FROM users WHERE uid = ?", [uid], (err, row) => {
-            if (err) { reject(err); }
-            else if (!row) { reject(`User with UID #${uid} does not exist`); }
-        });
-        const sql = `SELECT date, muscle_mass FROM bias WHERE uid = ?`;
-        db.all(sql, [uid], (err, rows) => {
-            if (err) {
-                reject(err);
-            } else if (!rows.length) {
-                reject(`No weights tracked yet`);
-            } else {
-              const weights = rows.map((w) => returnWeight(w));
-              resolve(weights);
-            }
-        });
-    });
-}
-
-exports.fetchFatWeights = (uid) => {
-    return new Promise((resolve, reject) => {
-        db.get("SELECT * FROM users WHERE uid = ?", [uid], (err, row) => {
-            if (err) { reject(err); }
-            else if (!row) { reject(`User with UID #${uid} does not exist`); }
-        });
-        const sql = `SELECT date, fat_mass FROM bias WHERE uid = ?`;
-        db.all(sql, [uid], (err, rows) => {
-            if (err) {
-                reject(err);
-            } else if (!rows.length) {
-                reject(`No weights tracked yet`);
-            } else {
-              const weights = rows.map((w) => returnWeight(w));
-              resolve(weights);
-            }
-        });
-    });
 }

@@ -113,15 +113,6 @@ const fetchWeights = () => {
     );
 }
 
-const fetchTotWeights = () => {
-    const url = new URL(SERVER_URL + "/weights");
-    return getJSON(
-        fetch(url, {
-            credentials: 'include'
-        })
-    );
-}
-
 const pushWeight = async (weight) => {
     return getJSON(
         fetch(SERVER_URL + `/weights?weight=${weight}`, {
@@ -130,24 +121,6 @@ const pushWeight = async (weight) => {
         })
     ).then(() => {})
     .catch((err) => { throw err; });
-}
-
-const fetchFatsWeights = () => {
-    const url = new URL(SERVER_URL + "/weights");
-    return getJSON(
-        fetch(url, {
-            credentials: 'include'
-        })
-    );
-}
-
-const fetchMusclesWeights = () => {
-    const url = new URL(SERVER_URL + "/weights");
-    return getJSON(
-        fetch(url, {
-            credentials: 'include'
-        })
-    );
 }
 
 export default {
@@ -160,8 +133,5 @@ export default {
   fetchMeal,
   fetchWorkout,
   fetchWeights,
-  fetchTotWeights,
   pushWeight,
-  fetchFatsWeights,
-  fetchMusclesWeights,
 };

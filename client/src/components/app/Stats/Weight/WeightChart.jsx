@@ -51,7 +51,7 @@ function WeightChart({ weights, title, yLabel }) {
             title: {
               display: true,
               // text: 'Weight (kg)',
-              text: yLabel,
+              text: title,
             },
             beginAtZero: false,
           },

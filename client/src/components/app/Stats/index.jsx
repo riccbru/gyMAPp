@@ -39,19 +39,19 @@ function StatsPanel() {
     
     useEffect(() => {
         if (isLogged) {
-            API.fetchBIAs()
-                .then((res) => {
-                    setBIAs(res.BIAs);
-                })
-                .catch((err) => {
-                    console.log(`app/Stats.index.useEffect(fetchBIAs):\n${err}`);
-                });
             API.fetchWeights()
                 .then((res) => {
                     setWeights(res.weights);
                 })
                 .catch((err) => {
                     console.log(`app/Stats.index.useEffect(fetchWeights):\n${err}`);
+                });
+            API.fetchBIAs()
+                .then((res) => {
+                    setBIAs(res.BIAs);
+                })
+                .catch((err) => {
+                    console.log(`app/Stats.index.useEffect(fetchBIAs):\n${err}`);
                 });
         } else {
             setBIAs([]);
@@ -78,10 +78,10 @@ function StatsPanel() {
               />
 
               <div className="mt-10">
-                {!totWeights?.length ? (
+                {!weights.tot?.length ? (
                   "No weight tracked yet, cannot display Total Mass chart"
                 ) : (
-                  <WeightChart title="Total Mass" yLabel="Total Mass" weights={weights.tot} />
+                  <WeightChart title="Total Weight" weights={weights.tot} />
                 )}
               </div>
             </div>
@@ -93,14 +93,14 @@ function StatsPanel() {
               {!weights.fat?.length ? (
                 "No weight tracked yet, cannot display Fat Mass chart"
               ) : (
-                <WeightChart title="Fat Mass" yLabel="Fat Mass" weights={weights.fat} />
+                <WeightChart title="Fat Mass" weights={weights.fat} />
               )}
             </div>
             <div className="">
               {!weights.muscle?.length ? (
                 "No weight tracked yet, cannot display Muscle Mass chart"
               ) : (
-                <WeightChart title="Muscle Mass" yLabel="Muscle Mass" weights={weights.muscle} />
+                <WeightChart title="Muscle Mass" weights={weights.muscle} />
               )}
             </div>
           </div>

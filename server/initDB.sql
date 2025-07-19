@@ -15,6 +15,15 @@ CREATE TABLE IF NOT EXISTS "users" (
     "salt" TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS "weights" (
+    "weid" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "uid" INTEGER NOT NULL,
+    "date" TEXT NOT NULL,
+    "weight" REAL NOT NULL,
+
+    FOREIGN KEY (uid) REFERENCES users(uid) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS "bias" (
     "bid" INTEGER PRIMARY KEY AUTOINCREMENT,
     "uid" INTEGER NOT NULL,
@@ -104,42 +113,9 @@ INSERT INTO "users" (
 );
 
 INSERT INTO "weights" ( "uid", "date", "weight" )
-VALUES ( 1, "08-31-2024", 91.2 );
-
-INSERT INTO "weights" ( "uid", "date", "weight" )
-VALUES ( 1, "12-19-2024", 82.4 );
-
-INSERT INTO "bias" (
-    "uid", "date", "height", "weight", "body_mass_index",
-    "basal_metabolic_rate",
-    "total_daily_energy_expenditure",
-    "na_k",
-    "phase_angle",
-    "total_body_water",                     -- tbw% = weight / tbw
-    "extra_cellular_water",                 -- ecw% = ecw / tbw
-    "intra_cellular_water",                 -- icw% = icw / tbw
-    "fat_free_mass",                        -- %ffm = ffm / weight
-    "fat_mass",                             -- %fm = fm / weight
-    "body_composition_measurement",         -- %bcm = bcm / ffm
-    "muscle_mass",                          -- %mm = mm / weight
-    "skeletal_muscle_mass",                 -- %smm = smm / weight
-    "appendicular_skeletal_muscle_mass"
-) VALUES (
-    1, "08-31-2024", 177.5, 91.2, 28.9,
-    2072.4,
-    3523.1,
-    0.9,
-    7.6,
-    55.1,
-    21.7,
-    33.4,
-    75.0,
-    16.2,
-    45.6,
-    55.1,
-    40.3,
-    31.0
-);
+VALUES
+    ( 1, "08-31-2024", 91.2 ),
+    ( 1, "12-19-2024", 82.4 );
 
 INSERT INTO "bias" (
     "uid", "date", "height", "weight", "body_mass_index",
@@ -156,22 +132,39 @@ INSERT INTO "bias" (
     "muscle_mass",                          -- %mm = mm / weight
     "skeletal_muscle_mass",                 -- %smm = smm / weight
     "appendicular_skeletal_muscle_mass"
-) VALUES (
-    1, "12-19-2024", 177.5, 82.4, 26.2,
-    2046.3,
-    3478.7,
-    0.9,
-    8.2,
-    51.8,
-    19.4,
-    32.4,
-    70.8,
-    11.6,
-    44.7,
-    53.7,
-    38.6,
-    29.5
-);
+) VALUES
+    (
+        1, "08-31-2024", 177.5, 91.2, 28.9,
+        2072.4,
+        3523.1,
+        0.9,
+        7.6,
+        55.1,
+        21.7,
+        33.4,
+        75.0,
+        16.2,
+        45.6,
+        55.1,
+        40.3,
+        31.0
+    ),
+    (
+        1, "12-19-2024", 177.5, 82.4, 26.2,
+        2046.3,
+        3478.7,
+        0.9,
+        8.2,
+        51.8,
+        19.4,
+        32.4,
+        70.8,
+        11.6,
+        44.7,
+        53.7,
+        38.6,
+        29.5
+    );
 
 
 
