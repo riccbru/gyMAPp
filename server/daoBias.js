@@ -87,3 +87,13 @@ exports.pushBia = (bia) => {
             });
     });
 }
+
+exports.deleteBia = (bid, uid) => {
+    return new Promise((resolve, reject) => {
+        const sql = "DELETE FROM bias WHERE bid = ? AND uid = ?";
+        db.run(sql, [bid, uid], function (err) {
+            if (err) { reject(err); }
+            else { resolve({"success": `BIA ${bid} successfully deleted`}); }
+        });
+    });
+}

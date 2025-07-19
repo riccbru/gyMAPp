@@ -224,7 +224,7 @@ app.get("/api/v1/bia/:uid?", isLogged,
   }
 );
 
-app.post("/api/v1/bia/", isLogged,
+app.post("/api/v1/bia", isLogged,
   async (req, res) => {
     const errors = validationResult(req).formatWith(errorFormatter);
     if (!errors.isEmpty()) {
@@ -239,6 +239,19 @@ app.post("/api/v1/bia/", isLogged,
       return res.status(500).json({ error: err });
     }
   }
+);
+
+app.delete("/api/v1/bia/:bid", isLogged,
+  async (req, res) => {
+    try {
+      const result = await daoBias.deleteBia(req.params.bid, req.user.uid);
+      if (result.error) { res.status(404).json(result); }
+      else { res.json(result); }
+    } catch (err) {
+      res.status(503).json({ error: err.message });
+    }
+  }
+
 );
 
 /*********************/

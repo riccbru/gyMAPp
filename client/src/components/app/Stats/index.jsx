@@ -1,7 +1,9 @@
 import API from '@/lib/API';
 import { Bia } from './BIA/Bia';
 import { useAuth } from "@/hooks/useAuth";
+import { CirclePlus } from 'lucide-react';
 import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { PushWeight } from './Weight/PushWeight';
 import { WeightChart } from './Weight/WeightChart';
 
@@ -13,13 +15,13 @@ function StatsPanel() {
         muscle: []
     }
 
-    const { isLogged } = useAuth()
+    const { isLogged } = useAuth();
+    const navigate = useNavigate();
     const [BIAs, setBIAs] = useState([]);
     const [weight, setWeight] = useState("");
-    const [totWeights, setTotWeights] = useState([]);
-    const [weights, setWeights] = useState(defaultWeights);
     const [error, setError] = useState(false);
     const [refresh, setRefresh] = useState(false);
+    const [weights, setWeights] = useState(defaultWeights);
 
     const handleClick = (event) => {
         event.preventDefault();
@@ -78,39 +80,26 @@ function StatsPanel() {
               />
 
               <div className="mt-10">
-                {!weights.tot?.length ? (
-                  "No weight tracked yet, cannot display Total Mass chart"
-                ) : (
-                  <WeightChart title="Total Weight" weights={weights.tot} />
-                )}
+                <WeightChart title="Total Weight" weights={weights.tot ?? []} />
               </div>
             </div>
           </div>
 
           <div className="itemDivided">
             <div className="itemTitle">Body Composition</div>
-            <div className="">
-              {!weights.fat?.length ? (
-                "No weight tracked yet, cannot display Fat Mass chart"
-              ) : (
-                <WeightChart title="Fat Mass" weights={weights.fat} />
-              )}
-            </div>
-            <div className="">
-              {!weights.muscle?.length ? (
-                "No weight tracked yet, cannot display Muscle Mass chart"
-              ) : (
-                <WeightChart title="Muscle Mass" weights={weights.muscle} />
-              )}
-            </div>
+              <WeightChart title="Fat Mass" weights={weights.fat} />
+              <WeightChart title="Muscle Mass" weights={weights.muscle} />
           </div>
 
         </div>
           <div className='flex flex-col items-center justify-center'>
-            <div className='itemTitle'>BIAs</div>
+            <div className='flex items-center gap-2'>
+              <CirclePlus className="w-7 h-7 cursor-pointer hover:text-green" onClick={() => navigate("/bia")}/>
+              <div className='itemTitle'>BIAs</div>
+            </div>
             {!BIAs?.length ? null :
                 BIAs.map((BIA, index) => (
-                    <Bia key={index} index={BIAs.length - index - 1} bia={BIA} />
+                    <Bia key={index} index={BIAs.length - index - 1} bia={BIA} setRefresh={setRefresh} />
             ))}
           </div>
       </div>

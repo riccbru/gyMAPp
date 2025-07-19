@@ -86,6 +86,16 @@ const pushBIA = async (biaData) => {
     .catch((err) => { throw err; });
 }
 
+const deleteBIA = async (bid) => {
+    const url = new URL(SERVER_URL + `/bia/${bid}`);
+    return getJSON(
+        fetch(url, {
+            method: 'DELETE',
+            credentials: 'include'
+        })
+    );
+}
+
 const fetchMeal = async (weekday, mealtype) => {
     const url = new URL(SERVER_URL + `/meals?weekday=${weekday}&meal=${mealtype}`);
 
@@ -130,6 +140,7 @@ export default {
   signup,
   fetchBIAs,
   pushBIA,
+  deleteBIA,
   fetchMeal,
   fetchWorkout,
   fetchWeights,

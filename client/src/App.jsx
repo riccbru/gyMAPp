@@ -12,6 +12,7 @@ import { FileDownload } from '@/pages/FileDownload';
 import { AuthProvider } from '@/context/AuthContext';
 import { DataProvider } from '@/context/DataContext';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { NewBia } from './pages/NewBia/NewBia';
 
 function App() {
 
@@ -43,6 +44,7 @@ function AppRouted() {
           <Route path="/meals" element={<Meals />} />
           <Route path="/workouts" element={<Workouts />} />
           <Route path="/file" element={<FileDownload />} />
+          <Route path="/bia" element={<NewBia />} />
           <Route path="/*" element={<NotFound />} />
         </Route>
         <Route path="/login" element={!isLogged ? <Login /> : <Navigate to="/home" />} />
