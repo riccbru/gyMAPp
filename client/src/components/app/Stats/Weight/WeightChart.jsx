@@ -12,12 +12,13 @@ import {
 
 ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend, Title);
 
-function WeightChart({ weights }) {
+function WeightChart({ weights, title, yLabel }) {
     const data = {
         labels: weights.map((entry) => entry.date),     // X-axis: dates
         datasets: [
           {
-            label: 'Weight (kg)',
+            // label: 'Weight (kg)',
+            label: `${title} (kg)`,
             data: weights.map((entry) => entry.weight), // Y-axis: weights
             borderColor: 'rgba(75, 192, 192, 1)',
             backgroundColor: 'rgba(75, 192, 192, 1)',
@@ -49,7 +50,8 @@ function WeightChart({ weights }) {
           y: {
             title: {
               display: true,
-              text: 'Weight (kg)',
+              // text: 'Weight (kg)',
+              text: yLabel,
             },
             beginAtZero: false,
           },

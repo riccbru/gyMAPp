@@ -57,7 +57,6 @@ function StatsPanel() {
             setBIAs([]);
             setWeight("");
             setError(false);
-            setTotWeights([]);
             setWeights(defaultWeights);
         }
     }, [refresh]);
@@ -80,9 +79,9 @@ function StatsPanel() {
 
               <div className="mt-10">
                 {!totWeights?.length ? (
-                  "No weight tracked yet, cannot display TotWeightChart"
+                  "No weight tracked yet, cannot display Total Mass chart"
                 ) : (
-                  <WeightChart weights={totWeights} />
+                  <WeightChart title="Total Mass" yLabel="Total Mass" weights={weights.tot} />
                 )}
               </div>
             </div>
@@ -94,14 +93,14 @@ function StatsPanel() {
               {!weights.fat?.length ? (
                 "No weight tracked yet, cannot display Fat Mass chart"
               ) : (
-                <WeightChart weights={weights.fat} />
+                <WeightChart title="Fat Mass" yLabel="Fat Mass" weights={weights.fat} />
               )}
             </div>
             <div className="">
               {!weights.muscle?.length ? (
                 "No weight tracked yet, cannot display Muscle Mass chart"
               ) : (
-                <WeightChart weights={weights.muscle} />
+                <WeightChart title="Muscle Mass" yLabel="Muscle Mass" weights={weights.muscle} />
               )}
             </div>
           </div>
