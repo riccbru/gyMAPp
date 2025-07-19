@@ -104,6 +104,15 @@ const fetchWorkout = async (weekday) => {
     return await res.json();
 }
 
+const fetchWeights = () => {
+    const url = new URL(SERVER_URL + "/weights");
+    return getJSON(
+        fetch(url, {
+            credentials: 'include'
+        })
+    );
+}
+
 const fetchTotWeights = () => {
     const url = new URL(SERVER_URL + "/weights");
     return getJSON(
@@ -150,6 +159,7 @@ export default {
   pushBIA,
   fetchMeal,
   fetchWorkout,
+  fetchWeights,
   fetchTotWeights,
   pushWeight,
   fetchFatsWeights,

@@ -17,8 +17,6 @@ function StatsPanel() {
     const [BIAs, setBIAs] = useState([]);
     const [weight, setWeight] = useState("");
     const [totWeights, setTotWeights] = useState([]);
-    const [muscleWeights, setMuscleWeights] = useState([]);
-    const [fatWeights, setFatWeights] = useState([]);
     const [weights, setWeights] = useState(defaultWeights);
     const [error, setError] = useState(false);
     const [refresh, setRefresh] = useState(false);
@@ -48,29 +46,12 @@ function StatsPanel() {
                 .catch((err) => {
                     console.log(`app/Stats.index.useEffect(fetchBIAs):\n${err}`);
                 });
-            API.fetchTotWeights()
+            API.fetchWeights()
                 .then((res) => {
-                    setTotWeights(res.weights);
-                    setWeights(prev => ({...prev, tot: res.weights}));
+                    setWeights(res.weights);
                 })
                 .catch((err) => {
-                    console.log(`app/Stats.index.useEffect(fetchTotWeights):\n${err}`);
-                });
-            API.fetchFatsWeights()
-                .then((res) => {
-                    setTotWeights(res.weights);
-                    setWeights(prev => ({...prev, fat: res.weights}));
-                })
-                .catch((err) => {
-                    console.log(`app/Stats.index.useEffect(fetchTotWeights):\n${err}`);
-                });
-            API.fetchMusclesWeights()
-                .then((res) => {
-                    setTotWeights(res.weights);
-                    setWeights(prev => ({...prev, muscle: res.weights}));
-                })
-                .catch((err) => {
-                    console.log(`app/Stats.index.useEffect(fetchTotWeights):\n${err}`);
+                    console.log(`app/Stats.index.useEffect(fetchWeights):\n${err}`);
                 });
         } else {
             setBIAs([]);
