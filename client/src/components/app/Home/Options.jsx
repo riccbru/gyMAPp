@@ -14,10 +14,6 @@ function Options({ mealOptions }) {
     return (
         <div className="flex flex-col items-center text-center justify-center">
             <div className="itemTitle">MEALS</div>
-            <div className="font-bold mb-5">
-                {mealOptions?.length ? mealName : 'TREAT DAY'}
-            </div>
-
             {
                 !mealOptions?.length ? null :
                 mealOptions.map((option, index) => (

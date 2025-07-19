@@ -94,7 +94,7 @@ function StatsPanel() {
         </div>
           <div className='flex flex-col items-center justify-center'>
             <div className='flex items-center gap-2'>
-              <CirclePlus className="w-7 h-7 cursor-pointer hover:text-green" onClick={() => navigate("/bia")}/>
+              <CirclePlus className="w-7 h-7 cursor-pointer hover:text-green" onClick={() => navigate("/bia/new")}/>
               <div className='itemTitle'>BIAs</div>
             </div>
             {!BIAs?.length ? null :
