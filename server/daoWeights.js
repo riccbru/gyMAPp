@@ -22,7 +22,7 @@ exports.fetchWeights = (uid, mass) => {
             if (err) { reject(err); }
             else if (!row) { reject(`User with UID #${uid} does not exist`); }
         });
-        db.all(sql, [uid], (err, rows) => {
+        db.all(sqlQuery, [uid], (err, rows) => {
             if (err) {
                 reject(err);
             } else if (!rows.length) {
