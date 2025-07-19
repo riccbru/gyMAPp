@@ -39,7 +39,7 @@ function MealsPanel() {
             <div className="itemDivided">
                 <div className="itemTitle">
                     <div className="flex flex-row items-center gap-x-10">
-                        <CirclePlus className='hover:text-green' onClick={() => navigate("/meal/new")} />
+                        <CirclePlus className='hover:text-green cursor-pointer' onClick={() => navigate("/meal/new")} />
                         Search meals
                     </div>
                 </div>
