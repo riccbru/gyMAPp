@@ -1,11 +1,3 @@
-import { FileCard } from "./FileCard";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import { files } from "@/data/pdfFiles";
 import { FileCarousel } from "./FileCarousel";
 

@@ -34,7 +34,7 @@
     }
   
     .sidebarTheme {
-        @apply p-2.5 bg-white text-background hover:bg-gray
+        @apply p-2.5 bg-gray text-background hover:bg-white
         dark:bg-background dark:text-white
         dark:hover:bg-white dark:hover:text-background rounded-3xl;
     }
