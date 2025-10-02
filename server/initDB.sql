@@ -115,7 +115,8 @@ INSERT INTO "users" (
 INSERT INTO "weights" ( "uid", "date", "weight" )
 VALUES
     ( 1, "08-31-2024", 91.2 ),
-    ( 1, "12-19-2024", 82.4 );
+    ( 1, "12-19-2024", 82.4 ),
+    ( 1, "09-25-2025", 84.6 );
 
 INSERT INTO "bias" (
     "uid", "date", "height", "weight", "body_mass_index",
