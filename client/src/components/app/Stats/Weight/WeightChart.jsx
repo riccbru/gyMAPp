@@ -1,4 +1,4 @@
-import { Line } from 'react-chartjs-2';
+import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   LineElement,
@@ -8,60 +8,68 @@ import {
   Tooltip,
   Legend,
   Title,
-} from 'chart.js';
+} from "chart.js";
 
-ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend, Title);
+ChartJS.register(
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend,
+  Title
+);
 
-function WeightChart({ weights, title, yLabel }) {
-    const data = {
-        labels: weights.map((entry) => entry.date),     // X-axis: dates
-        datasets: [
-          {
-            // label: 'Weight (kg)',
-            label: `${title} (kg)`,
-            data: weights.map((entry) => entry.weight), // Y-axis: weights
-            borderColor: 'rgba(75, 192, 192, 1)',
-            backgroundColor: 'rgba(75, 192, 192, 1)',
-            pointRadius: 4,
-            pointHoverRadius: 6,
-            fill: false,
-            tension: 0.4,
-          },
-        ],
-    };
-    const options = {
-        responsive: true,
-        plugins: {
-          legend: {
-            display: true,
-            position: 'top',
-          },
-          tooltip: {
-            enabled: true,
-          },
+function WeightChart({
+  weights,
+  title,
+  color = "rgba(75, 192, 192, 1)",
+}) {
+  const data = {
+    labels: weights.map((entry) => entry.date), // X-axis: dates
+    datasets: [
+      {
+        fill: false,
+        tension: 0.4,
+        pointRadius: 4,
+        borderColor: color,
+        pointHoverRadius: 6,
+        label: `${title} (kg)`,
+        backgroundColor: color,
+        data: weights.map((entry) => entry.weight), // Y-axis: weights
+      },
+    ],
+  };
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: "top",
+      },
+      tooltip: {
+        enabled: true,
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Date",
         },
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Date',
-            },
-          },
-          y: {
-            title: {
-              display: true,
-              // text: 'Weight (kg)',
-              text: title,
-            },
-            beginAtZero: false,
-          },
+      },
+      y: {
+        title: {
+          text: title,
+          display: true,
         },
-    };
-    return (
-        <>
-            <Line data={data} options={options} /> 
-        </>
-    );
+        beginAtZero: false,
+      },
+    },
+  };
+
+  return ( <Line data={data} options={options} /> );
+  
 }
 
 export { WeightChart };

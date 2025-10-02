@@ -87,8 +87,8 @@ function StatsPanel() {
 
           <div className="itemDivided">
             <div className="itemTitle">Body Composition</div>
-              <WeightChart title="Fat Mass" weights={weights.fat} />
-              <WeightChart title="Muscle Mass" weights={weights.muscle} />
+              <WeightChart title="Fat Mass" weights={weights.fat} color='rgba(244, 197, 66, 1)'/>
+              <WeightChart title="Muscle Mass" weights={weights.muscle} color='rgba(214, 69, 69, 1)'/>
           </div>
 
         </div>
