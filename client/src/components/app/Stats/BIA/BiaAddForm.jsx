@@ -58,52 +58,52 @@ function BiaAddForm() {
                     <Input name='date' value={newBia.date} type='date' className='authnInput' onChange={handleChange}/>
                     
                     <Label className='mt-2 mb-1.5'>Height</Label>
-                    <Input name='height' value={newBia.height} type='number' step='any' placeholder='Height (cm)...' className='authnInput' onChange={handleChange}/>
+                    <Input name='height' value={newBia.height || ''} type='number' step='any' placeholder='Height (cm)' className='authnInput' onChange={handleChange}/>
 
                     <Label className='mt-2 mb-1.5'>Weight</Label>
-                    <Input name='weight' value={newBia.weight} type='number' step='any' placeholder='Weight (kg)...' className='authnInput' onChange={handleChange}/>
+                    <Input name='weight' value={newBia.weight || ''} type='number' step='any' placeholder='Weight (kg)' className='authnInput' onChange={handleChange}/>
 
                     <Label className='mt-2 mb-1.5'>BMI</Label>
-                    <Input name='body_mass_index' value={newBia.body_mass_index} type='number' step='any' placeholder='Body Mass Index...' className='authnInput' onChange={handleChange}/>
+                    <Input name='body_mass_index' value={newBia.body_mass_index || ''} type='number' step='any' placeholder='Body Mass Index' className='authnInput' onChange={handleChange}/>
 
                     <Label className='mt-2 mb-1.5'>BMR</Label>
-                    <Input name='basal_metabolic_rate' value={newBia.basal_metabolic_rate} type='number' step='any' placeholder='Basal Metabolic Rate...' className='authnInput' onChange={handleChange}/>
+                    <Input name='basal_metabolic_rate' value={newBia.basal_metabolic_rate || ''} type='number' step='any' placeholder='Basal Metabolic Rate' className='authnInput' onChange={handleChange}/>
 
                     <Label className='mt-2 mb-1.5'>TDEE</Label>
-                    <Input name='total_daily_energy_expenditure' value={newBia.total_daily_energy_expenditure} type='number' step='any' placeholder='Total Daily Energy Expenditure...' className='authnInput' onChange={handleChange}/>
+                    <Input name='total_daily_energy_expenditure' value={newBia.total_daily_energy_expenditure || ''} type='number' step='any' placeholder='Total Daily Energy Expenditure' className='authnInput' onChange={handleChange}/>
 
                     <Label className='mt-2 mb-1.5'>Na/K</Label>
-                    <Input name='na_k' value={newBia.na_k} type='number' step='any' placeholder='Na/K...' className='authnInput' onChange={handleChange}/>
+                    <Input name='na_k' value={newBia.na_k || ''} type='number' step='any' placeholder='Na/K' className='authnInput' onChange={handleChange}/>
 
                     <Label className='mt-2 mb-1.5'>PA</Label>
-                    <Input name='phase_angle' value={newBia.phase_angle} type='number' step='any' placeholder='Phase Angle (°)...' className='authnInput' onChange={handleChange}/>
+                    <Input name='phase_angle' value={newBia.phase_angle || ''} type='number' step='any' placeholder='Phase Angle (°)' className='authnInput' onChange={handleChange}/>
 
                     <Label className='mt-2 mb-1.5'>TBW</Label>
-                    <Input name='total_body_water' value={newBia.total_body_water} type='number' step='any' placeholder='Total Body Water (L)...' className='authnInput' onChange={handleChange}/>
+                    <Input name='total_body_water' value={newBia.total_body_water || ''} type='number' step='any' placeholder='Total Body Water (L)' className='authnInput' onChange={handleChange}/>
 
                     <Label className='mt-2 mb-1.5'>ECW</Label>
-                    <Input name='extra_cellular_water' value={newBia.extra_cellular_water} type='number' step='any' placeholder='Extra Cellular Water (L)...' className='authnInput' onChange={handleChange}/>
+                    <Input name='extra_cellular_water' value={newBia.extra_cellular_water || ''} type='number' step='any' placeholder='Extra Cellular Water (L)' className='authnInput' onChange={handleChange}/>
 
                     <Label className='mt-2 mb-1.5'>ICW</Label>
-                    <Input name='intra_cellular_water' value={newBia.intra_cellular_water} type='number' step='any' placeholder='Intra Cellular Water (L)...' className='authnInput' onChange={handleChange}/>
+                    <Input name='intra_cellular_water' value={newBia.intra_cellular_water || ''} type='number' step='any' placeholder='Intra Cellular Water (L)' className='authnInput' onChange={handleChange}/>
 
                     <Label className='mt-2 mb-1.5'>FFM</Label>
-                    <Input name='fat_free_mass' value={newBia.fat_free_mass} type='number' step='any' placeholder='Fat Free Mass (kg)...' className='authnInput' onChange={handleChange}/>
+                    <Input name='fat_free_mass' value={newBia.fat_free_mass || ''} type='number' step='any' placeholder='Fat Free Mass (kg)' className='authnInput' onChange={handleChange}/>
 
                     <Label className='mt-2 mb-1.5'>FM</Label>
-                    <Input name='fat_mass' value={newBia.fat_mass} type='number' step='any' placeholder='Fat Mass (kg)...' className='authnInput' onChange={handleChange}/>
+                    <Input name='fat_mass' value={newBia.fat_mass || ''} type='number' step='any' placeholder='Fat Mass (kg)' className='authnInput' onChange={handleChange}/>
 
                     <Label className='mt-2 mb-1.5'>BCM</Label>
-                    <Input name='body_composition_measurement' value={newBia.body_composition_measurement} type='number' step='any' placeholder='Body Composition Measurement (kg)...' className='authnInput' onChange={handleChange}/>
+                    <Input name='body_composition_measurement' value={newBia.body_composition_measurement || ''} type='number' step='any' placeholder='Body Composition Measurement (kg)' className='authnInput' onChange={handleChange}/>
 
                     <Label className='mt-2 mb-1.5'>MM</Label>
-                    <Input name='muscle_mass' value={newBia.muscle_mass} type='number' step='any' placeholder='Muscle Mass (kg)...' className='authnInput' onChange={handleChange}/>
+                    <Input name='muscle_mass' value={newBia.muscle_mass || ''} type='number' step='any' placeholder='Muscle Mass (kg)' className='authnInput' onChange={handleChange}/>
 
                     <Label className='mt-2 mb-1.5'>SMM</Label>
-                    <Input name='skeletal_muscle_mass' value={newBia.skeletal_muscle_mass} type='number' step='any' placeholder='Skeletal Muscle Mass (kg)...' className='authnInput' onChange={handleChange}/>
+                    <Input name='skeletal_muscle_mass' value={newBia.skeletal_muscle_mass || ''} type='number' step='any' placeholder='Skeletal Muscle Mass (kg)' className='authnInput' onChange={handleChange}/>
 
                     <Label className='mt-2 mb-1.5'>ASMM</Label>
-                    <Input name='appendicular_skeletal_muscle_mass' value={newBia.appendicular_skeletal_muscle_mass} type='number' step='any' placeholder='Appendicular Skeletal Muscle Mass (kg)...' className='authnInput' onChange={handleChange}/>
+                    <Input name='appendicular_skeletal_muscle_mass' value={newBia.appendicular_skeletal_muscle_mass || ''} type='number' step='any' placeholder='Appendicular Skeletal Muscle Mass (kg)' className='authnInput' onChange={handleChange}/>
 
                     <Button type="submit" className="mt-5 !bg-white text-background rounded-3xl hover:rounded-xl transition-all duration-200 ease-linear cursor-pointer">
                         ADD
