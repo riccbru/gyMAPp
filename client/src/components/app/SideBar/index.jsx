@@ -1,11 +1,11 @@
 import { sidebarItems } from "./sidebarItems";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@/components/ui/tooltip";
 import {
   Sidebar,
   SidebarContent,
@@ -13,48 +13,53 @@ import {
   SidebarGroupContent,
   SidebarMenu,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
-
+} from "@/components/ui/sidebar";
 
 function SideBar() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    return(
-        <Sidebar className='sidebar' style={{width: '10rem'}}>
-          <SidebarContent>
-            <SidebarGroup>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  <div className='sidebarMenu'>
-                    <TooltipProvider delayDuration={400}>
-                      {sidebarItems.map((item, index) => (
-                        item.type !== 'menu' ?
-                        (
-                          <div key={`custom-${index}`}>
-                            <item.component />
-                          </div>
-                        )
-                        : (
-                          <Tooltip key={`tooltip-${item.title}`}>
-                            <TooltipTrigger>
-                              <SidebarMenuItem className='sidebarMenuItem' key={item.title} onClick={(e) => { navigate(item.url); }}>
-                                  <span><item.icon style={{width: '1.5rem', height: '1.5rem'}} /></span>
+  return (
+    <Sidebar className="sidebar" style={{ width: "10rem" }}>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <div className="sidebarMenu">
+                <TooltipProvider delayDuration={400}>
+                  {sidebarItems.map((item, index) =>
+                    item.type !== "menu" ? (
+                      <div key={`custom-${index}`}>
+                        <item.component />
+                      </div>
+                    ) : (
+                      <Tooltip key={`tooltip-${item.title}`}>
+                        <TooltipTrigger asChild>
+                          <NavLink to={item.url}>
+                            {({ isActive }) => (
+                              <SidebarMenuItem
+                                className={`sidebarMenuItem ${
+                                  isActive ? "!bg-white dark:!bg-gray" : ""
+                                }`}
+                              >
+                                <item.icon />
                               </SidebarMenuItem>
-                            </TooltipTrigger>
-                            <TooltipContent className='tooltipContent'>
-                              {item.title}
-                            </TooltipContent>
-                          </Tooltip>
-                        )
-                      ))}
-                    </TooltipProvider>
-                </div>
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
-      </Sidebar>
-    );
+                            )}
+                          </NavLink>
+                        </TooltipTrigger>
+                        <TooltipContent className="tooltipContent">
+                          {item.title}
+                        </TooltipContent>
+                      </Tooltip>
+                    )
+                  )}
+                </TooltipProvider>
+              </div>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
+  );
 }
 
 export { SideBar };
