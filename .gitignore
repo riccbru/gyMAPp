@@ -1,5 +1,6 @@
-gym.DB
+*.sh
 .env
+*.DB
 .DS_Store
 refreshDB
 instructions
