@@ -10,6 +10,7 @@ function MealAddForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("form submitted");
+        navigate("/meals");
     }
     
     return(
