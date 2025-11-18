@@ -2,10 +2,10 @@ import API from "@/lib/API";
 import params from "@/lib/parameters";
 import { useAuth } from "@/hooks/useAuth";
 import { Options } from "../Home/Options";
-import { useEffect, useState } from "react";
-import { MealSelection } from "./MealSelection";
 import { CirclePlus } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { MealSelection } from "./MealSelection";
 
 function MealsPanel() {
 

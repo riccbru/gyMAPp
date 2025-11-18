@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 function InputField({ label, name, value, error, submit, onChange, placeholder, type = "text" }) {
 
   const getColor = (value, error) => {
-    return !error ? (value ? '!bg-green' : '') : '!bg-red';
+    return !error ? (value ? '!bg-green' : '') : '!bg-red placeholder-white';
   };
 
   return (
