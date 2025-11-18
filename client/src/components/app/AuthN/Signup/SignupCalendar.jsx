@@ -1,3 +1,4 @@
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 function SignupCalendar({ birthdate, handleChange, error }) {
@@ -23,6 +24,21 @@ function SignupCalendar({ birthdate, handleChange, error }) {
                 onChange={handleChange}
                 className={`signupCalendar ${getColor(birthdate, error)}`}
             />
+            <Input
+                type="date"
+                name="birthdate"
+                value={formattedDate}
+                onChange={handleChange}
+                className={`authnInput ${getColor(birthdate, error)}`}
+            />
+            <Input
+                type="date"
+                name="birthdate"
+                value={formattedDate}
+                onChange={handleChange}
+                className={`signupCalendar ${getColor(birthdate, error)}`}
+            />
+
         </>
     );
 }
