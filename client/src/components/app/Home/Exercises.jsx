@@ -14,7 +14,7 @@ function Exercises({ workoutExercises }) {
         <div className="flex flex-col items-center text-center justify-center">
             <div className="itemTitle">WORKOUT</div>
             <div className="font-bold mb-5">
-                {workoutExercises?.length ? weekday : 'REST DAY'}
+                {workoutExercises?.length ? weekday : 'Rest Day'}
             </div>
             {
                 !workoutExercises?.length ? null :

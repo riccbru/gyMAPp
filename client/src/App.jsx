@@ -1,19 +1,19 @@
 import './App.css'
-import { Stats } from './pages/Stats';
 import { Home } from '@/pages/Home';
 import { Login } from '@/pages/Login';
 import { Meals } from './pages/Meals';
+import { Stats } from './pages/Stats';
 import { Signup } from '@/pages/Signup';
 import { Common } from '@/pages/Common';
 import { useAuth } from '@/hooks/useAuth';
 import { Workouts } from '@/pages/Workouts';
 import { NotFound } from '@/pages/NotFound';
+import { NewBia } from './pages/NewBia/NewBia';
+import { NewMeal } from './pages/NewMeal/NewMeal';
 import { FileDownload } from '@/pages/FileDownload';
 import { AuthProvider } from '@/context/AuthContext';
 import { DataProvider } from '@/context/DataContext';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { NewBia } from './pages/NewBia/NewBia';
-import { NewMeal } from './pages/NewMeal/NewMeal';
 
 function App() {
 

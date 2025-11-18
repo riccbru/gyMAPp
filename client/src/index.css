@@ -150,6 +150,10 @@
         bg-blue-500 hover:bg-blue-700;
     }
 
+    .trashIcon {
+        @apply w-8 h-8 mt-2.5 cursor-pointer hover:text-red hover:scale-110
+    }
+
 }
 
 @layer base {

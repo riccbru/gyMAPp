@@ -16,13 +16,11 @@ function Bia({index, bia, setRefresh }) {
 
     return (
         <>
-            <div className='flex flex-row justify-center mb-5'>
-                <div className='flex items-center text-center align-middle gap-5'>
-                    <Trash className='w-8 h-8 cursor-pointer hover:text-red' onClick={handleClick} />
-                    <Accordion type="multiple" collapsible="false" style={{width: '34rem'}}>
+            <div className='flex flex-row justify-center mb-5 gap-5'>
+                    <Accordion type="multiple" collapsible="false" style={{width: '22rem'}}>
                         <BiaAccordion index={index} bia={bia} />
                     </Accordion>
-                </div>
+                    <Trash className='trashIcon' onClick={handleClick} />
             </div>
         </>
     );
