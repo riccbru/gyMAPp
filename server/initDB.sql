@@ -190,16 +190,17 @@ INSERT INTO "bias" (
 -- *************************************** --
 INSERT INTO "workouts" ("uid", "weekday") VALUES (1, 1), (1, 3), (1, 5);
 -- Monday --
-INSERT INTO "exercises" ("wid", "name", "sets", "reps", "rest") VALUES ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Pull up", 5, 4, 150);
+INSERT INTO "exercises" ("wid", "name", "sets", "reps", "rest")
+VALUES ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Pull up", 5, 4, 120);
 INSERT INTO "exercises" ("wid", "name", "sets", "reps", "weight", "rest")
 VALUES
-    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Dip", 5, 8, 10, 150),
-    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Bench press", 5, 15, 40, 30),
-    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Incline bench press", 5, 15, 30, 30),
-    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Pulley", 5, 15, 20, 30),
-    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Pull down", 5, 15, 15, 30),
-    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Hammer curl", 5, 15, 6, 30),
-    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Seated bicep curl", 5, 15, 4, 30);
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Dip", 4, 10, 10, 120),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Bench press", 4, 10, 40, 90),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Incline bench press", 4, 10, 35, 90),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Pulley", 4, 10, 50, 90),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Pull down", 4, 10, 45, 90),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Hammer curl", 4, 10, 9, 90),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "Seated bicep curl", 4, 10, 7, 90);
 INSERT INTO "exercises" ("wid", "name", "rest") VALUES ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 1), "ABS circuit", 0);
 -- Wednesday --
 INSERT INTO "exercises" ("wid", "name", "sets", "reps", "weight", "rest")
@@ -216,16 +217,16 @@ INSERT INTO "exercises" ("wid", "name", "rest") VALUES ((SELECT wid FROM workout
 INSERT INTO "exercises" ("wid", "name", "sets", "reps", "rest")
 VALUES
 
-    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Chin up", 5, 5, 120),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Chin up", 4, 10, 120),
     ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Push up & 10s plank piramid", 4, 25, 180);
 INSERT INTO "exercises" ("wid", "name", "sets", "reps", "weight", "rest")
 VALUES
-    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Shoulder fly", 5, 15, 5, 30),
-    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Shoulder press", 5, 15, 5, 60),
-    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Fly", 5, 20, 5, 60),
-    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Push down (bullballz)", 5, 15, 25, 30),
-    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Push down (W wheel)", 5, 15, 20, 30),
-    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Kick back", 5, 15, 5, 30);
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Shoulder fly", 4, 10, 10, 90),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Shoulder press", 4, 10, 12, 90),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Fly", 4, 10, 7, 90),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Push down (bullballz)", 4, 10, 45, 90),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Push down (W wheel)", 4, 10, 50, 90),
+    ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Kick back", 4, 10, 7, 60);
 INSERT INTO "exercises" ("wid", "name", "rest") VALUES ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "ABS circuit", 0);
 
 
@@ -656,7 +657,7 @@ VALUES
 -- Wednesday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
-    ((SELECT mid FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 3), (SELECT iid FROM ingredients WHERE ingredient_name = 'Parboiled rice'), 100),
+    ((SELECT mid FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 3), (SELECT iid FROM ingredients WHERE ingredient_name = 'Parboiled rice'), 110),
     ((SELECT mid FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 3), (SELECT iid FROM ingredients WHERE ingredient_name = 'Parmigiano'), 5),
     ((SELECT mid FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 3), (SELECT iid FROM ingredients WHERE ingredient_name = 'Beans'), 90),
     ((SELECT mid FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 3), (SELECT iid FROM ingredients WHERE ingredient_name = 'Carrots'), 100),
@@ -667,7 +668,7 @@ VALUES
         (SELECT mid FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 3),
         (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 3)),
         (SELECT iid FROM ingredients WHERE ingredient_name = 'Whole wheat pasta'),
-        100
+        130
     ),
     (
         (SELECT mid FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 3),
@@ -699,7 +700,7 @@ VALUES
         (SELECT mid FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 3),
         (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 3)),
         (SELECT iid FROM ingredients WHERE ingredient_name = 'Pasta'),
-        90
+        120
     ),
     (
         (SELECT mid FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 3),
@@ -716,7 +717,7 @@ VALUES
     (
         (SELECT mid FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 3),
         (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 3 AND meal_type = 3)),
-        (SELECT iid FROM ingredients WHERE ingredient_name = 'Courgettes'),
+        (SELECT iid FROM ingredients WHERE ingredient_name = 'Spinach'),
         100
     ),
     (
@@ -788,7 +789,7 @@ VALUES
     (
         (SELECT mid FROM meals WHERE uid = 1 AND weekday = 4 AND meal_type = 3),
         (SELECT (COALESCE(MAX(option_id), 0) + 1) FROM ingredients_usage WHERE meal_id = (SELECT mid FROM meals WHERE uid = 1 AND weekday = 4 AND meal_type = 3)),
-        (SELECT iid FROM ingredients WHERE ingredient_name = 'Carrots'),
+        (SELECT iid FROM ingredients WHERE ingredient_name = 'Spinach'),
         100
     ),
     (
@@ -904,7 +905,7 @@ VALUES
 -- Saturday --
 INSERT INTO "ingredients_usage" ("meal_id", "ingredient_id", "quantity")
 VALUES
-    ((SELECT mid FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 3), (SELECT iid FROM ingredients WHERE ingredient_name = 'Whole wheat pasta'), 110),
+    ((SELECT mid FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 3), (SELECT iid FROM ingredients WHERE ingredient_name = 'Whole wheat pasta'), 120),
     ((SELECT mid FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 3), (SELECT iid FROM ingredients WHERE ingredient_name = 'Parmigiano'), 5),
     ((SELECT mid FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 3), (SELECT iid FROM ingredients WHERE ingredient_name = 'Codfish'), 200),
     ((SELECT mid FROM meals WHERE uid = 1 AND weekday = 6 AND meal_type = 3), (SELECT iid FROM ingredients WHERE ingredient_name = 'Broccoli'), 150),

@@ -13,7 +13,7 @@ const AuthProvider = ({ children }) => {
       try {
         const user = await API.info();
         setUser({
-          uid: user.id,
+          uid: user.uid,
           admin: user.admin,
           username: user.username,
         });

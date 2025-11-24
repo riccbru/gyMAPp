@@ -144,7 +144,7 @@
     }
 
     .fileCard {
-        @apply mt-5
+        @apply
         bg-panna dark:bg-primary
         text-blue-950 dark:text-white
         border-blue-700;

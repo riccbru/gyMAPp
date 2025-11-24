@@ -10,8 +10,8 @@ import { FileCard } from "./FileCard";
 function FileCarousel({ title, files }) {
     return(
         <>
-            <h2 className="text-center font-extrabold">{title}</h2>
-            <Carousel>
+            <div className="mt-5 mb-3 text-2xl text-center font-extrabold">{title}</div>
+            <Carousel className='mb-10'>
                 <CarouselContent>
                     {files.map((file, index) => (
                         <CarouselItem key={index}>
