@@ -2,6 +2,7 @@
 
 const files = {
     bias: [
+      { title: "BIA #4", author: "Mattia Cecchetti", path: "/pdf/1/bia_4.pdf", description: "November 14, 2025" },
       { title: "BIA #3", author: "Mattia Cecchetti", path: "/pdf/1/bia_3.pdf", description: "September 9, 2025" },
       { title: "BIA #2", author: "Mattia Cecchetti", path: "/pdf/1/bia_2.pdf", description: "December 19, 2024" },
       { title: "BIA #1", author: "Mattia Cecchetti", path: "/pdf/1/bia_1.pdf", description: "August 31, 2024" },
