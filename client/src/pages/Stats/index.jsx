@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { LazyLoader } from "@/components/LazyLoader";
+import { LazyLoader } from "../LazyLoader";
 
 const StatsPanel = lazy(() => 
     import("@/components/app/Stats").then(module => ({ default: module.StatsPanel }))

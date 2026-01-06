@@ -1,6 +1,6 @@
 import { BiaAddForm } from "@/components/app/Stats/BIA/BiaAddForm";
 
-function NewBia(props) {
+function NewBia() {
 
     return(
         <div className="flex flex-col">

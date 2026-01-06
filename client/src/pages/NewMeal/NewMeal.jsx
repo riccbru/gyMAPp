@@ -1,6 +1,6 @@
 import { MealAddForm } from "@/components/app/Meals/MealAddForm";
 
-function NewMeal(props) {
+function NewMeal() {
     return(
         <div className="flex flex-col">
             <div className="pageTitle">

@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { LazyLoader } from "@/components/LazyLoader";
+import { LazyLoader } from "../LazyLoader";
 
 const FileDownloadPanel = lazy(() => 
     import("@/components/app/FileDownload").then(module => ({ default: module.FileDownloadPanel }))
