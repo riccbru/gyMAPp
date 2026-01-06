@@ -1,10 +1,15 @@
-import { HomePanel } from "@/components/app/Home";
+import { lazy } from "react";
+import { LazyLoader } from "@/components/LazyLoader";
+
+const HomePanel = lazy(() => 
+    import("@/components/app/Home").then(module => ({ default: module.HomePanel }))
+);
 
 function Home() {
-    return(
-        <div>
+    return (
+        <LazyLoader message="Loading...">
             <HomePanel />
-        </div>
+        </LazyLoader>
     );
 }
 

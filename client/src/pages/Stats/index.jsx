@@ -1,10 +1,15 @@
-import { StatsPanel } from "@/components/app/Stats";
+import { lazy } from "react";
+import { LazyLoader } from "@/components/LazyLoader";
+
+const StatsPanel = lazy(() => 
+    import("@/components/app/Stats").then(module => ({ default: module.StatsPanel }))
+);
 
 function Stats() {
-    return(
-        <div>
+    return (
+        <LazyLoader message="Loading Stats...">
             <StatsPanel />
-        </div>
+        </LazyLoader>
     );
 }
 
