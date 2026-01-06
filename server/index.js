@@ -15,6 +15,7 @@ const daoUsers = require("./daoUsers");
 const daoMeals = require("./daoMeals");
 const daoWorkouts = require("./daoWorkouts");
 const daoWeights = require("./daoWeights");
+const daoLogs = require("./daoLogs");
 
 const app = new express();
 
@@ -251,7 +252,6 @@ app.delete("/api/v1/bia/:bid", isLogged,
       res.status(503).json({ error: err.message });
     }
   }
-
 );
 
 /*********************/
@@ -364,4 +364,49 @@ app.post("/api/v1/weights/", isLogged,
       return res.status(500).json({ error: err });
     }
   } 
+);
+
+/*********************/
+/*        LOGS       */
+/*********************/
+
+app.get("/api/v1/logs", isLogged, async (req, res) => {
+    try {
+        const logs = await daoLogs.fetchLogs(req.user.uid);
+        res.status(200).json(logs);
+    } catch (err) {
+        res.status(500).json({ error: "Database error while fetching logs" });
+    }
+});
+
+app.post("/api/v1/logs", isLogged, [
+    body('exercise_name').isString().notEmpty().trim(),
+    body('sets').isInt({ min: 1 }),
+    body('reps').isInt({ min: 1 }),
+    body('rest').isInt({ min: 0 }),
+    body('weight').optional().isFloat({ min: 0 }),
+    body('date').optional().isISO8601() // Validates YYYY-MM-DD format
+], async (req, res) => {
+    const errors = validationResult(req).formatWith(errorFormatter);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ error: errors.array()[0] });
+    }
+    try {
+        const call = await daoLogs.pushLog(req.user.uid, req.body);
+        return res.status(201).json({ success: call });
+    } catch (err) {
+        return res.status(500).json({ error: err });
+    }
+});
+
+app.delete("/api/v1/logs/:lid", isLogged,
+  async (req, res) => {
+    try {
+      const result = await daoLogs.deleteLog(req.params.lid, req.user.uid);
+      if (result.error) { res.status(404).json(result); }
+      else { res.json(result); }
+    } catch (err) {
+      res.status(503).json({ error: err.message });
+    }
+  }
 );

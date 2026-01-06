@@ -247,7 +247,21 @@ VALUES
     ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "Kick back", 4, 10, 7, 60);
 INSERT INTO "exercises" ("wid", "name", "rest") VALUES ((SELECT wid FROM workouts WHERE uid = 1 AND weekday = 5), "ABS circuit", 0);
 
-
+-- *************************************** --
+-- *****           LOGS              ***** --
+-- *************************************** --
+CREATE TABLE IF NOT EXISTS "logs" (
+    "lid" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "uid" INTEGER NOT NULL,
+    "exercise_name" TEXT NOT NULL,          
+    "sets" INTEGER NOT NULL,
+    "reps" INTEGER NOT NULL,
+    "weight" REAL DEFAULT 0,          
+    "rest" INTEGER,                   
+    "date" DATE DEFAULT CURRENT_DATE, 
+    "created_at" DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY("uid") REFERENCES "users"("uid")
+);
 
 
 
