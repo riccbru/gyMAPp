@@ -8,6 +8,7 @@ import { WorkoutSelection } from "./WorkoutSelection";
 function WorkoutsPanel() {
 
   const { isLogged } = useAuth();
+  const [logs, setLogs] = useState([]);
   const [exercises, setExercises] = useState([]);
   const [weekday, setWeekday] = useState(params.getWeekdayNum());
 
@@ -24,10 +25,21 @@ function WorkoutsPanel() {
         .catch((err) => {
           console.log(`HOME.index.useEffect(workout):\n${err}`);
         });
+      API.fetchLogs()
+        .then((res) => {
+          if (res.logs !== undefined) {
+            setLogs(res.logs);
+          } else {
+            setLogs([]);
+          }
+        })
+        .catch((err) => {
+          console.log(`WORKOUTS.index.useEffect(logs):\n${err}`);
+        });
     } else {
       setExercises([]);
     }
-  }, [weekday]);
+  }, [isLogged, weekday]);
 
   return (
     <div className="flex flex-col">
@@ -43,6 +55,7 @@ function WorkoutsPanel() {
           <Exercises workoutExercises={exercises} />
         </div>
       </div>
+      {/* {logs} */}
     </div>
   );
 }

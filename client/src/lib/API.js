@@ -133,6 +133,37 @@ const pushWeight = async (weight) => {
     .catch((err) => { throw err; });
 }
 
+const fetchLogs = () => {
+    const url = new URL(SERVER_URL + "/logs");
+    return getJSON(
+        fetch(url, {
+            credentials: 'include'
+        })
+    );
+}
+
+const pushLog = async (log) => {
+    return getJSON(
+        fetch(SERVER_URL + `/logs`, {
+            method: 'POST',
+            credentials: 'include',
+            body: JSON.stringify(log),
+            headers: {'Content-Type': 'application/json'}
+        })
+    ).then(() => {})
+    .catch((err) => { throw err; });
+}
+
+const deleteLog = async (lid) => {
+    const url = new URL(SERVER_URL + `/logs/${lid}`);
+    return getJSON(
+        fetch(url, {
+            method: 'DELETE',
+            credentials: 'include'
+        })
+    );
+}
+
 export default {
   info,
   login,
@@ -145,4 +176,7 @@ export default {
   fetchWorkout,
   fetchWeights,
   pushWeight,
+  fetchLogs,
+  pushLog,
+  deleteLog
 };

@@ -16,7 +16,7 @@ const returnLog = (l) => ({
 exports.fetchLogs = (uid) => {
     return new Promise((resolve, reject) => {
         const sql = `
-            SELECT id, exercise_name, sets, reps, weight, rest, date
+            SELECT lid, exercise_name, sets, reps, weight, rest, date
             FROM logs WHERE uid = ?
             ORDER BY date DESC, created_at DESC
         `;
