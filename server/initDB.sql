@@ -255,7 +255,7 @@ CREATE TABLE IF NOT EXISTS "logs" (
     "uid" INTEGER NOT NULL,
     "exercise_name" TEXT NOT NULL,          
     "sets" INTEGER NOT NULL,
-    "reps" INTEGER NOT NULL,
+    "reps" TEXT NOT NULL,
     "weight" REAL DEFAULT 0,          
     "rest" INTEGER,                   
     "date" DATE DEFAULT CURRENT_DATE, 

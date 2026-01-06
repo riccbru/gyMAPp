@@ -1,6 +1,6 @@
 *.sh
 .env
-*.DB
+*.DB*
 .DS_Store
 refreshDB
 instructions
