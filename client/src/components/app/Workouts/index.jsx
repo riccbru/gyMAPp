@@ -6,7 +6,6 @@ import { Exercises } from "../Home/Exercises";
 import { WorkoutSelection } from "./WorkoutSelection";
 
 function WorkoutsPanel() {
-
   const { isLogged } = useAuth();
   const [logs, setLogs] = useState([]);
   const [exercises, setExercises] = useState([]);

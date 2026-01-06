@@ -373,7 +373,7 @@ app.post("/api/v1/weights/", isLogged,
 app.get("/api/v1/logs", isLogged, async (req, res) => {
     try {
         const logs = await daoLogs.fetchLogs(req.user.uid);
-        res.status(200).json(logs);
+        res.status(200).json({ "logs": logs });
     } catch (err) {
         res.status(500).json({ error: "Database error while fetching logs" });
     }
