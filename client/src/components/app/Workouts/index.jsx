@@ -3,6 +3,7 @@ import params from "@/lib/parameters";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
 import { Exercises } from "../Home/Exercises";
+import { ExerciseChart } from "./ExerciseChart";
 import { WorkoutSelection } from "./WorkoutSelection";
 
 function WorkoutsPanel() {
@@ -54,7 +55,29 @@ function WorkoutsPanel() {
           <Exercises workoutExercises={exercises} />
         </div>
       </div>
-      {/* {logs} */}
+
+      <div className="text-center itemTitle">LOGS</div>
+      {logs.length === 0 && (
+        <div className="mt-10 mb-10 text-center text-slate-500">
+          No training logs yet.
+          <br></br>
+          Complete a home session to see your progress here!
+        </div>
+      )}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 px-4">
+        {[...new Set(logs.map((l) => l.exercise_name))].map((name, index) => (
+          <ExerciseChart
+            key={name}
+            logs={logs}
+            exerciseName={name}
+            color={
+              index % 2 === 0
+                ? "rgba(75, 192, 192, 1)"
+                : "rgba(153, 102, 255, 1)"
+            }
+          />
+        ))}
+      </div>
     </div>
   );
 }

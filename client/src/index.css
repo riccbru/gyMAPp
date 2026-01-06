@@ -160,6 +160,16 @@
         @apply w-8 h-8 mt-2.5 cursor-pointer hover:text-red hover:scale-110
     }
 
+    .logCard {
+        @apply bg-panna dark:bg-primary dark:hover:border-green
+        border-gray dark:border-blue-700
+        !border-2 !rounded-3xl;
+    }
+
+    .labelStyle {
+        @apply text-xs tracking-widest font-black uppercase;
+    }
+
 }
 
 @layer base {
