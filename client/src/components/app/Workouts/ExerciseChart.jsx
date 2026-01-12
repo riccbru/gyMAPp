@@ -44,7 +44,8 @@ function ExerciseChart({ logs, exerciseName, color = "rgba(54, 162, 235, 1)" }) 
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      title: { display: true, text: exerciseName.toUpperCase(), color: 'white' },
+      title: { display: true, text: '', color: 'white' },
+      // title: { display: true, text: exerciseName.toUpperCase(), color: 'white' },
       legend: { labels: { color: 'white' } }
     },
     scales: {
@@ -54,8 +55,10 @@ function ExerciseChart({ logs, exerciseName, color = "rgba(54, 162, 235, 1)" }) 
   };
 
   return (
-    <div className="h-80 w-full p-4 bg-slate-800 rounded-xl shadow-lg">
-      <Line data={data} options={options} />
+    <div className="h-full w-full p-4 bg-slate-800 rounded-xl shadow-lg flex items-center">
+      <div className="w-full h-full min-h-[320px]">
+        <Line data={data} options={options} />
+      </div>
     </div>
   );
 }

@@ -27,9 +27,23 @@ function WorkoutsPanel() {
         className: "toast !border-green",
       });
     } catch (err) {
-      toast({ title: "ERROR", description: "Failed to delete log", variant: "destructive" });
+      toast({ title: "Failed to delete log", description: err, variant: "destructive" });
     }
   };
+
+  // Group logs by exercise name
+  const groupedLogs = logs.reduce((acc, log) => {
+    if (!acc[log.exercise_name]) {
+      acc[log.exercise_name] = [];
+    }
+    acc[log.exercise_name].push(log);
+    return acc;
+  }, {});
+
+  // Sort logs within each group by date descending (newest first)
+  Object.keys(groupedLogs).forEach((exerciseName) => {
+    groupedLogs[exerciseName].sort((a, b) => b.lid - a.lid);
+  });
 
   useEffect(() => {
     if (isLogged) {
@@ -65,39 +79,40 @@ function WorkoutsPanel() {
         </div>
 
         <TabsContent value="home" className="mt-0 outline-none animate-in fade-in zoom-in-95 duration-300">
-          <div className="flex flex-col space-y-12">
+          <div className="flex flex-col space-y-8 pb-20 px-4">
             
-            {/* CHARTS SECTION */}
-            <div className="flex flex-col items-center">
-               <div className="itemTitle !text-[10px] tracking-[0.3em] mb-8">PERFORMANCE CHARTS</div>
-               <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 w-full px-4">
-                {logs.length === 0 ? (
-                  <div className="col-span-full py-20 text-center border-2 border-dashed border-slate-800 rounded-3xl">
-                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">No progress data yet</p>
-                  </div>
-                ) : (
-                  [...new Set(logs.map((l) => l.exercise_name))].map((name, index) => (
-                    <div key={name} className="bg-slate-900/40 p-4 rounded-3xl border border-slate-800/50 backdrop-blur-sm">
+            {logs.length === 0 ? (
+              <div className="py-20 text-center border-2 border-dashed border-slate-800 rounded-3xl">
+                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">No progress data yet</p>
+              </div>
+            ) : (
+              [...new Set(logs.map((l) => l.exercise_name))].sort().map((name, index) => (
+                <div key={name} className="bg-slate-900/40 p-6 rounded-3xl border border-slate-800/50 backdrop-blur-sm">
+                  {/* Exercise Name Header */}
+                  <h3 className="text-sm font-black text-white uppercase tracking-tight mb-6">
+                    {name}
+                  </h3>
+                  
+                  {/* Grid with Chart and Logs */}
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 items-start">
+                    {/* Chart - Left */}
+                    <div className="h-full flex items-center">
                       <ExerciseChart
                         logs={logs}
                         exerciseName={name}
                         color={index % 2 === 0 ? "rgba(34, 197, 94, 1)" : "rgba(168, 85, 247, 1)"}
                       />
                     </div>
-                  ))
-                )}
-              </div>
-            </div>
-
-            {/* RECENT LOGS SECTION */}
-            {logs.length > 0 && (
-              <div className="flex flex-col items-center pb-20">
-                 <div className="itemTitle !text-[10px] tracking-[0.3em] mb-6">HISTORY</div>
-                 <div className="w-full max-w-4xl px-4">
-                    <RecentLogs logs={logs} deleteLog={deleteLog} />
-                 </div>
-              </div>
+                    
+                    {/* Logs - Right */}
+                    <div>
+                      <RecentLogs logs={groupedLogs[name]} deleteLog={deleteLog} />
+                    </div>
+                  </div>
+                </div>
+              ))
             )}
+
           </div>
         </TabsContent>
         
@@ -118,8 +133,6 @@ function WorkoutsPanel() {
             </div>
           </Card>
         </TabsContent>
-
-        {/* HOME TAB: PROGRESS & LOGS */}
       </Tabs>
     </div>
   );
