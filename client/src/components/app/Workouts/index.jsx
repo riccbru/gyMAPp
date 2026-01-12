@@ -1,16 +1,14 @@
-// 
-
 import API from "@/lib/API";
 import params from "@/lib/parameters";
 import { useAuth } from "@/hooks/useAuth";
 import { RecentLogs } from "./RecentLogs";
 import { useEffect, useState } from "react";
+import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Exercises } from "../Home/Exercises";
 import { ExerciseChart } from "./ExerciseChart";
 import { WorkoutSelection } from "./WorkoutSelection";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Card } from "@/components/ui/card";
 
 function WorkoutsPanel() {
   const { toast } = useToast();
