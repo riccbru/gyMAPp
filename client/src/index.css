@@ -170,6 +170,10 @@
         @apply text-xs tracking-widest font-black uppercase;
     }
 
+    .deleteLogCard {
+        @apply bg-panna dark:bg-primary border-red !border-2 !rounded-3xl;
+    }
+
 }
 
 @layer base {

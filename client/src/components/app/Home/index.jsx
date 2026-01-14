@@ -7,7 +7,7 @@ import params from "@/lib/parameters";
 import { Exercises } from "./Exercises";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
-import { LogForm } from "./LogForm";
+import { LogForm } from "../Workouts/LogForm";
 
 function HomePanel() {
 
@@ -74,11 +74,7 @@ function HomePanel() {
             <Exercises workoutExercises={exercises} />
           </div>
         </div>
-
-        <div className="mt-10 mb-10 flex flex-col items-center">
-          <LogForm />
-        </div>
-
+        
       </div>
     );
 }

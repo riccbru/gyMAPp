@@ -9,11 +9,13 @@ import { Exercises } from "../Home/Exercises";
 import { ExerciseChart } from "./ExerciseChart";
 import { WorkoutSelection } from "./WorkoutSelection";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { LogForm } from "./LogForm";
 
 function WorkoutsPanel() {
   const { toast } = useToast();
   const { isLogged } = useAuth();
   const [logs, setLogs] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   const [exercises, setExercises] = useState([]);
   const [weekday, setWeekday] = useState(params.getWeekdayNum());
 
@@ -21,17 +23,12 @@ function WorkoutsPanel() {
     try {
       await API.deleteLog(lid);
       setLogs((prev) => prev.filter((log) => log.lid !== lid));
-      toast({
-        title: "LOG DELETED",
-        description: "Entry removed successfully",
-        className: "toast !border-green",
-      });
+      setRefresh(true);
     } catch (err) {
       toast({ title: "Failed to delete log", description: err, variant: "destructive" });
     }
   };
 
-  // Group logs by exercise name
   const groupedLogs = logs.reduce((acc, log) => {
     if (!acc[log.exercise_name]) {
       acc[log.exercise_name] = [];
@@ -40,7 +37,6 @@ function WorkoutsPanel() {
     return acc;
   }, {});
 
-  // Sort logs within each group by date descending (newest first)
   Object.keys(groupedLogs).forEach((exerciseName) => {
     groupedLogs[exerciseName].sort((a, b) => b.lid - a.lid);
   });
@@ -49,17 +45,20 @@ function WorkoutsPanel() {
     if (isLogged) {
       API.fetchWorkout(weekday).then((res) => setExercises(res.exercises || []));
       API.fetchLogs().then((res) => setLogs(res.logs || []));
+      setRefresh(false);
     }
-  }, [isLogged, weekday]);
+  }, [isLogged, weekday, refresh]);
 
   return (
     <div className="flex flex-col space-y-6">
+
       {/* HEADER SECTION */}
       <div className="text-center">
         <div className="pageTitle">WORKOUTS</div>
       </div>
 
       <Tabs defaultValue="home" className="w-full">
+        
         {/* CENTERED SEGMENTED CONTROL */}
         <div className="flex justify-center mb-10 px-4">
           <TabsList className="grid w-full max-w-[320px] grid-cols-2 bg-slate-950/50 border border-slate-800 p-1.5 rounded-2xl backdrop-blur-sm shadow-xl">
@@ -78,7 +77,11 @@ function WorkoutsPanel() {
           </TabsList>
         </div>
 
+        {/* HOME TAB */}
         <TabsContent value="home" className="mt-0 outline-none animate-in fade-in zoom-in-95 duration-300">
+          <div className="mt-10 mb-10 flex flex-col items-center">
+            <LogForm setRefresh={setRefresh} />
+          </div>
           <div className="flex flex-col space-y-8 pb-20 px-4">
             
             {logs.length === 0 ? (
@@ -88,14 +91,16 @@ function WorkoutsPanel() {
             ) : (
               [...new Set(logs.map((l) => l.exercise_name))].sort().map((name, index) => (
                 <div key={name} className="bg-slate-900/40 p-6 rounded-3xl border border-slate-800/50 backdrop-blur-sm">
+
                   {/* Exercise Name Header */}
-                  <h3 className="text-sm font-black text-white uppercase tracking-tight mb-6">
+                  <h3 className="text-xl font-black text-white uppercase tracking-tight mb-6">
                     {name}
                   </h3>
                   
                   {/* Grid with Chart and Logs */}
                   <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 items-start">
-                    {/* Chart - Left */}
+
+                    {/* Chart */}
                     <div className="h-full flex items-center">
                       <ExerciseChart
                         logs={logs}
@@ -104,10 +109,11 @@ function WorkoutsPanel() {
                       />
                     </div>
                     
-                    {/* Logs - Right */}
+                    {/* Logs */}
                     <div>
                       <RecentLogs logs={groupedLogs[name]} deleteLog={deleteLog} />
                     </div>
+
                   </div>
                 </div>
               ))
@@ -116,7 +122,7 @@ function WorkoutsPanel() {
           </div>
         </TabsContent>
         
-        {/* GYM TAB: ROUTINE PLANNING */}
+        {/* GYM TAB */}
         <TabsContent value="gym" className="mt-0 outline-none animate-in fade-in zoom-in-95 duration-300">
           <Card className="logCard !bg-transparent !border-none shadow-none">
             <div className="pageDivider">

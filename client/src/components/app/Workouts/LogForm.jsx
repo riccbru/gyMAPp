@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { InputField } from "../AuthN/InputField";
 import { CircleMinus, CirclePlus } from "lucide-react";
 
-function LogForm() {
+function LogForm({ setRefresh }) {
   const { toast } = useToast();
   const [sets, setSets] = useState([0]);
   const defaultData = {
@@ -75,14 +75,8 @@ function LogForm() {
       };
 
       await API.pushLog(logData);
-
-      toast({
-        title: "SUCCESS",
-        description: "Session logged successfully",
-        className: "toast !border-green",
-      });
-
       setFormData(defaultData);
+      setRefresh(true);
       setSets([0]);
     } catch (err) {
       console.error(err);
@@ -115,7 +109,7 @@ function LogForm() {
               onChange={handleInputChange}
               error={errors.exercise_name}
               value={formData.exercise_name}
-              placeholder="e.g. Pull ups"
+              placeholder="e.g. Pull Ups, Planche Push Ups"
             />
 
             <div className="flex space-x-4 justify-center w-full">
