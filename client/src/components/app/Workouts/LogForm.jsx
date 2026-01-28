@@ -1,11 +1,11 @@
 import dayjs from "dayjs";
-import { useState } from "react";
 import API from "@/lib/API";
+import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { InputField } from "../AuthN/InputField";
 import { CircleMinus, CirclePlus } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 function LogForm({ setRefresh }) {
   const { toast } = useToast();
@@ -89,13 +89,13 @@ function LogForm({ setRefresh }) {
   };
 
   return (
-    <div className="itemDivided">
+    <div className="itemDivided w-full px-2 sm:px-0"> {/* Responsive width/padding */}
       <Card
-        className={`logCard !w-full ${!errors.submit ? "" : "!border-red"}`}
+        className={`logCard !w-full mx-auto max-w-xl ${!errors.submit ? "" : "!border-red"}`}
       >
         <CardHeader>
           <CardTitle className="text-center">
-            <div className={`mx-auto itemTitle ${!errors.submit ? "" : "text-red"}`}>
+            <div className={`mx-auto itemTitle text-sm sm:text-base ${!errors.submit ? "" : "text-red"}`}>
               LOG HOME WORKOUT
             </div>
           </CardTitle>
@@ -103,45 +103,45 @@ function LogForm({ setRefresh }) {
 
         <CardContent>
           <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
-            <label className={`labelStyle ${ errors.exercise_name ? "text-red" : "text-slate-400" }`}>Exercise Name</label>
-            <InputField
-              name="exercise_name"
-              onChange={handleInputChange}
-              error={errors.exercise_name}
-              value={formData.exercise_name}
-              placeholder="e.g. Pull Ups, Planche Push Ups"
-            />
+            <div className="flex flex-col space-y-1">
+              <label className={`labelStyle ${ errors.exercise_name ? "text-red" : "text-slate-400" }`}>Exercise Name</label>
+              <InputField
+                name="exercise_name"
+                onChange={handleInputChange}
+                error={errors.exercise_name}
+                value={formData.exercise_name}
+                placeholder="e.g. Pull Ups, Planche Push Ups"
+              />
+            </div>
 
-            <div className="flex space-x-4 justify-center w-full">
+            {/* RESPONSIVE GRID FOR WEIGHT AND REST */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
               <div className="flex flex-col space-y-1 ">
-      <label className={`labelStyle ${ errors.weight ? "text-red" : "text-slate-400" }`}>Weight (kg)</label>
-      <InputField
-        name="weight"
-        label=""
-        type="number"
-        onChange={handleInputChange}
-        value={formData.weight}
-      />
-    </div>
+                <label className={`labelStyle ${ errors.weight ? "text-red" : "text-slate-400" }`}>Weight (kg)</label>
+                <InputField
+                  name="weight"
+                  label=""
+                  type="number"
+                  onChange={handleInputChange}
+                  value={formData.weight}
+                />
+              </div>
               <div className="flex flex-col space-y-1 ">
-      <label className={`labelStyle ${ errors.rest ? "text-red" : "text-slate-400" }`}>Rest (sec)</label>
-      <InputField
-        name="rest"
-        label=""
-        type="number"
-        onChange={handleInputChange}
-        value={formData.rest}
-      />
-    </div>
+                <label className={`labelStyle ${ errors.rest ? "text-red" : "text-slate-400" }`}>Rest (sec)</label>
+                <InputField
+                  name="rest"
+                  label=""
+                  type="number"
+                  onChange={handleInputChange}
+                  value={formData.rest}
+                />
+              </div>
             </div>
 
 
             <div className="flex flex-col space-y-6 py-4">
-              {/* SET CONTROLLER */}
               <div className="flex flex-col items-center space-y-3">
-                <label
-                  className={`labelStyle ${ errors.sets ? "text-red" : "text-slate-400" }`}
-                >
+                <label className={`labelStyle ${ errors.sets ? "text-red" : "text-slate-400" }`}>
                   Sets Number
                 </label>
 
@@ -155,9 +155,7 @@ function LogForm({ setRefresh }) {
                   </button>
 
                   <div className="flex flex-col items-center justify-center w-12 h-12 rounded-full bg-white text-background shadow-lg">
-                    <span className="text-xl font-black leading-none">
-                      {sets.length}
-                    </span>
+                    <span className="text-xl font-black leading-none">{sets.length}</span>
                     <span className="text-[8px] uppercase font-bold">Sets</span>
                   </div>
 
@@ -171,8 +169,8 @@ function LogForm({ setRefresh }) {
                 </div>
               </div>
 
-              {/* REPS INPUTS */}
-              <div className="flex flex-wrap gap-3 justify-center">
+              {/* REPS INPUTS: Improved wrap behavior for mobile */}
+              <div className="flex flex-wrap gap-2 sm:gap-3 justify-center">
                 {sets.map((rep, index) => (
                   <div
                     key={index}
@@ -184,15 +182,11 @@ function LogForm({ setRefresh }) {
                     <div className="relative">
                       <input
                         type="number"
-                        className={`w-14 h-14 bg-slate-900/50 border-2 rounded-xl text-center text-lg font-black outline-none transition-all
-              ${
-                errors.sets
-                  ? "border-red text-red"
-                  : "border-slate-700 focus:border-green text-white"
-              }`}
+                        className={`w-12 h-12 sm:w-14 sm:h-14 bg-slate-900/50 border-2 rounded-xl text-center text-base sm:text-lg font-black outline-none transition-all
+                          ${errors.sets ? "border-red text-red" : "border-slate-700 focus:border-green text-white"}`}
                         value={rep}
                         onChange={(e) => handleRepChange(index, e.target.value)}
-                        onFocus={(e) => e.target.select()} // Auto-select text on click
+                        onFocus={(e) => e.target.select()}
                       />
                     </div>
                   </div>
@@ -202,7 +196,7 @@ function LogForm({ setRefresh }) {
 
             <Button
               type="submit"
-              className="mt-5 !bg-white text-background rounded-3xl hover:rounded-xl transition-all duration-200"
+              className="mt-5 !bg-white text-background rounded-3xl hover:rounded-xl transition-all duration-200 py-6"
             >
               SAVE LOG
             </Button>
