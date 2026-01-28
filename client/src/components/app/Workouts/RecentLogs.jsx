@@ -93,30 +93,27 @@ function RecentLogs({ logs, deleteLog }) {
             >
               {/* Stats Wrapper - use flex-wrap to allow breaking on small screens */}
               <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] font-bold text-slate-500 uppercase tracking-widest w-full pr-8 xs:pr-0">
-                <span className="text-[10px] font-black bg-white text-background px-2 py-0.5 rounded uppercase shrink-0">
+                <span className="text-[12px] font-black bg-white text-background px-2 py-0.5 rounded uppercase shrink-0">
                   {log.date}
-                </span>
-                <span className="text-sm font-black text-white uppercase tracking-tight truncate max-w-[120px] xs:max-w-none">
-                  {log.exercise_name}
                 </span>
 
                 {/* This container holds the metrics and wraps together on mobile */}
-                <div className="flex items-center gap-2 text-slate-400">
+                <div className="flex items-center gap-2 text-[13px] text-slate-400">
                   <span className="hidden xs:inline opacity-50">•</span>
                   <span className="text-slate-200">
-                    {Array.isArray(log.reps) ? log.reps.join("-") : log.reps}
+                    {Array.isArray(log.reps) ? log.reps.join(" - ") : log.reps}
                   </span>
                   <span className="opacity-50">•</span>
                   <span>{log.weight}KG</span>
                   <span className="opacity-50">•</span>
-                  <span>{log.rest}"</span>
+                  <span>{log.rest}&ldquo;</span>
                 </div>
               </div>
 
               {/* Delete Button - Static position on mobile avoids overlapping wrapped text */}
               <button
                 onClick={() => deleteLog(log.lid)}
-                className="absolute top-4 right-4 xs:static p-2.5 rounded-full bg-slate-800/50 text-slate-500 hover:bg-red-600 hover:text-white transition-all"
+                className="absolute top-2 right-3 xs:static p-2.5 rounded-full bg-slate-800/50 text-slate-500 hover:bg-red hover:text-white transition-all"
               >
                 <Trash2 size={18} strokeWidth={2.5} />
               </button>

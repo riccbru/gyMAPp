@@ -82,13 +82,15 @@ function WorkoutsPanel() {
         </div>
 
         {/* HOME TAB */}
-        <TabsContent value="home" className="mt-0 outline-none animate-in fade-in zoom-in-95 duration-300">
-  <div className="mt-6 mb-6 flex flex-col items-center w-full px-2">
-    <LogForm setRefresh={setRefresh} />
-  </div>
+        <TabsContent
+          value="home"
+          className="mt-0 outline-none animate-in fade-in zoom-in-95 duration-300"
+        >
+          <div className="mt-6 mb-6 flex flex-col items-center w-full px-2">
+            <LogForm setRefresh={setRefresh} />
+          </div>
           <div className="flex flex-col space-y-6 pb-20 px-2 sm:px-4">
             {" "}
-            {/* Adjusted padding for mobile */}
             {logs.length === 0 ? (
               <div className="py-20 text-center border-2 border-dashed border-slate-800 rounded-3xl">
                 <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
@@ -99,18 +101,21 @@ function WorkoutsPanel() {
               [...new Set(logs.map((l) => l.exercise_name))]
                 .sort()
                 .map((name, index) => (
-                  <div key={name} className="bg-slate-900/40 p-3 sm:p-6 rounded-3xl border border-slate-800/50 backdrop-blur-sm">
+                  <div
+                    key={name}
+                    className="bg-slate-900/40 p-3 sm:p-6 rounded-3xl border-2 border-gray backdrop-blur-sm"
+                  >
                     {/* Exercise Name Header */}
                     <h3 className="text-lg sm:text-xl font-black text-white uppercase tracking-tight mb-6">
                       {name}
                     </h3>
 
                     {/* Grid with Chart and Logs */}
-                    {/* grid-cols-1: Mobile and 14" Laptop */}
+                    {/* grid-cols-1: Mobile and Laptop */}
                     {/* 2xl:grid-cols-2: 32" Monitor (side-by-side) */}
                     <div className="grid grid-cols-1 2xl:grid-cols-2 gap-8 items-start">
                       {/* Chart Container */}
-                      <div className="w-full h-[350px] sm:h-[450px] 2xl:h-full flex items-center overflow-hidden">
+                      <div className="w-full h-[350px] sm:h-[450px] 2xl:h-[450px] flex items-center overflow-hidden">
                         <ExerciseChart
                           logs={logs}
                           exerciseName={name}
