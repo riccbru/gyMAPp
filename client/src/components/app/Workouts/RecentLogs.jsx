@@ -21,7 +21,7 @@ function RecentLogs({ logs, deleteLog }) {
   const totalPages = Math.ceil(sortedLogs.length / itemsPerPage);
   const currentLogs = sortedLogs.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    currentPage * itemsPerPage,
   );
 
   const confirmDeletion = () => {
@@ -89,31 +89,37 @@ function RecentLogs({ logs, deleteLog }) {
           {currentLogs.map((log) => (
             <div
               key={log.lid}
-              className="group relative flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-900/80 border border-slate-800 rounded-2xl hover:border-slate-600 transition-all duration-300"
+              className="group relative flex flex-col xs:flex-row items-start xs:items-center justify-between p-4 bg-slate-900/80 border border-slate-800 rounded-2xl gap-3"
             >
-              <div className="flex items-center text-[11px] font-bold text-slate-500 uppercase tracking-widest space-x-2">
-                <span className="text-[10px] font-black bg-white text-background px-2 py-0.5 rounded uppercase">
+              {/* Stats Wrapper - use flex-wrap to allow breaking on small screens */}
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] font-bold text-slate-500 uppercase tracking-widest w-full pr-8 xs:pr-0">
+                <span className="text-[10px] font-black bg-white text-background px-2 py-0.5 rounded uppercase shrink-0">
                   {log.date}
                 </span>
-                <span className="text-sm font-black text-white uppercase tracking-tight">
+                <span className="text-sm font-black text-white uppercase tracking-tight truncate max-w-[120px] xs:max-w-none">
                   {log.exercise_name}
                 </span>
-                <span className="mx-2 opacity-90">•</span>
-                <span className="text-slate-300">
-                  {Array.isArray(log.reps) ? log.reps.join(" - ") : log.reps}
-                </span>
-                <span className="mx-2 opacity-90">•</span>
-                <span>{log.weight} KG</span>
-                <span className="mx-2 opacity-90">•</span>
-                <span>{log.rest}&quot;</span>
+
+                {/* This container holds the metrics and wraps together on mobile */}
+                <div className="flex items-center gap-2 text-slate-400">
+                  <span className="hidden xs:inline opacity-50">•</span>
+                  <span className="text-slate-200">
+                    {Array.isArray(log.reps) ? log.reps.join("-") : log.reps}
+                  </span>
+                  <span className="opacity-50">•</span>
+                  <span>{log.weight}KG</span>
+                  <span className="opacity-50">•</span>
+                  <span>{log.rest}"</span>
+                </div>
               </div>
 
-              <Trash2
-                size={24}
-                strokeWidth={3}
-                onClick={() => setLogToDelete(log.lid)}
-                className="cursor-pointer text-white hover:text-red hover:scale-110 transition-all duration-300"
-              />
+              {/* Delete Button - Static position on mobile avoids overlapping wrapped text */}
+              <button
+                onClick={() => deleteLog(log.lid)}
+                className="absolute top-4 right-4 xs:static p-2.5 rounded-full bg-slate-800/50 text-slate-500 hover:bg-red-600 hover:text-white transition-all"
+              >
+                <Trash2 size={18} strokeWidth={2.5} />
+              </button>
             </div>
           ))}
         </CardContent>
