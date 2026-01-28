@@ -1,4 +1,5 @@
 import API from "@/lib/API";
+import { LogForm } from "./LogForm";
 import params from "@/lib/parameters";
 import { useAuth } from "@/hooks/useAuth";
 import { RecentLogs } from "./RecentLogs";
@@ -9,7 +10,6 @@ import { Exercises } from "../Home/Exercises";
 import { ExerciseChart } from "./ExerciseChart";
 import { WorkoutSelection } from "./WorkoutSelection";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { LogForm } from "./LogForm";
 
 function WorkoutsPanel() {
   const { toast } = useToast();
