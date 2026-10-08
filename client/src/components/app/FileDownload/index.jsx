@@ -3,7 +3,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { FileCarousel } from "./FileCarousel";
 
 function FileDownloadPanel() {
-  const global = "/pdf";
   const { user } = useAuth();
 
   return (
